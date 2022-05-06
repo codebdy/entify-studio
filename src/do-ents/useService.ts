@@ -8,7 +8,7 @@ export type MutateFn<T> = (data?: T) => void;
 
 const gql = `
   query{
-    service{
+    _service{
       id
     }
   }
@@ -32,7 +32,7 @@ export function useService(): {
       .then((data) => {
         setLoading(false);
         if (data) {
-          setService(data["service"]);
+          setService(data["_service"]);
         }
       })
       .catch((err: ClientError) => {

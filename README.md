@@ -3,31 +3,31 @@
 </p>
 
  
-  <p align="center"><a href="https://rxdrag.com" target="_blank">rxModels</a> 是一个低代码后端服务，基于业务模型生成后端，提供通用查询JSON接口，本项目是前端部分</p>
+  <p align="center"><a href="https://rxdrag.com" target="_blank">rxModels</a> 是一个低代码后端服务，基于业务模型生成后端，提供通用GraphQL接口，本项目是前端部分</p>
     <p align="center">
 
 
-演示地址：https://rxmodels-client.rxdrag.com/login
+演示地址：https://entify-client.vercel.app/
 
 ## 安装服务端
 ```console
 
-git clone https://github.com/rxdrag/rx-models.git
+git clone https://github.com/rxdrag/entify.git
 
-cd rx-models
+cd entify
 
-npm install
+go get
 
-npm run start:dev
+go run main.go
 ```
-在浏览器输入：http://localhost:3001/ ，看到熟悉的“Hello World!”，则说明已经成功运行了。
+显示提示信息：Running a GraphQL API server at http://localhost:8080/graphql，则说明已经成功运行了。
 
 ## 安装运行客户端
 
 ```console
-git clone https://github.com/rxdrag/rx-models-client.git
+git clone https://github.com/rxdrag/entify-client.git
 
-cd rx-models-client
+cd entify-client
 
 npm install
 
@@ -56,4 +56,4 @@ npm run start
 
 ## License
 
-  rxModels is MIT licensed
+  Entify is MIT licensed
