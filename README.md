@@ -3,7 +3,7 @@
 </p>
 
  
-  <p align="center"><a href="https://rxdrag.com" target="_blank">rxModels</a> 是一个低代码后端服务，基于业务模型生成后端，提供通用GraphQL接口，本项目是前端部分</p>
+  <p align="center"><a href="https://rxdrag.com" target="_blank">Entify</a> 是一个低代码后端服务，基于业务模型生成后端，提供通用GraphQL接口，本项目是前端部分</p>
     <p align="center">
 
 
