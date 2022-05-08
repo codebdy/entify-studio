@@ -14,13 +14,13 @@ import { useAppStore } from "store/app-store";
 import { rxModelsSwrConfig } from "@rxdrag/rxmodels-swr";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import { useRecoilState, useSetRecoilState } from "recoil";
-import { serviceState } from "./ModelBoard/recoil/atoms";
 import { useShowServerError } from "recoil/hooks/useShowServerError";
 import Loading from "./common/loading";
-import { useService } from "do-ents/useService";
+import { useServices } from "do-ents/useServices";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness5Icon from "@mui/icons-material/Brightness5";
 import { themeModeState } from "recoil/atoms";
+import { servicesState } from "./ModelBoard/recoil/atoms";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -61,15 +61,15 @@ export const Studio = memo(() => {
   const classes = useStyles();
   const history = useHistory();
   const appStore = useAppStore();
-  const setService = useSetRecoilState(serviceState);
+  const setServices = useSetRecoilState(servicesState);
 
-  const { service, loading, error } = useService();
+  const { services, loading, error } = useServices();
 
   useShowServerError(error);
 
   useEffect(() => {
-    setService(service);
-  }, [service, setService]);
+    setServices(services);
+  }, [services, setServices]);
 
   const handleLogout = useCallback(() => {
     appStore.setToken("");
@@ -83,7 +83,7 @@ export const Studio = memo(() => {
     setThemeMode((mode) => (mode === "dark" ? "light" : "dark"));
   }, [setThemeMode]);
 
-  return loading || !service ? (
+  return loading || !services ? (
     <Loading />
   ) : (
     <div className={classes.root}>

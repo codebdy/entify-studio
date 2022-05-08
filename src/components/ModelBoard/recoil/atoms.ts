@@ -3,7 +3,7 @@ import { DiagramMeta } from "../meta/DiagramMeta";
 import { ClassMeta } from "../meta/ClassMeta";
 import { Meta } from "../meta/Meta";
 import { RelationMeta, RelationType } from "../meta/RelationMeta";
-import { ServiceNode } from "../meta/ServiceNode";
+import { Service } from "../meta/ServiceNode";
 import { X6EdgeMeta } from "../meta/X6EdgeMeta";
 import { X6NodeMeta } from "../meta/X6NodeMeta";
 import { LineAction } from "./LineAction";
@@ -18,10 +18,15 @@ export interface Snapshot {
   selectedDiagram?: string;
 }
 
-export const serviceState = atom<ServiceNode | undefined>({
-  key: "local.service",
+export const servicesState = atom<Service[] | undefined>({
+  key: "local.services",
   default: undefined,
 });
+
+export const serviceIdState = atom<number>({
+  key: "local.serviceId",
+  default: 0,
+})
 
 export const minMapState = atomFamily<boolean, number>({
   key: "local.minMap",

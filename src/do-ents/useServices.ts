@@ -8,20 +8,23 @@ export type MutateFn<T> = (data?: T) => void;
 
 const gql = `
   query{
-    _service{
+    services{
       id
+      name
+      url
+      version
     }
   }
 `
 
-export function useService(): {
-  service?: Service;
+export function useServices(): {
+  services?: Service[];
   loading?: boolean;
   error?: GraphQLError;
 } {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<GraphQLError>();
-  const [service, setService] = useState<Service>();
+  const [services, setServices] = useState<Service[]>();
   const excute = useCallback((server?:string) => {
     const graphQLClient = createGraphQLClient(server);
 
@@ -32,7 +35,7 @@ export function useService(): {
       .then((data) => {
         setLoading(false);
         if (data) {
-          setService(data["_service"]);
+          setServices(data["services"]);
         }
       })
       .catch((err: ClientError) => {
@@ -49,5 +52,5 @@ export function useService(): {
     excute();
   }, [excute]);
 
-  return { service, loading, error };
+  return { services, loading, error };
 }

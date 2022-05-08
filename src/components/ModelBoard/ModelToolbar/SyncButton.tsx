@@ -12,22 +12,23 @@ import { memo } from "react";
 import { LoadingButton } from "@mui/lab";
 import intl from "react-intl-universal";
 import UndoOutlinedIcon from "@mui/icons-material/UndoOutlined";
-import { changedState, publishedIdState, metaState, serviceState } from "../recoil/atoms";
+import { changedState, publishedIdState, metaState } from "../recoil/atoms";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { useShowServerError } from "recoil/hooks/useShowServerError";
 import { usePublishMeta } from "do-ents/usePublishMeta";
 import { successAlertState } from "recoil/atoms";
 import { MetaStatus } from "../meta/Meta";
+import { useServiceId } from "../hooks/useServiceId";
 
 export const SyncButton = memo(() => {
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef<HTMLDivElement>(null);
   const setSuccessAlertState = useSetRecoilState(successAlertState);
-  const service = useRecoilValue(serviceState);
-  const publishedId = useRecoilValue(publishedIdState(service?.id||0));
-  const changed = useRecoilValue(changedState(service?.id||0));
-  const [meta, setMeta] = useRecoilState(metaState(service?.id||0));
-  const setPublishedId = useSetRecoilState(publishedIdState(service?.id||0));
+  const serviceId = useServiceId();
+  const publishedId = useRecoilValue(publishedIdState(serviceId));
+  const changed = useRecoilValue(changedState(serviceId));
+  const [meta, setMeta] = useRecoilState(metaState(serviceId));
+  const setPublishedId = useSetRecoilState(publishedIdState(serviceId));
 
   const [publish, { loading, error }] = usePublishMeta({
     onCompleted() {

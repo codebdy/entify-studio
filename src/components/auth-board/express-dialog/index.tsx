@@ -19,10 +19,10 @@ import { ClassMeta } from "components/ModelBoard/meta/ClassMeta";
 import {
   classesState,
   relationsState,
-  serviceState,
 } from "components/ModelBoard/recoil/atoms";
 import { useRecoilValue } from "recoil";
 import { LoadingButton } from "@mui/lab";
+import { useServiceId } from "components/ModelBoard/hooks/useServiceId";
 
 const SqlWhereParser = require("sql-where-parser");
 const OPERATOR_UNARY_MINUS = Symbol("-");
@@ -58,12 +58,12 @@ export default function ExpressDialog(props: {
 }) {
   const { entityMeta, expression, onExpressionChange } = props;
   const classes = useStyles();
-  const service = useRecoilValue(serviceState)
+  const serviceId = useServiceId()
   const [open, setOpen] = useState(false);
   const [exp, setExp] = useState(expression);
   const [error, setError] = useState("");
-  const entites = useRecoilValue(classesState(service?.id||0));
-  const relations = useRecoilValue(relationsState(service?.id||0));
+  const entites = useRecoilValue(classesState(serviceId));
+  const relations = useRecoilValue(relationsState(serviceId));
 
   const handleClickOpen = () => {
     setOpen(true);
