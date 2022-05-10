@@ -20,6 +20,8 @@ import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness5Icon from "@mui/icons-material/Brightness5";
 import { themeModeState } from "recoil/atoms";
 import { servicesState } from "./ModelBoard/recoil/atoms";
+import { useInstalled } from "do-ents/useInstalled";
+import { INTALL_URL } from "util/consts";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -61,8 +63,14 @@ export const Studio = memo(() => {
   const history = useHistory();
   const appStore = useAppStore();
   const setServices = useSetRecoilState(servicesState);
-
   const { services, loading, error } = useServices();
+  const {installed, loading: installChecking} = useInstalled();
+
+  useEffect(()=>{
+    if(!installed || !installChecking){
+      history.push(INTALL_URL);
+    }
+  }, [history, installChecking, installed])
 
   useShowServerError(error);
 
@@ -82,7 +90,7 @@ export const Studio = memo(() => {
     setThemeMode((mode) => (mode === "dark" ? "light" : "dark"));
   }, [setThemeMode]);
 
-  return loading || !services ? (
+  return loading ||installChecking || !services ? (
     <Loading />
   ) : (
     <div className={classes.root}>
