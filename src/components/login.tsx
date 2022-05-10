@@ -23,13 +23,14 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import intl from "react-intl-universal";
 import { useHistory } from "react-router";
 import { observer } from "mobx-react";
-import { INDEX_URL, PRIMARY_COLOR } from "../util/consts";
+import { INDEX_URL, INTALL_URL, PRIMARY_COLOR } from "../util/consts";
 import { useAppStore } from "../store/app-store";
 import useShadows from "../util/use-shadows";
 import { cache } from "swr";
 import { rxModelsSwrConfig } from "@rxdrag/rxmodels-swr";
 import { useLogin } from "do-ents/useLogin";
 import { LoadingButton } from "@mui/lab";
+import { useInstalled } from "do-ents/useInstalled";
 
 declare module "@mui/styles/defaultTheme" {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -98,7 +99,13 @@ export const Login = observer(() => {
   const [errorMessage, setErroMessage] = useState("");
   const appStore = useAppStore();
   const history = useHistory();
-
+  const {installed} = useInstalled();
+  useEffect(()=>{
+    if(installed === false){
+      history.push(INTALL_URL);
+    }
+  }, [history, installed])
+  
   const [login, { loading }] = useLogin({
     onCompleted(token: string) {
       console.log("token:", token);

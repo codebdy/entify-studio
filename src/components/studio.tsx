@@ -64,13 +64,13 @@ export const Studio = memo(() => {
   const appStore = useAppStore();
   const setServices = useSetRecoilState(servicesState);
   const { services, loading, error } = useServices();
-  const {installed, loading: installChecking} = useInstalled();
+  const { installed, loading: installChecking } = useInstalled();
 
-  useEffect(()=>{
-    if(!installed || !installChecking){
+  useEffect(() => {
+    if (installed === false) {
       history.push(INTALL_URL);
     }
-  }, [history, installChecking, installed])
+  }, [history, installed]);
 
   useShowServerError(error);
 
@@ -90,7 +90,7 @@ export const Studio = memo(() => {
     setThemeMode((mode) => (mode === "dark" ? "light" : "dark"));
   }, [setThemeMode]);
 
-  return loading ||installChecking || !services ? (
+  return loading || installChecking || !services ? (
     <Loading />
   ) : (
     <div className={classes.root}>
