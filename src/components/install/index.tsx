@@ -129,7 +129,7 @@ export const Install = observer(() => {
               <Grid item lg={6} className={classes.leftInstall}>
                 <div>
                   <h2 className={classes.title}>
-                    {intl.get("install") + " rxModels"}
+                    {intl.get("install") + " Entify"}
                   </h2>
                 </div>
                 {checking && <div>Install checking...</div>}

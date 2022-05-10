@@ -9,7 +9,6 @@ import intl from "react-intl-universal";
 import { NavLink, Redirect, Route, Switch, useHistory } from "react-router-dom";
 import { GraphiQLBoard } from "./GraphiQLBoard";
 import { ModelsBoard } from "./ModelBoard";
-import { AuthBoard } from "./auth-board";
 import { useAppStore } from "store/app-store";
 import { rxModelsSwrConfig } from "@rxdrag/rxmodels-swr";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
@@ -117,22 +116,6 @@ export const Studio = memo(() => {
           >
             {"API"}
           </NavLink>
-          <NavLink
-            className={classes.navLink}
-            activeClassName={classes.activeLink}
-            to="/studio/auth"
-          >
-            {intl.get("auth-management")}
-          </NavLink>
-          {
-            //<NavLink
-            //  className = {classes.navLink}
-            //  activeClassName = {classes.activeLink}
-            //  to="/studio/commands"
-            //>
-            //  {intl.get('commands')}
-            ///NavLink>
-          }
           <Link
             className={classes.navLink}
             target="_blank"
@@ -161,7 +144,6 @@ export const Studio = memo(() => {
       <Switch>
         <Route path="/studio/models" component={ModelsBoard}></Route>
         <Route path="/studio/api" component={GraphiQLBoard}></Route>
-        <Route path="/studio/auth" component={AuthBoard}></Route>
         <Redirect to={`/studio/models`} from="/studio" />
       </Switch>
     </div>
