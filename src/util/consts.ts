@@ -1,4 +1,4 @@
-export const TOKEN_NAME = "RxModelsToken";
+export const TOKEN_NAME = "EntifyToken";
 export const LOGIN_URL = "/login";
 export const INTALL_URL = "/install";
 export const INDEX_URL = "/studio";

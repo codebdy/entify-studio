@@ -4,20 +4,15 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
-import { AppStore, AppStoreProvider } from "store/app-store";
 import { RecoilRoot } from "recoil";
 import { CssBaseline } from "@mui/material";
 
-const appStore = new AppStore();
-
 ReactDOM.render(
   <RecoilRoot>
-    <AppStoreProvider value={appStore}>
-      <BrowserRouter>
-        <CssBaseline />
-        <App />
-      </BrowserRouter>
-    </AppStoreProvider>
+    <BrowserRouter>
+      <CssBaseline />
+      <App />
+    </BrowserRouter>
   </RecoilRoot>,
   document.getElementById("root")
 );

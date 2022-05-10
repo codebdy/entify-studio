@@ -6,24 +6,24 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import intl from 'react-intl-universal';
-import {observer} from 'mobx-react';
-import { useAppStore } from '../../store/app-store';
+import { useRecoilState } from 'recoil';
+import { confirmState } from 'recoil/atoms';
 
-export const ConfirmDialog = observer(() => {
-  const confirmStore = useAppStore().confirm;
+export const ConfirmDialog = () => {
+  const [confirm, setConfirm] = useRecoilState(confirmState);
   
   const handelCancel = ()=>{
-    confirmStore.close();
+    setConfirm(undefined)
   }
 
   const handleConfirm = ()=>{
-    confirmStore.callbackFn && confirmStore.callbackFn();
-    confirmStore.close();
+    confirm?.callbackFn && confirm.callbackFn();
+    setConfirm(undefined)
   }
 
   return (
     <Dialog
-      open={!!confirmStore.message}
+      open={!!confirm?.message}
       onClose={handelCancel}
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
@@ -31,7 +31,7 @@ export const ConfirmDialog = observer(() => {
       <DialogTitle id="alert-dialog-title">{intl.get('operation-confirm')}</DialogTitle>
       <DialogContent style={{minWidth:"400px"}}>
         <DialogContentText id="alert-dialog-description">
-          {confirmStore.message}
+          {confirm?.message}
         </DialogContentText>
       </DialogContent>
       <DialogActions>
@@ -44,4 +44,4 @@ export const ConfirmDialog = observer(() => {
       </DialogActions>
     </Dialog>
   );
-})
+}

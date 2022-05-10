@@ -1,12 +1,10 @@
 import { Button, Checkbox, FormControl, FormControlLabel, Grid, IconButton, InputAdornment, InputLabel, OutlinedInput, TextField} from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { API_INSTALL } from 'apis/install';
 import React, { useState } from 'react';
 import intl from "react-intl-universal";
 import { PageLayout } from './page-layout';
 import { useHistory } from 'react-router';
 import { useShowServerError } from 'recoil/hooks/useShowServerError';
-import { useLazyAxios, rxModelsSwrConfig } from '@rxdrag/rxmodels-swr';
 import { LoadingButton } from '@mui/lab';
 
 export const SecondPage=(
@@ -20,13 +18,13 @@ export const SecondPage=(
   const [showPassword, setShowPassword] = useState(false);
   const history = useHistory();
 
-  const [install, { loading, error}] = useLazyAxios<any>(API_INSTALL,{
-    onCompleted(data){
-      if(data && data.success){
-        history.push(rxModelsSwrConfig.loginUrl);
-      }      
-    },
-  });
+  // const [install, { loading, error}] = useLazyAxios<any>(API_INSTALL,{
+  //   onCompleted(data){
+  //     if(data && data.success){
+  //       history.push(rxModelsSwrConfig.loginUrl);
+  //     }      
+  //   },
+  // });
 
   //useShowServerError(error);
   
@@ -47,7 +45,7 @@ export const SecondPage=(
   };
 
   const handleInstall = ()=>{
-    install({data:values})
+    //install({data:values})
   }
 
   return (
@@ -61,7 +59,7 @@ export const SecondPage=(
             {intl.get('previous-step')}
           </Button>
           <LoadingButton fullWidth variant="contained" color="primary" size = "large" 
-            loading = {loading}
+            loading = {false}
             disabled = {!values.admin || !values.adminPassword}
             type = "button"
             onClick = {handleInstall}

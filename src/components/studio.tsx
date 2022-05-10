@@ -9,8 +9,6 @@ import intl from "react-intl-universal";
 import { NavLink, Redirect, Route, Switch, useHistory } from "react-router-dom";
 import { GraphiQLBoard } from "./GraphiQLBoard";
 import { ModelsBoard } from "./ModelBoard";
-import { useAppStore } from "store/app-store";
-import { rxModelsSwrConfig } from "@rxdrag/rxmodels-swr";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { useShowServerError } from "recoil/hooks/useShowServerError";
@@ -18,10 +16,10 @@ import Loading from "./common/loading";
 import { useServices } from "do-ents/useServices";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness5Icon from "@mui/icons-material/Brightness5";
-import { themeModeState } from "recoil/atoms";
+import { loggedUserState, themeModeState } from "recoil/atoms";
 import { servicesState } from "./ModelBoard/recoil/atoms";
 import { useInstalled } from "do-ents/useInstalled";
-import { INTALL_URL } from "util/consts";
+import { INTALL_URL, LOGIN_URL, TOKEN_NAME } from "util/consts";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -61,7 +59,7 @@ export const Studio = memo(() => {
   const [themeMode, setThemeMode] = useRecoilState(themeModeState);
   const classes = useStyles();
   const history = useHistory();
-  const appStore = useAppStore();
+  const setLoggedUser = useSetRecoilState(loggedUserState);
   const setServices = useSetRecoilState(servicesState);
   const { services, loading, error } = useServices();
   const { installed, loading: installChecking } = useInstalled();
@@ -79,12 +77,10 @@ export const Studio = memo(() => {
   }, [services, setServices]);
 
   const handleLogout = useCallback(() => {
-    appStore.setToken("");
-    appStore.setLoggedUser(undefined);
-    localStorage.removeItem(rxModelsSwrConfig.tokenName);
-    rxModelsSwrConfig.token = "";
-    history.push(rxModelsSwrConfig.loginUrl);
-  }, [appStore, history]);
+    setLoggedUser(undefined);
+    localStorage.removeItem(TOKEN_NAME);
+    history.push(LOGIN_URL);
+  }, [history, setLoggedUser]);
 
   const handleSwitchThemeMode = useCallback(() => {
     setThemeMode((mode) => (mode === "dark" ? "light" : "dark"));

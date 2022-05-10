@@ -12,20 +12,12 @@ import background from "assets/img/background1.jpg";
 import rightImage from "assets/img/install1.png";
 import intl from "react-intl-universal";
 import { useHistory } from "react-router";
-import { observer } from "mobx-react";
 import { INDEX_URL, PRIMARY_COLOR } from "../../util/consts";
-import { useAppStore } from "../../store/app-store";
 import useShadows from "../../util/use-shadows";
-import { API_IS_INSTALLED } from "apis/install";
-import { useSWRQuery } from "@rxdrag/rxmodels-swr";
 import { Alert } from "@mui/material";
 import { FirstPage } from "./first-page";
 import { SecondPage } from "./second-page";
-
-declare module "@mui/styles/defaultTheme" {
-  // eslint-disable-next-line @typescript-eslint/no-empty-interface
-  interface DefaultTheme extends Theme {}
-}
+import { useInstalled } from "do-ents/useInstalled";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -68,9 +60,8 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export const Install = observer(() => {
+export const Install = () => {
   const classes = useStyles();
-  const appStore = useAppStore();
   const history = useHistory();
   const [pageNumber, setPageNumber] = useState(1);
   const [values, setValues] = useState<any>({
@@ -88,18 +79,13 @@ export const Install = observer(() => {
   const handleChange = (values: any) => {
     setValues({ ...values });
   };
-
-  const {
-    data,
-    loading: checking,
-    error,
-  } = useSWRQuery<{ installed: boolean }>(API_IS_INSTALLED);
+  const { installed, loading: checking, error } = useInstalled();
 
   useEffect(() => {
-    if (appStore.loggedUser) {
+    if (installed) {
       history.push(INDEX_URL);
     }
-  }, [appStore.loggedUser, history]);
+  }, [installed, history]);
 
   const theme = createTheme({
     palette: {
@@ -134,10 +120,10 @@ export const Install = observer(() => {
                 </div>
                 {checking && <div>Install checking...</div>}
                 {error && <Alert severity="error">{error.message}</Alert>}
-                {!checking && data?.installed && (
+                {!checking && installed && (
                   <Alert severity="error">{intl.get("installed")}</Alert>
                 )}
-                {!checking && !error && !data?.installed && (
+                {!checking && !error && !installed && (
                   <>
                     {pageNumber === 1 ? (
                       <FirstPage
@@ -168,4 +154,4 @@ export const Install = observer(() => {
       </ThemeProvider>
     </StyledEngineProvider>
   );
-});
+};

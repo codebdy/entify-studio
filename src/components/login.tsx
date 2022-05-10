@@ -22,20 +22,18 @@ import leftImage from "assets/img/login1.png";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import intl from "react-intl-universal";
 import { useHistory } from "react-router";
-import { observer } from "mobx-react";
-import { INDEX_URL, INTALL_URL, PRIMARY_COLOR } from "../util/consts";
-import { useAppStore } from "../store/app-store";
+import {
+  INDEX_URL,
+  INTALL_URL,
+  PRIMARY_COLOR,
+  TOKEN_NAME,
+} from "../util/consts";
 import useShadows from "../util/use-shadows";
-import { cache } from "swr";
-import { rxModelsSwrConfig } from "@rxdrag/rxmodels-swr";
 import { useLogin } from "do-ents/useLogin";
 import { LoadingButton } from "@mui/lab";
 import { useInstalled } from "do-ents/useInstalled";
-
-declare module "@mui/styles/defaultTheme" {
-  // eslint-disable-next-line @typescript-eslint/no-empty-interface
-  interface DefaultTheme extends Theme {}
-}
+import { useRecoilValue } from "recoil";
+import { loggedUserState } from "recoil/atoms";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -87,36 +85,34 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export const Login = observer(() => {
+export const Login = () => {
   const classes = useStyles();
   const [values, setValues] = useState<any>({
     account: "demo",
     password: "demo",
     showPassword: false,
   });
-
   const [rememberMe, setRememberMe] = useState(true);
   const [errorMessage, setErroMessage] = useState("");
-  const appStore = useAppStore();
+  const loggedUser = useRecoilValue(loggedUserState);
+
   const history = useHistory();
-  const {installed} = useInstalled();
-  useEffect(()=>{
-    if(installed === false){
+  const { installed } = useInstalled();
+  useEffect(() => {
+    if (installed === false) {
       history.push(INTALL_URL);
     }
-  }, [history, installed])
-  
+  }, [history, installed]);
+
   const [login, { loading }] = useLogin({
-    onCompleted(token: string) {
-      console.log("token:", token);
-      if (token) {
+    onCompleted(atoken: string) {
+      console.log("token:", atoken);
+      if (atoken) {
         if (rememberMe) {
-          localStorage.setItem(rxModelsSwrConfig.tokenName, token);
+          localStorage.setItem(TOKEN_NAME, atoken);
         } else {
-          localStorage.removeItem(rxModelsSwrConfig.tokenName);
+          localStorage.removeItem(TOKEN_NAME);
         }
-        appStore.setToken(token);
-        rxModelsSwrConfig.token = token;
         history.push(INDEX_URL);
       }
     },
@@ -134,10 +130,10 @@ export const Login = observer(() => {
   }, [values]);
 
   useEffect(() => {
-    if (appStore.loggedUser) {
+    if (loggedUser) {
       history.push(INDEX_URL);
     }
-  }, [appStore.loggedUser, history]);
+  }, [loggedUser, history]);
 
   const theme = createTheme({
     palette: {
@@ -170,7 +166,6 @@ export const Login = observer(() => {
   };
 
   const handleLogin = (event?: React.FormEvent<HTMLFormElement>) => {
-    cache.clear();
     login(values.account, values.password);
     event && event.preventDefault();
   };
@@ -297,4 +292,4 @@ export const Login = observer(() => {
       </ThemeProvider>
     </StyledEngineProvider>
   );
-});
+};
