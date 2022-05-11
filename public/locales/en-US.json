@@ -148,5 +148,6 @@
   "edit-script": "Edit script",
   "operate-type":"Operate type",
   "classes" :"Classes",
-  "duplicated-property-error":"Class {cls} has duplicated property"
+  "duplicated-property-error":"Class {cls} has duplicated property",
+  "auth-module":"Auth Module"
 }
