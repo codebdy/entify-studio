@@ -12,19 +12,29 @@ import React, { useCallback, useState } from "react";
 import intl from "react-intl-universal";
 import { PageLayout } from "../PageLayout";
 import { LoadingButton } from "@mui/lab";
+import { InstallInput, useInstallRegistry } from "do-ents/useInstallRegistry";
+import { useShowServerError } from "hooks/useShowServerError";
 
-export const InstallPage = (props: {
-  values: any;
-  onValuesChange: (values: any) => void;
-}) => {
-  const { values, onValuesChange } = props;
+export const InstallPage = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [values, setValues] = useState<InstallInput>({
+    driver: "mysql",
+    host: "localhost",
+    port: "3306",
+    database: "",
+    user: "root",
+    password: "",
+  });
+
+  const [install, { loading, error }] = useInstallRegistry();
+
+  useShowServerError(error);
 
   const handleChange = useCallback(
     (prop: any) => (event: React.ChangeEvent<HTMLInputElement>) => {
-      onValuesChange({ ...values, [prop]: event.target.value });
+      setValues({ ...values, [prop]: event.target.value });
     },
-    [onValuesChange, values]
+    [values]
   );
 
   const handleClickShowPassword = useCallback(() => {
@@ -38,7 +48,9 @@ export const InstallPage = (props: {
     []
   );
 
-  const handleInstall = useCallback(() => {}, []);
+  const handleInstall = useCallback(() => {
+    install(values);
+  }, [install, values]);
 
   return (
     <PageLayout
@@ -48,14 +60,14 @@ export const InstallPage = (props: {
             variant="contained"
             color="primary"
             size="large"
-            loading={false}
+            loading={loading}
             type="button"
             disabled={
-              !values.type ||
+              !values.driver ||
               !values.host ||
               !values.port ||
               !values.database ||
-              !values.username
+              !values.user
             }
             onClick={handleInstall}
           >
@@ -68,7 +80,7 @@ export const InstallPage = (props: {
         <TextField
           fullWidth
           label={intl.get("database-type")}
-          value={values.type}
+          value={values.driver}
           variant="outlined"
           onChange={handleChange("type")}
           size="small"
@@ -113,7 +125,7 @@ export const InstallPage = (props: {
         <TextField
           fullWidth
           label={intl.get("user-name")}
-          value={values.username}
+          value={values.user}
           variant="outlined"
           onChange={handleChange("username")}
           size="small"
@@ -141,7 +153,7 @@ export const InstallPage = (props: {
                   onMouseDown={handleMouseDownPassword}
                   size="large"
                 >
-                  {values.showPassword ? <Visibility /> : <VisibilityOff />}
+                  {showPassword ? <Visibility /> : <VisibilityOff />}
                 </IconButton>
               </InputAdornment>
             }

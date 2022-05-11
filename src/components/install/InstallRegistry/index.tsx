@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import {
   Theme,
   Grid,
@@ -63,21 +63,7 @@ const useStyles = makeStyles((theme: Theme) =>
 export const InstallRegistry = () => {
   const classes = useStyles();
   const history = useHistory();
-  const [values, setValues] = useState<any>({
-    type: "mysql",
-    host: "localhost",
-    port: "3306",
-    database: "",
-    username: "root",
-    password: "",
-    admin: "admin",
-    adminPassword: "",
-    withDemo: false,
-  });
 
-  const handleChange = (values: any) => {
-    setValues({ ...values });
-  };
   const installed = useRecoilValue(installedState);
 
   useEffect(() => {
@@ -120,9 +106,7 @@ export const InstallRegistry = () => {
                 {installed && (
                   <Alert severity="error">{intl.get("installed")}</Alert>
                 )}
-                {!installed && (
-                  <InstallPage values={values} onValuesChange={handleChange} />
-                )}
+                {!installed && <InstallPage />}
               </Grid>
               <Grid item lg={6} className={classes.rightImage}>
                 <img src={rightImage} alt="" width="100%" />
