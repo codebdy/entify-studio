@@ -67,17 +67,6 @@ export const InstallPage = (props: {
       <Grid item xs={6}>
         <TextField
           fullWidth
-          label={intl.get("host")}
-          value={values.host}
-          variant="outlined"
-          onChange={handleChange("host")}
-          size="small"
-          required
-        />
-      </Grid>
-      <Grid item xs={6}>
-        <TextField
-          fullWidth
           label={intl.get("database-type")}
           value={values.type}
           variant="outlined"
@@ -87,7 +76,17 @@ export const InstallPage = (props: {
           required
         />
       </Grid>
-
+      <Grid item xs={6}>
+        <TextField
+          fullWidth
+          label={intl.get("host")}
+          value={values.host}
+          variant="outlined"
+          onChange={handleChange("host")}
+          size="small"
+          required
+        />
+      </Grid>
       <Grid item xs={6}>
         <TextField
           fullWidth

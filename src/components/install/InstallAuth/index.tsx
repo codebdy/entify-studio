@@ -14,10 +14,9 @@ import intl from "react-intl-universal";
 import { useHistory } from "react-router";
 import { INDEX_URL, PRIMARY_COLOR } from "../../../util/consts";
 import useShadows from "../../../util/useShadows";
-import { Alert } from "@mui/material";
 import { InstallPage } from "./InstallPage";
 import { useRecoilValue } from "recoil";
-import { installedState } from "recoil/atoms";
+import { authServiceState } from "recoil/atoms";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -78,13 +77,13 @@ export const InstallAuth = () => {
   const handleChange = (values: any) => {
     setValues({ ...values });
   };
-  const installed = useRecoilValue(installedState);
+  const authService = useRecoilValue(authServiceState);
 
   useEffect(() => {
-    if (installed) {
+    if (authService) {
       history.push(INDEX_URL);
     }
-  }, [installed, history]);
+  }, [history, authService]);
 
   const theme = createTheme({
     palette: {
@@ -117,12 +116,7 @@ export const InstallAuth = () => {
                     {intl.get("install") + " Entify " + intl.get("auth-module")}
                   </h2>
                 </div>
-                {installed && (
-                  <Alert severity="error">{intl.get("installed")}</Alert>
-                )}
-                {!installed && (
-                  <InstallPage values={values} onValuesChange={handleChange} />
-                )}
+                <InstallPage values={values} onValuesChange={handleChange} />
               </Grid>
               <Grid item lg={6} className={classes.rightImage}>
                 <img src={rightImage} alt="" width="100%" />
