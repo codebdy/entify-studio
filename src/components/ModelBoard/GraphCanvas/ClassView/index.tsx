@@ -26,7 +26,7 @@ import AttributeView from "./AttributeView";
 import { StereoType } from "components/ModelBoard/meta/ClassMeta";
 import { ClassNodeData } from "./ClassNodeData";
 import { PRIMARY_COLOR } from "util/consts";
-import useShadows from "util/use-shadows";
+import useShadows from "util/useShadows";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import intl from "react-intl-universal";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";

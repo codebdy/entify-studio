@@ -2,7 +2,7 @@ import { Button, Checkbox, FormControl, FormControlLabel, Grid, IconButton, Inpu
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import React, { useState } from 'react';
 import intl from "react-intl-universal";
-import { PageLayout } from './page-layout';
+import { PageLayout } from './PageLayout';
 import { useHistory } from 'react-router';
 import { useShowServerError } from 'recoil/hooks/useShowServerError';
 import { LoadingButton } from '@mui/lab';

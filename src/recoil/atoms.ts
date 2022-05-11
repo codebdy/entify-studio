@@ -9,6 +9,10 @@ export interface User {
   isDemo?: boolean;
 }
 
+export interface AuthenticationService {
+  url: string;
+}
+
 
 export const themeModeState = atom<"light"|"dark">({
   key: "themeMode",
@@ -32,6 +36,11 @@ export const loggedUserState = atom<User|undefined>({
 
 export const confirmState = atom<Confirm|undefined>({
   key: "confirm",
+  default: undefined,
+})
+
+export const authServiceState =  atom<AuthenticationService|undefined>({
+  key: "authService",
   default: undefined,
 })
 

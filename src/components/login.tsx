@@ -28,7 +28,7 @@ import {
   PRIMARY_COLOR,
   TOKEN_NAME,
 } from "../util/consts";
-import useShadows from "../util/use-shadows";
+import useShadows from "../util/useShadows";
 import { useLogin } from "do-ents/useLogin";
 import { LoadingButton } from "@mui/lab";
 import { useInstalled } from "do-ents/useInstalled";

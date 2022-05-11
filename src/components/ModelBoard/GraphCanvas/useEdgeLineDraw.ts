@@ -3,7 +3,7 @@ import { LineAction } from "../recoil/LineAction";
 import { Edge, Graph, Node } from "@antv/x6";
 import { getRelationGraphAttrs } from "./getRelationGraphAttrs";
 import { createId } from "util/createId";
-import { seedId } from "util/seed-id";
+import { seedId } from "util/seedId";
 import { RelationMultiplicity, RelationType } from "../meta/RelationMeta";
 import {
   drawingLineState,

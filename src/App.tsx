@@ -12,7 +12,7 @@ import Loading from "./components/common/loading";
 import { Install } from "./components/install";
 import { Login } from "./components/login";
 import { Studio } from "./components/studio";
-import { ConfirmDialog } from "./components/widgets/confirm-dialog";
+import { ConfirmDialog } from "./components/widgets/ConfirmDialog";
 import { ErrorDialog } from "./components/widgets/ErrorDialog";
 import { SuccessAlertBar } from "./components/widgets/SuccessAlertBar";
 import {
@@ -21,8 +21,8 @@ import {
   LOGIN_URL,
   PRIMARY_COLOR,
 } from "./util/consts";
-import { useIntl } from "./util/use-intl";
-import useShadows from "./util/use-shadows";
+import { useIntl } from "./util/useIntl";
+import useShadows from "./util/useShadows";
 
 function App() {
   const themeMode = useRecoilValue(themeModeState)

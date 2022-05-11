@@ -1,22 +1,25 @@
 import { ClientError, GraphQLError } from "graphql-request/dist/types";
 import { useCallback, useEffect, useState } from "react";
+import { AuthenticationService } from "recoil/atoms";
 import { createGraphQLClient } from "./createGraphQLClient";
 
 const gql = `
   query{
-    installed
+    authenticationService{
+      url
+    }
   }
-`
+`;
 
-export function useInstalled(): {
-  installed?: boolean;
+export function useGetAuthService(): {
+  authService?: AuthenticationService;
   loading?: boolean;
   error?: GraphQLError;
 } {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<GraphQLError>();
-  const [installed, setInstalled] = useState<boolean>();
-  const excute = useCallback((server?:string) => {
+  const [authService, setAuthService] = useState<AuthenticationService>();
+  const excute = useCallback((server?: string) => {
     const graphQLClient = createGraphQLClient(server);
 
     setLoading(true);
@@ -26,7 +29,7 @@ export function useInstalled(): {
       .then((data) => {
         setLoading(false);
         if (data) {
-          setInstalled(data["installed"]);
+          setAuthService(data["authenticationService"]);
         }
       })
       .catch((err: ClientError) => {
@@ -43,5 +46,5 @@ export function useInstalled(): {
     excute();
   }, [excute]);
 
-  return { installed, loading, error };
+  return { authService, loading, error };
 }

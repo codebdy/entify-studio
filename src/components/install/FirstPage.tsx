@@ -11,7 +11,7 @@ import {
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import React, { useCallback, useState } from "react";
 import intl from "react-intl-universal";
-import { PageLayout } from "./page-layout";
+import { PageLayout } from "./PageLayout";
 import { LoadingButton } from "@mui/lab";
 
 export const FirstPage = (props: {

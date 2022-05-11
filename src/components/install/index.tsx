@@ -13,10 +13,10 @@ import rightImage from "assets/img/install1.png";
 import intl from "react-intl-universal";
 import { useHistory } from "react-router";
 import { INDEX_URL, PRIMARY_COLOR } from "../../util/consts";
-import useShadows from "../../util/use-shadows";
+import useShadows from "../../util/useShadows";
 import { Alert } from "@mui/material";
-import { FirstPage } from "./first-page";
-import { SecondPage } from "./second-page";
+import { FirstPage } from "./FirstPage";
+import { SecondPage } from "./SecondPage";
 import { useInstalled } from "do-ents/useInstalled";
 
 const useStyles = makeStyles((theme: Theme) =>
