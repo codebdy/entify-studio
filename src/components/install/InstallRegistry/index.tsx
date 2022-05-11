@@ -12,8 +12,8 @@ import background from "assets/img/background1.jpg";
 import rightImage from "assets/img/install1.png";
 import intl from "react-intl-universal";
 import { useHistory } from "react-router";
-import { INDEX_URL, PRIMARY_COLOR } from "../../util/consts";
-import useShadows from "../../util/useShadows";
+import { INDEX_URL, PRIMARY_COLOR } from "../../../util/consts";
+import useShadows from "../../../util/useShadows";
 import { Alert } from "@mui/material";
 import { FirstPage } from "./FirstPage";
 import { SecondPage } from "./SecondPage";
@@ -60,7 +60,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export const Install = () => {
+export const InstallRegistry = () => {
   const classes = useStyles();
   const history = useHistory();
   const [pageNumber, setPageNumber] = useState(1);

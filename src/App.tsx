@@ -9,7 +9,7 @@ import { useRecoilValue } from "recoil";
 import { themeModeState } from "recoil/atoms";
 import "./App.css";
 import Loading from "./components/common/loading";
-import { Install } from "./components/install";
+import { InstallRegistry } from "./components/install/InstallRegistry";
 import { Login } from "./components/login";
 import { Studio } from "./components/studio";
 import { ConfirmDialog } from "./components/widgets/ConfirmDialog";
@@ -45,7 +45,7 @@ function App() {
       <ThemeProvider theme={theme}>
         <Switch>
           <Route path={LOGIN_URL} component={Login}></Route>
-          <Route path={INTALL_URL} component={Install}></Route>
+          <Route path={INTALL_URL} component={InstallRegistry}></Route>
           <Route path={INDEX_URL} component={Studio}></Route>
           <Redirect to={INDEX_URL} from="/" />
         </Switch>
