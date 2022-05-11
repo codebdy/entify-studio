@@ -6,20 +6,18 @@ import {
   OutlinedInput,
   InputAdornment,
   IconButton,
-  Button,
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import React, { useCallback, useState } from "react";
 import intl from "react-intl-universal";
-import { PageLayout } from "./PageLayout";
+import { PageLayout } from "../PageLayout";
 import { LoadingButton } from "@mui/lab";
 
-export const FirstPage = (props: {
+export const InstallPage = (props: {
   values: any;
-  onNextPage: () => void;
   onValuesChange: (values: any) => void;
 }) => {
-  const { values, onNextPage, onValuesChange } = props;
+  const { values, onValuesChange } = props;
   const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = useCallback(
@@ -51,18 +49,6 @@ export const FirstPage = (props: {
             color="primary"
             size="large"
             loading={false}
-            disabled={false}
-            type="button"
-            sx={{mr:1}}
-            onClick={handleInstall}
-          >
-            {intl.get("install")}
-          </LoadingButton>
-          <Button
-            variant="contained"
-            color="primary"
-            size="large"
-            onClick={onNextPage}
             type="button"
             disabled={
               !values.type ||
@@ -71,9 +57,10 @@ export const FirstPage = (props: {
               !values.database ||
               !values.username
             }
+            onClick={handleInstall}
           >
-            {intl.get("next-step")}
-          </Button>
+            {intl.get("install")}
+          </LoadingButton>
         </>
       }
     >

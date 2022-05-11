@@ -15,9 +15,9 @@ import { useHistory } from "react-router";
 import { INDEX_URL, PRIMARY_COLOR } from "../../../util/consts";
 import useShadows from "../../../util/useShadows";
 import { Alert } from "@mui/material";
-import { FirstPage } from "./FirstPage";
-import { SecondPage } from "./SecondPage";
-import { useInstalled } from "do-ents/useInstalled";
+import { InstallPage } from "./InstallPage";
+import { useRecoilValue } from "recoil";
+import { installedState } from "recoil/atoms";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -63,7 +63,6 @@ const useStyles = makeStyles((theme: Theme) =>
 export const InstallRegistry = () => {
   const classes = useStyles();
   const history = useHistory();
-  const [pageNumber, setPageNumber] = useState(1);
   const [values, setValues] = useState<any>({
     type: "mysql",
     host: "localhost",
@@ -79,7 +78,7 @@ export const InstallRegistry = () => {
   const handleChange = (values: any) => {
     setValues({ ...values });
   };
-  const { installed, loading: checking, error } = useInstalled();
+  const installed = useRecoilValue(installedState);
 
   useEffect(() => {
     if (installed) {
@@ -115,34 +114,14 @@ export const InstallRegistry = () => {
               <Grid item lg={6} className={classes.leftInstall}>
                 <div>
                   <h2 className={classes.title}>
-                    {intl.get("install") + " Entify"}
+                    {intl.get("install") + " Entify Registry"}
                   </h2>
                 </div>
-                {checking && <div>Install checking...</div>}
-                {error && <Alert severity="error">{error.message}</Alert>}
-                {!checking && installed && (
+                {installed && (
                   <Alert severity="error">{intl.get("installed")}</Alert>
                 )}
-                {!checking && !error && !installed && (
-                  <>
-                    {pageNumber === 1 ? (
-                      <FirstPage
-                        values={values}
-                        onValuesChange={handleChange}
-                        onNextPage={() => {
-                          setPageNumber(2);
-                        }}
-                      />
-                    ) : (
-                      <SecondPage
-                        values={values}
-                        onValuesChange={handleChange}
-                        onPreviousPage={() => {
-                          setPageNumber(1);
-                        }}
-                      />
-                    )}
-                  </>
+                {!installed && (
+                  <InstallPage values={values} onValuesChange={handleChange} />
                 )}
               </Grid>
               <Grid item lg={6} className={classes.rightImage}>
