@@ -22,18 +22,13 @@ import leftImage from "assets/img/login1.png";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import intl from "react-intl-universal";
 import { useHistory } from "react-router";
-import {
-  INDEX_URL,
-  INTALL_URL,
-  PRIMARY_COLOR,
-  TOKEN_NAME,
-} from "../util/consts";
+import { INDEX_URL, PRIMARY_COLOR, TOKEN_NAME } from "../util/consts";
 import useShadows from "../util/useShadows";
 import { useLogin } from "do-ents/useLogin";
 import { LoadingButton } from "@mui/lab";
-import { useInstalled } from "do-ents/useInstalled";
 import { useRecoilValue } from "recoil";
 import { loggedUserState } from "recoil/atoms";
+import { useInstallCheck } from "recoil/hooks/useInstallCheck";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -97,12 +92,7 @@ export const Login = () => {
   const loggedUser = useRecoilValue(loggedUserState);
 
   const history = useHistory();
-  const { installed } = useInstalled();
-  useEffect(() => {
-    if (installed === false) {
-      history.push(INTALL_URL);
-    }
-  }, [history, installed]);
+  useInstallCheck();
 
   const [login, { loading }] = useLogin({
     onCompleted(atoken: string) {

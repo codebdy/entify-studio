@@ -18,8 +18,8 @@ import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness5Icon from "@mui/icons-material/Brightness5";
 import { loggedUserState, themeModeState } from "recoil/atoms";
 import { servicesState } from "./ModelBoard/recoil/atoms";
-import { useInstalled } from "do-ents/useInstalled";
-import { INTALL_URL, LOGIN_URL, TOKEN_NAME } from "util/consts";
+import { useInstallCheck } from "recoil/hooks/useInstallCheck";
+import { LOGIN_URL, TOKEN_NAME } from "util/consts";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -62,13 +62,7 @@ export const Studio = memo(() => {
   const setLoggedUser = useSetRecoilState(loggedUserState);
   const setServices = useSetRecoilState(servicesState);
   const { services, loading, error } = useServices();
-  const { installed, loading: installChecking } = useInstalled();
-
-  useEffect(() => {
-    if (installed === false) {
-      history.push(INTALL_URL);
-    }
-  }, [history, installed]);
+  useInstallCheck();
 
   useShowServerError(error);
 
@@ -86,7 +80,7 @@ export const Studio = memo(() => {
     setThemeMode((mode) => (mode === "dark" ? "light" : "dark"));
   }, [setThemeMode]);
 
-  return loading || installChecking || !services ? (
+  return loading || !services ? (
     <Loading />
   ) : (
     <div className={classes.root}>

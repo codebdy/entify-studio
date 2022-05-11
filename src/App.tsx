@@ -7,6 +7,8 @@ import React from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { themeModeState } from "recoil/atoms";
+import { useInit } from "recoil/hooks/useInit";
+import { useShowServerError } from "recoil/hooks/useShowServerError";
 import "./App.css";
 import Loading from "./components/common/loading";
 import { InstallRegistry } from "./components/install/InstallRegistry";
@@ -15,18 +17,15 @@ import { Studio } from "./components/studio";
 import { ConfirmDialog } from "./components/widgets/ConfirmDialog";
 import { ErrorDialog } from "./components/widgets/ErrorDialog";
 import { SuccessAlertBar } from "./components/widgets/SuccessAlertBar";
-import {
-  INDEX_URL,
-  INTALL_URL,
-  LOGIN_URL,
-  PRIMARY_COLOR,
-} from "./util/consts";
+import { INDEX_URL, INTALL_URL, LOGIN_URL, PRIMARY_COLOR } from "./util/consts";
 import { useIntl } from "./util/useIntl";
 import useShadows from "./util/useShadows";
 
 function App() {
-  const themeMode = useRecoilValue(themeModeState)
+  const themeMode = useRecoilValue(themeModeState);
   const [langLoading] = useIntl();
+  const { loading, error } = useInit();
+  useShowServerError(error);
   const theme = createTheme({
     palette: {
       mode: themeMode,
@@ -38,7 +37,7 @@ function App() {
     shadows: [...useShadows()] as any,
   });
 
-  return langLoading ? (
+  return langLoading || loading ? (
     <Loading />
   ) : (
     <StyledEngineProvider injectFirst>

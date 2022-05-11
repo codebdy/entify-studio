@@ -11,7 +11,7 @@ const gql = `
   }
 `;
 
-export function useGetAuthService(): {
+export function useAuthService(): {
   authService?: AuthenticationService;
   loading?: boolean;
   error?: GraphQLError;

@@ -39,6 +39,11 @@ export const confirmState = atom<Confirm|undefined>({
   default: undefined,
 })
 
+export const installedState = atom<boolean|undefined>({
+  key: "installed",
+  default: undefined,
+})
+
 export const authServiceState =  atom<AuthenticationService|undefined>({
   key: "authService",
   default: undefined,
