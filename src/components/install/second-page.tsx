@@ -54,11 +54,11 @@ export const SecondPage=(
         <>
           <Button variant="contained" size = "large" 
             onClick = {onPreviousPage}
-            style={{marginRight:'16px'}}
+            sx={{mr:1}}
           >
             {intl.get('previous-step')}
           </Button>
-          <LoadingButton fullWidth variant="contained" color="primary" size = "large" 
+          <LoadingButton variant="contained" color="primary" size = "large" 
             loading = {false}
             disabled = {!values.admin || !values.adminPassword}
             type = "button"
