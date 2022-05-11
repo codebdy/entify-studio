@@ -1,63 +1,77 @@
-import { Button, Checkbox, FormControl, FormControlLabel, Grid, IconButton, InputAdornment, InputLabel, OutlinedInput, TextField} from '@mui/material';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
-import React, { useState } from 'react';
+import {
+  Button,
+  Checkbox,
+  FormControl,
+  FormControlLabel,
+  Grid,
+  IconButton,
+  InputAdornment,
+  InputLabel,
+  OutlinedInput,
+  TextField,
+} from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import React, { useState } from "react";
 import intl from "react-intl-universal";
-import { PageLayout } from '../PageLayout';
-import { useHistory } from 'react-router';
-import { useShowServerError } from 'hooks/useShowServerError';
-import { LoadingButton } from '@mui/lab';
+import { PageLayout } from "../PageLayout";
+import { useHistory } from "react-router";
+import { useShowServerError } from "hooks/useShowServerError";
+import { LoadingButton } from "@mui/lab";
 
-export const InstallPage=(
-  props:{
-    values: any;
-    onValuesChange: (values: any) => void;
-  }
-)=>{
-  const {values, onValuesChange} = props;
+export const InstallPage = (props: {
+  values: any;
+  onValuesChange: (values: any) => void;
+}) => {
+  const { values, onValuesChange } = props;
   const [showPassword, setShowPassword] = useState(false);
   const history = useHistory();
 
-  // const [install, { loading, error}] = useLazyAxios<any>(API_INSTALL,{
-  //   onCompleted(data){
-  //     if(data && data.success){
-  //       history.push(rxModelsSwrConfig.loginUrl);
-  //     }      
-  //   },
-  // });
-
-  //useShowServerError(error);
-  
-  const handleChange = (prop: any) => (event: React.ChangeEvent<HTMLInputElement>) => {
-    onValuesChange({ ...values, [prop]: event.target.value });
-  };
+  const handleChange =
+    (prop: any) => (event: React.ChangeEvent<HTMLInputElement>) => {
+      onValuesChange({ ...values, [prop]: event.target.value });
+    };
 
   const handleWithDemoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     onValuesChange({ ...values, withDemo: event.target.checked });
   };
-  
+
   const handleClickShowPassword = () => {
-    setShowPassword(!showPassword)
+    setShowPassword(!showPassword);
   };
 
-  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleMouseDownPassword = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
     event.preventDefault();
   };
 
-  const handleInstall = ()=>{
+  const handleInstall = () => {
     //install({data:values})
-  }
+  };
 
   return (
     <PageLayout
-      action = {
+      action={
         <>
-          <LoadingButton variant="contained" color="primary" size = "large" 
-            loading = {false}
-            disabled = {!values.admin || !values.adminPassword}
-            type = "button"
-            onClick = {handleInstall}
+          <Button
+            color="primary"
+            size="large"
+            variant="contained"
+            disabled
+            sx={{ mr: 1 }}
           >
-            {intl.get('install')}
+            {intl.get("previous-step")}
+          </Button>
+          <LoadingButton
+            variant="contained"
+            color="primary"
+            size="large"
+            loading={false}
+            disabled={!values.admin || !values.adminPassword}
+            type="button"
+            onClick={handleInstall}
+          >
+            {intl.get("install")}
           </LoadingButton>
         </>
       }
@@ -65,38 +79,44 @@ export const InstallPage=(
       <Grid item xs={12}>
         <TextField
           fullWidth
-          label={intl.get('admin-name')}
+          label={intl.get("admin-name")}
           value={values.admin}
           variant="outlined"
-          onChange={handleChange('admin')}
-          size = "small"
+          onChange={handleChange("admin")}
+          size="small"
           required
         />
       </Grid>
       <Grid item xs={12}>
-        <FormControl fullWidth variant = "outlined" size = "small" required>
-          <InputLabel htmlFor="standard-adornment-password" style={{background:"#fff",padding:"0 8px"}}>{intl.get('password')}</InputLabel>
+        <FormControl fullWidth variant="outlined" size="small" required>
+          <InputLabel
+            htmlFor="standard-adornment-password"
+            style={{ background: "#fff", padding: "0 8px" }}
+          >
+            {intl.get("password")}
+          </InputLabel>
           <OutlinedInput
             id="standard-adornment-password"
-            type={showPassword ? 'text' : 'password'}
+            type={showPassword ? "text" : "password"}
             value={values.adminPassword}
             required
-            onChange={handleChange('adminPassword')}
+            onChange={handleChange("adminPassword")}
             endAdornment={
               <InputAdornment position="end">
                 <IconButton
                   aria-label="toggle password visibility"
                   onClick={handleClickShowPassword}
                   onMouseDown={handleMouseDownPassword}
-                  size="large">
+                  size="large"
+                >
                   {showPassword ? <Visibility /> : <VisibilityOff />}
                 </IconButton>
               </InputAdornment>
             }
           />
         </FormControl>
-      </Grid> 
-      <Grid item xs = {12}>
+      </Grid>
+      <Grid item xs={12}>
         <FormControlLabel
           control={
             <Checkbox
@@ -105,9 +125,9 @@ export const InstallPage=(
               color="primary"
             />
           }
-          label={intl.get('with-demo')}
+          label={intl.get("with-demo")}
         />
-      </Grid>          
+      </Grid>
     </PageLayout>
   );
-}
+};

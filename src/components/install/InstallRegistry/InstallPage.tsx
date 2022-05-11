@@ -14,6 +14,8 @@ import { PageLayout } from "../PageLayout";
 import { LoadingButton } from "@mui/lab";
 import { InstallInput, useInstallRegistry } from "do-ents/useInstallRegistry";
 import { useShowServerError } from "hooks/useShowServerError";
+import { useSetRecoilState } from "recoil";
+import { installedState } from "recoil/atoms";
 
 export const InstallPage = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -26,7 +28,15 @@ export const InstallPage = () => {
     password: "",
   });
 
-  const [install, { loading, error }] = useInstallRegistry();
+  const setInstalled = useSetRecoilState(installedState)
+
+  const [install, { loading, error }] = useInstallRegistry({
+    onCompleted:(status:boolean)=>{
+      if(status){
+        setInstalled(status)
+      }
+    }
+  });
 
   useShowServerError(error);
 
@@ -71,7 +81,7 @@ export const InstallPage = () => {
             }
             onClick={handleInstall}
           >
-            {intl.get("install")}
+            {intl.get("next-step")}
           </LoadingButton>
         </>
       }
