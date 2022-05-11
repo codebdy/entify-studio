@@ -1,7 +1,7 @@
 import _ from "lodash";
 import { useCallback } from "react";
 import { useRecoilValue } from "recoil";
-import { useAlertError } from "recoil/hooks/useAlertError";
+import { useAlertError } from "hooks/useAlertError";
 import { classesState } from "../recoil/atoms";
 import { useGetClassAssociations } from "./useGetClassAssociations";
 import intl from "react-intl-universal";

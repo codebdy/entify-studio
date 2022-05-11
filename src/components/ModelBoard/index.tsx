@@ -23,7 +23,7 @@ import { Graph } from "@antv/x6";
 import "@antv/x6-react-shape";
 import { useQueryOne } from "do-ents/useQueryOne";
 import { EntityNameMeta, Meta } from "./meta/Meta";
-import { useShowServerError } from "recoil/hooks/useShowServerError";
+import { useShowServerError } from "hooks/useShowServerError";
 import { gql } from "graphql-request";
 import { useServiceId } from "./hooks/useServiceId";
 import { useChildrenScrollStyles } from "theme/useChildrenScrollStyles";

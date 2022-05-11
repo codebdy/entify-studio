@@ -5,7 +5,7 @@ import intl from "react-intl-universal";
 import { FieldItem, FieldMeta } from "./FieldItem";
 import { useCreateAttribute } from "components/ModelBoard/hooks/useCreateAttribute";
 import { useServiceId } from "components/ModelBoard/hooks/useServiceId";
-import { useAlertError } from "recoil/hooks/useAlertError";
+import { useAlertError } from "hooks/useAlertError";
 
 export const FieldList = memo(
   (props: {

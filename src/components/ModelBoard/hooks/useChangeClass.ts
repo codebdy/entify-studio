@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { useAlertError } from "recoil/hooks/useAlertError";
+import { useAlertError } from "hooks/useAlertError";
 import { EVENT_CLASS_CHANGED, triggerCanvasEvent } from "../GraphCanvas/events";
 import { ClassMeta } from "../meta/ClassMeta";
 import { classesState } from "../recoil/atoms";

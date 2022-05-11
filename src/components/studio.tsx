@@ -11,14 +11,14 @@ import { GraphiQLBoard } from "./GraphiQLBoard";
 import { ModelsBoard } from "./ModelBoard";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import { useRecoilState, useSetRecoilState } from "recoil";
-import { useShowServerError } from "recoil/hooks/useShowServerError";
+import { useShowServerError } from "hooks/useShowServerError";
 import Loading from "./common/loading";
 import { useServices } from "do-ents/useServices";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness5Icon from "@mui/icons-material/Brightness5";
 import { loggedUserState, themeModeState } from "recoil/atoms";
 import { servicesState } from "./ModelBoard/recoil/atoms";
-import { useInstallCheck } from "recoil/hooks/useInstallCheck";
+import { useInstallCheck } from "hooks/useInstallCheck";
 import { LOGIN_URL, TOKEN_NAME } from "util/consts";
 
 const useStyles = makeStyles((theme: Theme) =>

@@ -28,7 +28,7 @@ import { useLogin } from "do-ents/useLogin";
 import { LoadingButton } from "@mui/lab";
 import { useRecoilValue } from "recoil";
 import { loggedUserState } from "recoil/atoms";
-import { useInstallCheck } from "recoil/hooks/useInstallCheck";
+import { useInstallCheck } from "hooks/useInstallCheck";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

@@ -14,7 +14,7 @@ import intl from "react-intl-universal";
 import UndoOutlinedIcon from "@mui/icons-material/UndoOutlined";
 import { changedState, publishedIdState, metaState } from "../recoil/atoms";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { useShowServerError } from "recoil/hooks/useShowServerError";
+import { useShowServerError } from "hooks/useShowServerError";
 import { usePublishMeta } from "do-ents/usePublishMeta";
 import { successAlertState } from "recoil/atoms";
 import { MetaStatus } from "../meta/Meta";

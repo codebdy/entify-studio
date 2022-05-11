@@ -4,7 +4,7 @@ import { MethodMeta } from "../meta/MethodMeta";
 import { useChangeClass } from "./useChangeClass";
 import { useCheckClassProperyName } from "./useCheckClassProperyName";
 import intl from "react-intl-universal";
-import { useAlertError } from "recoil/hooks/useAlertError";
+import { useAlertError } from "hooks/useAlertError";
 
 export function useChangeMethod(serviceId: number) {
   const changeClass = useChangeClass(serviceId);

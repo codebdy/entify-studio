@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import { useAlertError } from "recoil/hooks/useAlertError";
+import { useAlertError } from "hooks/useAlertError";
 import { AttributeMeta } from "../meta/AttributeMeta";
 import { ClassMeta } from "../meta/ClassMeta";
 import { useChangeClass } from "./useChangeClass";

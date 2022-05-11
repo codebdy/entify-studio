@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import intl from "react-intl-universal";
 import { PageLayout } from './PageLayout';
 import { useHistory } from 'react-router';
-import { useShowServerError } from 'recoil/hooks/useShowServerError';
+import { useShowServerError } from 'hooks/useShowServerError';
 import { LoadingButton } from '@mui/lab';
 
 export const SecondPage=(

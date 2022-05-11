@@ -4,7 +4,7 @@ import makeStyles from "@mui/styles/makeStyles";
 import createStyles from "@mui/styles/createStyles";
 import intl from "react-intl-universal";
 import RouterPrompt from "components/common/RouterPrompt";
-import { useShowServerError } from "recoil/hooks/useShowServerError";
+import { useShowServerError } from "hooks/useShowServerError";
 import UndoOutlinedIcon from "@mui/icons-material/UndoOutlined";
 import RedoOutlinedIcon from "@mui/icons-material/RedoOutlined";
 import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
