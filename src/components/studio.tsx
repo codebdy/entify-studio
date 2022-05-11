@@ -18,7 +18,6 @@ import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness5Icon from "@mui/icons-material/Brightness5";
 import { loggedUserState, themeModeState } from "recoil/atoms";
 import { servicesState } from "./ModelBoard/recoil/atoms";
-import { useInstallCheck } from "hooks/useInstallCheck";
 import { LOGIN_URL, TOKEN_NAME } from "util/consts";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -62,8 +61,6 @@ export const Studio = memo(() => {
   const setLoggedUser = useSetRecoilState(loggedUserState);
   const setServices = useSetRecoilState(servicesState);
   const { services, loading, error } = useServices();
-  useInstallCheck();
-
   useShowServerError(error);
 
   useEffect(() => {

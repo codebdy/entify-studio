@@ -28,7 +28,6 @@ import { useLogin } from "do-ents/useLogin";
 import { LoadingButton } from "@mui/lab";
 import { useRecoilValue } from "recoil";
 import { loggedUserState } from "recoil/atoms";
-import { useInstallCheck } from "hooks/useInstallCheck";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -92,7 +91,6 @@ export const Login = () => {
   const loggedUser = useRecoilValue(loggedUserState);
 
   const history = useHistory();
-  useInstallCheck();
 
   const [login, { loading }] = useLogin({
     onCompleted(atoken: string) {
