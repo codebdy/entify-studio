@@ -18,7 +18,7 @@ import { useHistory } from "react-router";
 import { useShowServerError } from "hooks/useShowServerError";
 import { LoadingButton } from "@mui/lab";
 
-export const InstallPage = (props: {
+export const SecondPage = (props: {
   values: any;
   onValuesChange: (values: any) => void;
 }) => {
@@ -57,7 +57,6 @@ export const InstallPage = (props: {
             color="primary"
             size="large"
             variant="contained"
-            disabled
             sx={{ mr: 1 }}
           >
             {intl.get("previous-step")}

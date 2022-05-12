@@ -14,9 +14,10 @@ import intl from "react-intl-universal";
 import { useHistory } from "react-router";
 import { INDEX_URL, PRIMARY_COLOR } from "../../../util/consts";
 import useShadows from "../../../util/useShadows";
-import { InstallPage } from "./InstallPage";
+import { SecondPage } from "./SecondPage";
 import { useRecoilValue } from "recoil";
 import { authServiceState } from "recoil/atoms";
+import { FirstPage } from "./FirstPage";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -62,6 +63,7 @@ const useStyles = makeStyles((theme: Theme) =>
 export const InstallAuth = () => {
   const classes = useStyles();
   const history = useHistory();
+  const [step, setStep] = useState(1);
   const [values, setValues] = useState<any>({
     type: "mysql",
     host: "localhost",
@@ -116,7 +118,11 @@ export const InstallAuth = () => {
                     {intl.get("install") + " Entify " + intl.get("auth-module")}
                   </h2>
                 </div>
-                <InstallPage values={values} onValuesChange={handleChange} />
+                {step === 1 ? (
+                  <FirstPage />
+                ) : (
+                  <SecondPage values={values} onValuesChange={handleChange} />
+                )}
               </Grid>
               <Grid item lg={6} className={classes.rightImage}>
                 <img src={rightImage} alt="" width="100%" />
