@@ -8,7 +8,7 @@ import {
   IconButton,
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import React, { useCallback, useState } from "react";
+import React, { memo, useCallback, useState } from "react";
 import intl from "react-intl-universal";
 import { PageLayout } from "../PageLayout";
 import { LoadingButton } from "@mui/lab";
@@ -17,7 +17,7 @@ import { useShowServerError } from "hooks/useShowServerError";
 import { useSetRecoilState } from "recoil";
 import { installedState } from "recoil/atoms";
 
-export const InstallPage = () => {
+export const InstallPage = memo(() => {
   const [showPassword, setShowPassword] = useState(false);
   const [values, setValues] = useState<InstallInput>({
     driver: "mysql",
@@ -28,14 +28,14 @@ export const InstallPage = () => {
     password: "",
   });
 
-  const setInstalled = useSetRecoilState(installedState)
+  const setInstalled = useSetRecoilState(installedState);
 
   const [install, { loading, error }] = useInstallRegistry({
-    onCompleted:(status:boolean)=>{
-      if(status){
-        setInstalled(status)
+    onCompleted: (status: boolean) => {
+      if (status) {
+        setInstalled(status);
       }
-    }
+    },
   });
 
   useShowServerError(error);
@@ -172,4 +172,4 @@ export const InstallPage = () => {
       </Grid>
     </PageLayout>
   );
-};
+});

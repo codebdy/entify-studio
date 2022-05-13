@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { memo, useEffect } from "react";
 import {
   Theme,
   Grid,
@@ -60,7 +60,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export const InstallRegistry = () => {
+export const InstallRegistry = memo(() => {
   const classes = useStyles();
   const history = useHistory();
 
@@ -117,4 +117,4 @@ export const InstallRegistry = () => {
       </ThemeProvider>
     </StyledEngineProvider>
   );
-};
+});

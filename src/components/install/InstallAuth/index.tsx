@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { memo, useCallback, useEffect, useState } from "react";
 import {
   Theme,
   Grid,
@@ -63,7 +63,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export const InstallAuth = () => {
+export const InstallAuth = memo(() => {
   const classes = useStyles();
   const history = useHistory();
   const [step, setStep] = useState(1);
@@ -92,7 +92,6 @@ export const InstallAuth = () => {
   }, [error, service?.id]);
 
   const handleChange = (values: InstallAuthInput) => {
-    console.log(values);
     setValues({ ...values });
   };
   const authService = useRecoilValue(authServiceState);
@@ -179,4 +178,4 @@ export const InstallAuth = () => {
       </ThemeProvider>
     </StyledEngineProvider>
   );
-};
+});

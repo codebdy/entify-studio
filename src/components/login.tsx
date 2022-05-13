@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import {
   Theme,
   Grid,
@@ -79,7 +79,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export const Login = () => {
+export const Login = memo(() => {
   const classes = useStyles();
   const [values, setValues] = useState<any>({
     account: "demo",
@@ -280,4 +280,4 @@ export const Login = () => {
       </ThemeProvider>
     </StyledEngineProvider>
   );
-};
+});
