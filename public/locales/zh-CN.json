@@ -149,5 +149,6 @@
   "operate-type":"操作类型",
   "classes":"类",
   "duplicated-property-error":"类{cls}上属性或方法重名",
-  "auth-module":"权限模块"
+  "auth-module":"权限模块",
+  "service-id":"服务ID"
 }

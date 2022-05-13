@@ -67,6 +67,7 @@ export const InstallAuth = () => {
   const history = useHistory();
   const [step, setStep] = useState(1);
   const [values, setValues] = useState<InstallAuthInput>({
+    id:1,
     driver: "mysql",
     host: "localhost",
     port: "3306",

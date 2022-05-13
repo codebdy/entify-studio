@@ -6,6 +6,7 @@ import { InstallInput, InstallOptions } from "./useInstallRegistry";
 
 export interface InstallAuthInput extends InstallInput {
   url: string;
+  id: number;
   admin: string;
   adminPassword: string;
   withDemo: boolean;

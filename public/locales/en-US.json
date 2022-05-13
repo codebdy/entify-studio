@@ -149,5 +149,6 @@
   "operate-type":"Operate type",
   "classes" :"Classes",
   "duplicated-property-error":"Class {cls} has duplicated property",
-  "auth-module":"Auth Module"
+  "auth-module":"Auth Module",
+  "service-id":"Service ID"
 }

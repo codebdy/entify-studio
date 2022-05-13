@@ -14,17 +14,24 @@ import intl from "react-intl-universal";
 import { PageLayout } from "../PageLayout";
 import { InstallAuthInput } from "do-ents/useInstallAuth";
 
-export const FirstPage = (props:{
-  values: InstallAuthInput
+export const FirstPage = (props: {
+  values: InstallAuthInput;
   onValuesChange: (values: InstallAuthInput) => void;
-  onNext:()=>void;
+  onNext: () => void;
 }) => {
-  const {values, onValuesChange, onNext} = props
+  const { values, onValuesChange, onNext } = props;
   const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = useCallback(
     (prop: any) => (event: React.ChangeEvent<HTMLInputElement>) => {
       onValuesChange({ ...values, [prop]: event.target.value });
+    },
+    [onValuesChange, values]
+  );
+
+  const handleChangeServiceId = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      onValuesChange({ ...values, id: parseInt(event.target.value) });
     },
     [onValuesChange, values]
   );
@@ -41,7 +48,7 @@ export const FirstPage = (props:{
   );
 
   const handleNext = useCallback(() => {
-    onNext()
+    onNext();
   }, [onNext]);
 
   return (
@@ -63,6 +70,7 @@ export const FirstPage = (props:{
             size="large"
             type="button"
             disabled={
+              !values.id ||
               !values.url ||
               !values.driver ||
               !values.host ||
@@ -89,6 +97,19 @@ export const FirstPage = (props:{
           required
         />
       </Grid>
+      <Grid item xs={6}>
+        <TextField
+          fullWidth
+          label={intl.get("service-id")}
+          type="number"
+          value={values.id}
+          variant="outlined"
+          onChange={handleChangeServiceId}
+          size="small"
+          required
+        />
+      </Grid>
+      <Grid item xs={6}></Grid>
       <Grid item xs={6}>
         <TextField
           fullWidth
@@ -134,7 +155,7 @@ export const FirstPage = (props:{
           required
         />
       </Grid>
-      <Grid item xs={12}>
+      <Grid item xs={6}>
         <TextField
           fullWidth
           label={intl.get("user-name")}
@@ -145,7 +166,7 @@ export const FirstPage = (props:{
           required
         />
       </Grid>
-      <Grid item xs={12}>
+      <Grid item xs={6}>
         <FormControl fullWidth variant="outlined" size="small">
           <InputLabel
             htmlFor="standard-adornment-password"
