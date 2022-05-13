@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   Theme,
   Grid,
@@ -18,6 +18,8 @@ import { SecondPage } from "./SecondPage";
 import { useRecoilValue } from "recoil";
 import { authServiceState } from "recoil/atoms";
 import { FirstPage } from "./FirstPage";
+import { ThirdPage } from "./ThirdPage";
+import { InstallAuthInput } from "do-ents/useInstallAuth";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -64,19 +66,20 @@ export const InstallAuth = () => {
   const classes = useStyles();
   const history = useHistory();
   const [step, setStep] = useState(1);
-  const [values, setValues] = useState<any>({
-    type: "mysql",
+  const [values, setValues] = useState<InstallAuthInput>({
+    driver: "mysql",
     host: "localhost",
     port: "3306",
     database: "",
-    username: "root",
+    user: "root",
     password: "",
+    url: "http://localhost:4000/graphql",
     admin: "admin",
     adminPassword: "",
     withDemo: false,
   });
 
-  const handleChange = (values: any) => {
+  const handleChange = (values: InstallAuthInput) => {
     setValues({ ...values });
   };
   const authService = useRecoilValue(authServiceState);
@@ -98,6 +101,14 @@ export const InstallAuth = () => {
     shadows: [...useShadows()] as any,
   });
 
+  const handleNext = useCallback(()=>{
+    setStep(2)
+  }, [])
+
+  const handelPrevious = useCallback(()=>{
+    setStep(1)
+  }, [])
+
   return (
     <StyledEngineProvider injectFirst>
       <ThemeProvider theme={theme}>
@@ -118,10 +129,12 @@ export const InstallAuth = () => {
                     {intl.get("install") + " Entify " + intl.get("auth-module")}
                   </h2>
                 </div>
-                {step === 1 ? (
-                  <FirstPage />
-                ) : (
-                  <SecondPage values={values} onValuesChange={handleChange} />
+                {step === 1 && <FirstPage values={values} onValuesChange={handleChange} onNext = {handleNext}/>}
+                {step === 2 && (
+                  <SecondPage values={values} onValuesChange={handleChange} onPrevious = {handelPrevious} />
+                )}
+                {step === 3 && (
+                  <ThirdPage values={values} onValuesChange={handleChange} />
                 )}
               </Grid>
               <Grid item lg={6} className={classes.rightImage}>

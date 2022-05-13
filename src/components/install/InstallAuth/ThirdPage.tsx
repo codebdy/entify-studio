@@ -18,12 +18,11 @@ import { useHistory } from "react-router";
 import { useShowServerError } from "hooks/useShowServerError";
 import { LoadingButton } from "@mui/lab";
 
-export const SecondPage = (props: {
+export const ThirdPage = (props: {
   values: any;
   onValuesChange: (values: any) => void;
-  onPrevious:()=>void;
 }) => {
-  const { values, onValuesChange, onPrevious } = props;
+  const { values, onValuesChange } = props;
   const [showPassword, setShowPassword] = useState(false);
   const history = useHistory();
 
@@ -46,7 +45,7 @@ export const SecondPage = (props: {
     event.preventDefault();
   };
 
-  const handleNext = () => {
+  const handleInstall = () => {
     //install({data:values})
   };
 
@@ -59,7 +58,6 @@ export const SecondPage = (props: {
             size="large"
             variant="contained"
             sx={{ mr: 1 }}
-            onClick = {onPrevious}
           >
             {intl.get("previous-step")}
           </Button>
@@ -70,9 +68,9 @@ export const SecondPage = (props: {
             loading={false}
             disabled={!values.admin || !values.adminPassword}
             type="button"
-            onClick={handleNext}
+            onClick={handleInstall}
           >
-            {intl.get("next-step")}
+            {intl.get("install")}
           </LoadingButton>
         </>
       }

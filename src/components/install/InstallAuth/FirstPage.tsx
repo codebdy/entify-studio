@@ -12,40 +12,21 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import React, { useCallback, useState } from "react";
 import intl from "react-intl-universal";
 import { PageLayout } from "../PageLayout";
-import { LoadingButton } from "@mui/lab";
-import { InstallInput, useInstallRegistry } from "do-ents/useInstallRegistry";
-import { useShowServerError } from "hooks/useShowServerError";
-import { useSetRecoilState } from "recoil";
-import { installedState } from "recoil/atoms";
+import { InstallAuthInput } from "do-ents/useInstallAuth";
 
-export const FirstPage = () => {
+export const FirstPage = (props:{
+  values: InstallAuthInput
+  onValuesChange: (values: InstallAuthInput) => void;
+  onNext:()=>void;
+}) => {
+  const {values, onValuesChange, onNext} = props
   const [showPassword, setShowPassword] = useState(false);
-  const [values, setValues] = useState<InstallInput>({
-    driver: "mysql",
-    host: "localhost",
-    port: "3306",
-    database: "",
-    user: "root",
-    password: "",
-  });
-
-  const setInstalled = useSetRecoilState(installedState);
-
-  const [install, { loading, error }] = useInstallRegistry({
-    onCompleted: (status: boolean) => {
-      if (status) {
-        setInstalled(status);
-      }
-    },
-  });
-
-  useShowServerError(error);
 
   const handleChange = useCallback(
     (prop: any) => (event: React.ChangeEvent<HTMLInputElement>) => {
-      setValues({ ...values, [prop]: event.target.value });
+      onValuesChange({ ...values, [prop]: event.target.value });
     },
-    [values]
+    [onValuesChange, values]
   );
 
   const handleClickShowPassword = useCallback(() => {
@@ -59,9 +40,9 @@ export const FirstPage = () => {
     []
   );
 
-  const handleInstall = useCallback(() => {
-    install(values);
-  }, [install, values]);
+  const handleNext = useCallback(() => {
+    onNext()
+  }, [onNext]);
 
   return (
     <PageLayout
@@ -76,26 +57,38 @@ export const FirstPage = () => {
           >
             {intl.get("previous-step")}
           </Button>
-          <LoadingButton
+          <Button
             variant="contained"
             color="primary"
             size="large"
-            loading={loading}
             type="button"
             disabled={
+              !values.url ||
               !values.driver ||
               !values.host ||
               !values.port ||
               !values.database ||
               !values.user
             }
-            onClick={handleInstall}
+            onClick={handleNext}
           >
             {intl.get("next-step")}
-          </LoadingButton>
+          </Button>
         </>
       }
     >
+      <Grid item xs={12}>
+        <TextField
+          fullWidth
+          label="URL"
+          type="url"
+          value={values.url || ""}
+          variant="outlined"
+          onChange={handleChange("url")}
+          size="small"
+          required
+        />
+      </Grid>
       <Grid item xs={6}>
         <TextField
           fullWidth
