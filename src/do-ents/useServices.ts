@@ -15,7 +15,7 @@ const gql = `
       version
     }
   }
-`
+`;
 
 export function useServices(): {
   services?: Service[];
@@ -25,7 +25,7 @@ export function useServices(): {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<GraphQLError>();
   const [services, setServices] = useState<Service[]>();
-  const excute = useCallback((server?:string) => {
+  const excute = useCallback((server?: string) => {
     const graphQLClient = createGraphQLClient(server);
 
     setLoading(true);
@@ -36,6 +36,8 @@ export function useServices(): {
         setLoading(false);
         if (data) {
           setServices(data["services"]);
+        } else {
+          setServices(undefined);
         }
       })
       .catch((err: ClientError) => {
@@ -44,6 +46,7 @@ export function useServices(): {
           : err;
         setLoading(false);
         setError(error);
+        setServices(undefined);
         console.error(err);
       });
   }, []);

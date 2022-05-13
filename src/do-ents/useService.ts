@@ -37,6 +37,8 @@ export function useService(serverUrl?: string): {
           setLoading(false);
           if (data) {
             setService(data["_service"]);
+          } else {
+            setService(undefined);
           }
         })
         .catch((err: ClientError) => {
