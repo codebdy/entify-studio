@@ -146,9 +146,11 @@
   "cloud-function": "Cloud funcion",
   "micro-service": "Micro service",
   "edit-script": "Edit script",
-  "operate-type":"Operate type",
-  "classes" :"Classes",
-  "duplicated-property-error":"Class {cls} has duplicated property",
-  "auth-module":"Auth Module",
-  "service-id":"Service ID"
+  "operate-type": "Operate type",
+  "classes": "Classes",
+  "duplicated-property-error": "Class {cls} has duplicated property",
+  "auth-module": "Auth Module",
+  "service-id": "Service ID",
+  "auth-finished": "Auth module finished",
+  "finish": "Finish"
 }

@@ -20,6 +20,7 @@ import { authServiceState } from "recoil/atoms";
 import { FirstPage } from "./FirstPage";
 import { ThirdPage } from "./ThirdPage";
 import { InstallAuthInput } from "do-ents/useInstallAuth";
+import { useService } from "do-ents/useService";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -67,7 +68,7 @@ export const InstallAuth = () => {
   const history = useHistory();
   const [step, setStep] = useState(1);
   const [values, setValues] = useState<InstallAuthInput>({
-    id:1,
+    id: 1,
     driver: "mysql",
     host: "localhost",
     port: "3306",
@@ -80,7 +81,16 @@ export const InstallAuth = () => {
     withDemo: false,
   });
 
+  const { service, loading, error } = useService(values.url);
+
+  useEffect(() => {
+    if (service?.id) {
+      setStep(3);
+    }
+  }, [service?.id]);
+
   const handleChange = (values: InstallAuthInput) => {
+    console.log(values);
     setValues({ ...values });
   };
   const authService = useRecoilValue(authServiceState);
@@ -102,13 +112,17 @@ export const InstallAuth = () => {
     shadows: [...useShadows()] as any,
   });
 
-  const handleNext = useCallback(()=>{
-    setStep(2)
-  }, [])
+  const handleNext = useCallback(() => {
+    setStep(2);
+  }, []);
 
-  const handelPrevious = useCallback(()=>{
-    setStep(1)
-  }, [])
+  const handelPrevious = useCallback(() => {
+    setStep(1);
+  }, []);
+
+  const handleUrlChange = useCallback((url: string) => {
+    setValues((values) => ({ ...values, url }));
+  }, []);
 
   return (
     <StyledEngineProvider injectFirst>
@@ -130,12 +144,28 @@ export const InstallAuth = () => {
                     {intl.get("install") + " Entify " + intl.get("auth-module")}
                   </h2>
                 </div>
-                {step === 1 && <FirstPage values={values} onValuesChange={handleChange} onNext = {handleNext}/>}
+                {step === 1 && (
+                  <FirstPage
+                    loading={loading}
+                    values={values}
+                    onValuesChange={handleChange}
+                    onNext={handleNext}
+                  />
+                )}
                 {step === 2 && (
-                  <SecondPage values={values} onValuesChange={handleChange} onPrevious = {handelPrevious} />
+                  <SecondPage
+                    values={values}
+                    onValuesChange={handleChange}
+                    onPrevious={handelPrevious}
+                  />
                 )}
                 {step === 3 && (
-                  <ThirdPage values={values} onValuesChange={handleChange} />
+                  <ThirdPage
+                    url={values.url}
+                    error={error}
+                    service={service}
+                    onUrlChange={handleUrlChange}
+                  />
                 )}
               </Grid>
               <Grid item lg={6} className={classes.rightImage}>

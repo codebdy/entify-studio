@@ -1,50 +1,28 @@
-import {
-  Button,
-  Checkbox,
-  FormControl,
-  FormControlLabel,
-  Grid,
-  IconButton,
-  InputAdornment,
-  InputLabel,
-  OutlinedInput,
-  TextField,
-} from "@mui/material";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
-import React, { useState } from "react";
+import { Box, Button, Grid } from "@mui/material";
+import React, { useCallback } from "react";
 import intl from "react-intl-universal";
 import { PageLayout } from "../PageLayout";
 import { useHistory } from "react-router";
-import { useShowServerError } from "hooks/useShowServerError";
 import { LoadingButton } from "@mui/lab";
+import LazyTextField from "components/ModelBoard/PropertyBox/LazyTextField";
+import { GraphQLError } from "graphql-request/dist/types";
+import { Service } from "components/ModelBoard/meta/Service";
 
 export const ThirdPage = (props: {
-  values: any;
-  onValuesChange: (values: any) => void;
+  error?: GraphQLError;
+  url: string;
+  service?: Service;
+  onUrlChange: (url: string) => void;
 }) => {
-  const { values, onValuesChange } = props;
-  const [showPassword, setShowPassword] = useState(false);
+  const { error, url, service, onUrlChange } = props;
   const history = useHistory();
 
-  const handleChange =
-    (prop: any) => (event: React.ChangeEvent<HTMLInputElement>) => {
-      onValuesChange({ ...values, [prop]: event.target.value });
-    };
-
-  const handleWithDemoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    onValuesChange({ ...values, withDemo: event.target.checked });
-  };
-
-  const handleClickShowPassword = () => {
-    setShowPassword(!showPassword);
-  };
-
-  const handleMouseDownPassword = (
-    event: React.MouseEvent<HTMLButtonElement>
-  ) => {
-    event.preventDefault();
-  };
-
+  const handleChangeUrl = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      onUrlChange(event.target.value);
+    },
+    [onUrlChange]
+  );
   const handleInstall = () => {
     //install({data:values})
   };
@@ -58,6 +36,7 @@ export const ThirdPage = (props: {
             size="large"
             variant="contained"
             sx={{ mr: 1 }}
+            disabled
           >
             {intl.get("previous-step")}
           </Button>
@@ -66,66 +45,33 @@ export const ThirdPage = (props: {
             color="primary"
             size="large"
             loading={false}
-            disabled={!values.admin || !values.adminPassword}
             type="button"
+            disabled={!service?.id}
             onClick={handleInstall}
           >
-            {intl.get("install")}
+            {intl.get("finish")}
           </LoadingButton>
         </>
       }
     >
       <Grid item xs={12}>
-        <TextField
+        <LazyTextField
           fullWidth
-          label={intl.get("admin-name")}
-          value={values.admin}
+          label="URL"
+          type="url"
+          value={url || ""}
           variant="outlined"
-          onChange={handleChange("admin")}
+          onChange={handleChangeUrl}
           size="small"
           required
         />
       </Grid>
       <Grid item xs={12}>
-        <FormControl fullWidth variant="outlined" size="small" required>
-          <InputLabel
-            htmlFor="standard-adornment-password"
-            style={{ background: "#fff", padding: "0 8px" }}
-          >
-            {intl.get("password")}
-          </InputLabel>
-          <OutlinedInput
-            id="standard-adornment-password"
-            type={showPassword ? "text" : "password"}
-            value={values.adminPassword}
-            required
-            onChange={handleChange("adminPassword")}
-            endAdornment={
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={handleClickShowPassword}
-                  onMouseDown={handleMouseDownPassword}
-                  size="large"
-                >
-                  {showPassword ? <Visibility /> : <VisibilityOff />}
-                </IconButton>
-              </InputAdornment>
-            }
-          />
-        </FormControl>
-      </Grid>
-      <Grid item xs={12}>
-        <FormControlLabel
-          control={
-            <Checkbox
-              checked={values.withDemo}
-              onChange={handleWithDemoChange}
-              color="primary"
-            />
-          }
-          label={intl.get("with-demo")}
-        />
+        {error ? (
+          <Box sx={{ color: "red" }}>{error?.message}</Box>
+        ) : (
+          url && intl.get("auth-finished")
+        )}
       </Grid>
     </PageLayout>
   );

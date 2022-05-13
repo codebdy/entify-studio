@@ -15,13 +15,12 @@ import React, { useState } from "react";
 import intl from "react-intl-universal";
 import { PageLayout } from "../PageLayout";
 import { useHistory } from "react-router";
-import { useShowServerError } from "hooks/useShowServerError";
 import { LoadingButton } from "@mui/lab";
 
 export const SecondPage = (props: {
   values: any;
   onValuesChange: (values: any) => void;
-  onPrevious:()=>void;
+  onPrevious: () => void;
 }) => {
   const { values, onValuesChange, onPrevious } = props;
   const [showPassword, setShowPassword] = useState(false);
@@ -59,7 +58,7 @@ export const SecondPage = (props: {
             size="large"
             variant="contained"
             sx={{ mr: 1 }}
-            onClick = {onPrevious}
+            onClick={onPrevious}
           >
             {intl.get("previous-step")}
           </Button>

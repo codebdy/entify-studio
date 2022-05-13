@@ -4,9 +4,12 @@ import { createGraphQLClient } from "./createGraphQLClient";
 import { ServerError } from "./ServerError";
 import { InstallInput, InstallOptions } from "./useInstallRegistry";
 
-export interface InstallAuthInput extends InstallInput {
-  url: string;
+export interface InstallServiceInput extends InstallInput{
   id: number;
+}
+
+export interface InstallAuthInput extends InstallServiceInput {
+  url: string;
   admin: string;
   adminPassword: string;
   withDemo: boolean;
