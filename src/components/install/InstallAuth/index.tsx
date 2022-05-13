@@ -84,10 +84,12 @@ export const InstallAuth = () => {
   const { service, loading, error } = useService(values.url);
 
   useEffect(() => {
-    if (service?.id) {
+    if (service?.id || error) {
       setStep(3);
+    } else {
+      setStep(1);
     }
-  }, [service?.id]);
+  }, [error, service?.id]);
 
   const handleChange = (values: InstallAuthInput) => {
     console.log(values);
