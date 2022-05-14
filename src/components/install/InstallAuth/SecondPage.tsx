@@ -28,6 +28,7 @@ export const SecondPage = memo(
     const { values, onValuesChange, onPrevious, onFinshed } = props;
     const [showPassword, setShowPassword] = useState(false);
     const [install, { loading, error }] = useInstallAuth({
+      serverUrl: values.url,
       onCompleted: (status: boolean) => {
         if (status) {
           onFinshed();

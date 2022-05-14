@@ -6,20 +6,24 @@ import { ServerError } from "./ServerError";
 export interface InstallOptions {
   onCompleted?: (status: boolean) => void;
   onError?: (error: ServerError) => void;
+  serverUrl?: string;
 }
 
-export interface InstallInput{
-	driver: string;
-	user: string;
-	password: string;
-	host: string;
-	port: string;
-	database: string;
+export interface InstallInput {
+  driver: string;
+  user: string;
+  password: string;
+  host: string;
+  port: string;
+  database: string;
 }
 
 export function useInstallRegistry(
   options?: InstallOptions
-): [(data: InstallInput) => void, { loading: boolean; error: ServerError | undefined }] {
+): [
+  (data: InstallInput) => void,
+  { loading: boolean; error: ServerError | undefined }
+] {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<ServerError | undefined>();
 
@@ -27,7 +31,7 @@ export function useInstallRegistry(
     (input: InstallInput) => {
       const graphQLClient = createGraphQLClient();
       const postMutation = gql`
-        mutation install ($input: InstallInput!) {
+        mutation install($input: InstallInput!) {
           install(input: $input)
         }
       `;

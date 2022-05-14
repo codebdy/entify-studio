@@ -26,7 +26,7 @@ export function useInstallAuth(
 
   const post = useCallback(
     (input: InstallAuthInput) => {
-      const graphQLClient = createGraphQLClient();
+      const graphQLClient = createGraphQLClient(options?.serverUrl);
       const postMutation = gql`
         mutation install($input: InstallInput!) {
           install(input: $input)
