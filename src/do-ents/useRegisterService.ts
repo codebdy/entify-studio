@@ -5,12 +5,7 @@ import { PostOptions } from "./PostOptions";
 import { ServerError } from "./ServerError";
 import { ServiceInput } from "./ServiceInput";
 
-export enum ServiceType{
-  auth = "auth",
-  normal = "normal"
-}
-
-export function useAddService(
+export function useRegisterService(
   options?: PostOptions
 ): [
   (data: ServiceInput) => void,
@@ -24,7 +19,9 @@ export function useAddService(
       const graphQLClient = createGraphQLClient(options?.serverUrl);
       const postMutation = gql`
         mutation addService($input: ServiceInput!) {
-          addService(input: $input)
+          addService(input: $input){
+            id
+          }
         }
       `;
 

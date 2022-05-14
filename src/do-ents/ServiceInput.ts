@@ -1,4 +1,8 @@
-import { ServiceType } from "./useAddService";
+
+export enum ServiceType{
+  auth = "auth",
+  normal = "normal"
+}
 
 
 export interface ServiceInput {
