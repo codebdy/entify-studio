@@ -81,7 +81,7 @@ export const InstallAuth = memo(() => {
     withDemo: false,
   });
 
-  const { service, loading, error } = useService(values.url);
+  const { service, loading, error, refresh } = useService(values.url);
 
   useEffect(() => {
     if (service?.id || error) {
@@ -125,6 +125,11 @@ export const InstallAuth = memo(() => {
     setValues((values) => ({ ...values, url }));
   }, []);
 
+  const handleFinished = useCallback(() => {
+    refresh();
+  }, [refresh]);
+
+
   return (
     <StyledEngineProvider injectFirst>
       <ThemeProvider theme={theme}>
@@ -158,6 +163,7 @@ export const InstallAuth = memo(() => {
                     values={values}
                     onValuesChange={handleChange}
                     onPrevious={handelPrevious}
+                    onFinshed = {handleFinished}
                   />
                 )}
                 {step === 3 && (

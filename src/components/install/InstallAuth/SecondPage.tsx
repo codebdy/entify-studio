@@ -15,15 +15,27 @@ import React, { memo, useState } from "react";
 import intl from "react-intl-universal";
 import { PageLayout } from "../PageLayout";
 import { LoadingButton } from "@mui/lab";
+import { useInstallAuth } from "do-ents/useInstallAuth";
+import { useShowServerError } from "hooks/useShowServerError";
 
 export const SecondPage = memo(
   (props: {
     values: any;
     onValuesChange: (values: any) => void;
     onPrevious: () => void;
+    onFinshed:()=>void;
   }) => {
-    const { values, onValuesChange, onPrevious } = props;
+    const { values, onValuesChange, onPrevious, onFinshed } = props;
     const [showPassword, setShowPassword] = useState(false);
+    const [install, { loading, error }] = useInstallAuth({
+      onCompleted: (status: boolean) => {
+        if (status) {
+          onFinshed();
+        }
+      },
+    });
+
+    useShowServerError(error);
 
     const handleChange =
       (prop: any) => (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -47,7 +59,7 @@ export const SecondPage = memo(
     };
 
     const handleNext = () => {
-      //install({data:values})
+      install(values)
     };
 
     return (
@@ -67,7 +79,7 @@ export const SecondPage = memo(
               variant="contained"
               color="primary"
               size="large"
-              loading={false}
+              loading={loading}
               disabled={!values.admin || !values.adminPassword}
               type="button"
               onClick={handleNext}
