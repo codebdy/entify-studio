@@ -18,7 +18,7 @@ export function useService(serverUrl?: string): {
   service?: Service;
   loading?: boolean;
   error?: GraphQLError;
-  refresh: ()=>void;
+  refresh: () => void;
 } {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<GraphQLError>();
@@ -29,6 +29,7 @@ export function useService(serverUrl?: string): {
         setService(undefined);
         return;
       }
+
       const graphQLClient = createGraphQLClient(server);
       setLoading(true);
       setError(undefined);
@@ -59,5 +60,8 @@ export function useService(serverUrl?: string): {
     excute(serverUrl);
   }, [excute, serverUrl]);
 
-  return { service, loading, error, refresh:excute };
+  const refreshFn = useCallback(() => {
+    excute(serverUrl);
+  }, [excute, serverUrl]);
+  return { service, loading, error, refresh: refreshFn };
 }

@@ -15,13 +15,13 @@ import React, { memo, useState } from "react";
 import intl from "react-intl-universal";
 import { PageLayout } from "../PageLayout";
 import { LoadingButton } from "@mui/lab";
-import { useInstallAuth } from "do-ents/useInstallAuth";
+import { InstallAuthInput, useInstallAuth } from "do-ents/useInstallAuth";
 import { useShowServerError } from "hooks/useShowServerError";
 
 export const SecondPage = memo(
   (props: {
-    values: any;
-    onValuesChange: (values: any) => void;
+    values: InstallAuthInput;
+    onValuesChange: (values: InstallAuthInput) => void;
     onPrevious: () => void;
     onFinshed:()=>void;
   }) => {
