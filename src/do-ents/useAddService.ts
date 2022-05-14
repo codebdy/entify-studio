@@ -1,36 +1,30 @@
 import { ClientError, gql } from "graphql-request";
 import { useCallback, useState } from "react";
 import { createGraphQLClient } from "./createGraphQLClient";
-import { ServerError } from "./ServerError";
-import { InstallInput } from "./useInstallRegistry";
 import { PostOptions } from "./PostOptions";
+import { ServerError } from "./ServerError";
+import { ServiceInput } from "./ServiceInput";
 
-export interface InstallServiceInput extends InstallInput{
-  id: number;
+export enum ServiceType{
+  auth = "auth",
+  normal = "normal"
 }
 
-export interface InstallAuthInput extends InstallServiceInput {
-  url: string;
-  admin: string;
-  adminPassword: string;
-  withDemo: boolean;
-}
-
-export function useInstallAuth(
+export function useAddService(
   options?: PostOptions
 ): [
-  (data: InstallAuthInput) => void,
+  (data: ServiceInput) => void,
   { loading: boolean; error: ServerError | undefined }
 ] {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<ServerError | undefined>();
 
   const post = useCallback(
-    (input: InstallAuthInput) => {
+    (input: ServiceInput) => {
       const graphQLClient = createGraphQLClient(options?.serverUrl);
       const postMutation = gql`
-        mutation install($input: InstallInput!) {
-          install(input: $input)
+        mutation addService($input: ServiceInput!) {
+          addService(input: $input)
         }
       `;
 
@@ -40,7 +34,7 @@ export function useInstallAuth(
         .request(postMutation, { input })
         .then((data) => {
           setLoading(false);
-          options?.onCompleted && options?.onCompleted(data["install"]);
+          options?.onCompleted && options?.onCompleted(!!data["addService"]);
         })
         .catch((err: ClientError) => {
           const error: ServerError | undefined = err.response?.errors

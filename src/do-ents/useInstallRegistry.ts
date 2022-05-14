@@ -1,13 +1,8 @@
 import { ClientError, gql } from "graphql-request";
 import { useCallback, useState } from "react";
 import { createGraphQLClient } from "./createGraphQLClient";
+import { PostOptions } from "./PostOptions";
 import { ServerError } from "./ServerError";
-
-export interface InstallOptions {
-  onCompleted?: (status: boolean) => void;
-  onError?: (error: ServerError) => void;
-  serverUrl?: string;
-}
 
 export interface InstallInput {
   driver: string;
@@ -19,7 +14,7 @@ export interface InstallInput {
 }
 
 export function useInstallRegistry(
-  options?: InstallOptions
+  options?: PostOptions
 ): [
   (data: InstallInput) => void,
   { loading: boolean; error: ServerError | undefined }
