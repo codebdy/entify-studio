@@ -44,7 +44,7 @@ export const ThirdPage = memo(
       [onUrlChange]
     );
     const handleFinish = () => {
-      service && register({ ...service, name, url, serviceType: ServiceType.auth });
+      service && register({ ...service, name, url, serviceType: ServiceType.EntifyAuth });
     };
 
     const err = error || addError;
