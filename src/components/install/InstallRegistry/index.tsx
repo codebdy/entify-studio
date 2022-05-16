@@ -17,7 +17,7 @@ import useShadows from "../../../util/useShadows";
 import { Alert } from "@mui/material";
 import { InstallPage } from "./InstallPage";
 import { useRecoilValue } from "recoil";
-import { installedState } from "recoil/atoms";
+import { registryStatusState } from "recoil/atoms";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -64,13 +64,13 @@ export const InstallRegistry = memo(() => {
   const classes = useStyles();
   const history = useHistory();
 
-  const installed = useRecoilValue(installedState);
+  const status = useRecoilValue(registryStatusState);
 
   useEffect(() => {
-    if (installed) {
+    if (status?.installed && status.authInstalled) {
       history.push(INDEX_URL);
     }
-  }, [installed, history]);
+  }, [history, status]);
 
   const theme = createTheme({
     palette: {
@@ -103,10 +103,10 @@ export const InstallRegistry = memo(() => {
                     {intl.get("install") + " Entify Registry"}
                   </h2>
                 </div>
-                {installed && (
+                {status?.installed && (
                   <Alert severity="error">{intl.get("installed")}</Alert>
                 )}
-                {!installed && <InstallPage />}
+                {!status?.installed && <InstallPage />}
               </Grid>
               <Grid item lg={6} className={classes.rightImage}>
                 <img src={rightImage} alt="" width="100%" />

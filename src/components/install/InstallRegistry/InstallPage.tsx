@@ -15,7 +15,7 @@ import { LoadingButton } from "@mui/lab";
 import { InstallInput, useInstallRegistry } from "do-ents/useInstallRegistry";
 import { useShowServerError } from "hooks/useShowServerError";
 import { useSetRecoilState } from "recoil";
-import { installedState } from "recoil/atoms";
+import { registryStatusState } from "recoil/atoms";
 
 export const InstallPage = memo(() => {
   const [showPassword, setShowPassword] = useState(false);
@@ -28,12 +28,12 @@ export const InstallPage = memo(() => {
     password: "",
   });
 
-  const setInstalled = useSetRecoilState(installedState);
+  const setStatus = useSetRecoilState(registryStatusState);
 
   const [install, { loading, error }] = useInstallRegistry({
     onCompleted: (status: boolean) => {
       if (status) {
-        setInstalled(status);
+        setStatus((st) => ({ ...st, installed: status }));
       }
     },
   });

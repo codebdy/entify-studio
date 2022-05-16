@@ -10,10 +10,15 @@ export interface User {
   isDemo?: boolean;
 }
 
-export const themeModeState = atom<"light"|"dark">({
+export interface RegistryStatus {
+  installed?: boolean;
+  authInstalled?: boolean;
+}
+
+export const themeModeState = atom<"light" | "dark">({
   key: "themeMode",
   default: "dark",
-})
+});
 
 export const successAlertState = atom<boolean | string>({
   key: "successAlert",
@@ -23,39 +28,37 @@ export const successAlertState = atom<boolean | string>({
 export const appErrorState = atom<AppError | undefined>({
   key: "appError",
   default: undefined,
-})
+});
 
-export const loggedUserState = atom<User|undefined>({
+export const loggedUserState = atom<User | undefined>({
   key: "loggedUserState",
   default: undefined,
-})
+});
 
-export const confirmState = atom<Confirm|undefined>({
+export const confirmState = atom<Confirm | undefined>({
   key: "confirm",
   default: undefined,
-})
+});
 
-export const installedState = atom<boolean|undefined>({
-  key: "installed",
-  default: undefined,
-})
+export const registryStatusState = atom<RegistryStatus|undefined>({
+  key: "installStatus",
+  default:undefined,
+});
 
-export const authServiceState =  atom<Service|undefined|null>({
+export const authServiceState = atom<Service | undefined | null>({
   key: "authService",
   default: undefined,
-})
+});
 
 export const selectedServiceIdState = atom<number>({
   key: "selectedServiceId",
   default: 0,
-})
+});
 
-export const servicesState = atom<Service[]>(
-  {
-    key: "services",
-    default: [],
-  }
-)
+export const servicesState = atom<Service[]>({
+  key: "services",
+  default: [],
+});
 // export const tokenState = atom<string|undefined>({
 //   key: "token",
 //   default: undefined,
