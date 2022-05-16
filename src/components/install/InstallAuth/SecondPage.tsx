@@ -17,21 +17,23 @@ import { PageLayout } from "../PageLayout";
 import { LoadingButton } from "@mui/lab";
 import { InstallAuthInput, useInstallAuth } from "do-ents/useInstallAuth";
 import { useShowServerError } from "hooks/useShowServerError";
+import { useSetRecoilState } from "recoil";
+import { registryStatusState } from "recoil/atoms";
 
 export const SecondPage = memo(
   (props: {
     values: InstallAuthInput;
     onValuesChange: (values: InstallAuthInput) => void;
     onPrevious: () => void;
-    onFinshed:()=>void;
   }) => {
-    const { values, onValuesChange, onPrevious, onFinshed } = props;
+    const { values, onValuesChange, onPrevious } = props;
     const [showPassword, setShowPassword] = useState(false);
+    const setStatus = useSetRecoilState(registryStatusState);
     const [install, { loading, error }] = useInstallAuth({
       serverUrl: values.url,
       onCompleted: (status: boolean) => {
         if (status) {
-          onFinshed();
+          setStatus((st) => ({ ...st, authInstalled: status }));
         }
       },
     });
@@ -60,7 +62,7 @@ export const SecondPage = memo(
     };
 
     const handleNext = () => {
-      install(values)
+      install(values);
     };
 
     return (
