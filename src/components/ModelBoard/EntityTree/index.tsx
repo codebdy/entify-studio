@@ -30,7 +30,7 @@ export const EntityTree = memo((props: { graph?: Graph }) => {
         }}
       >
         <Typography sx={{ color: (theme) => theme.palette.text.primary }}>
-          {intl.get("entity-model")}
+          {intl.get("services")}
         </Typography>
         <Button
           variant="contained"
@@ -44,7 +44,7 @@ export const EntityTree = memo((props: { graph?: Graph }) => {
             </SvgIcon>
           }
         >
-          {intl.get("add-node")}
+          {intl.get("add-service")}
         </Button>
       </Box>
       <Box
