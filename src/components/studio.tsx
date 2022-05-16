@@ -11,13 +11,9 @@ import { GraphiQLBoard } from "./GraphiQLBoard";
 import { ModelsBoard } from "./ModelBoard";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import { useRecoilState, useSetRecoilState } from "recoil";
-import { useShowServerError } from "hooks/useShowServerError";
-import Loading from "./common/loading";
-import { useServices } from "do-ents/useServices";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness5Icon from "@mui/icons-material/Brightness5";
 import { loggedUserState, themeModeState } from "recoil/atoms";
-import { servicesState } from "./ModelBoard/recoil/atoms";
 import { LOGIN_URL, TOKEN_NAME } from "util/consts";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -59,13 +55,6 @@ export const Studio = memo(() => {
   const classes = useStyles();
   const history = useHistory();
   const setLoggedUser = useSetRecoilState(loggedUserState);
-  const setServices = useSetRecoilState(servicesState);
-  const { services, loading, error } = useServices();
-  useShowServerError(error);
-
-  useEffect(() => {
-    setServices(services);
-  }, [services, setServices]);
 
   const handleLogout = useCallback(() => {
     setLoggedUser(undefined);
@@ -77,9 +66,7 @@ export const Studio = memo(() => {
     setThemeMode((mode) => (mode === "dark" ? "light" : "dark"));
   }, [setThemeMode]);
 
-  return loading || !services ? (
-    <Loading />
-  ) : (
+  return (
     <div className={classes.root}>
       <AppBar
         position="static"

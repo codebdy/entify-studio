@@ -18,11 +18,6 @@ export interface Snapshot {
   selectedDiagram?: string;
 }
 
-export const servicesState = atom<Service[] | undefined>({
-  key: "local.services",
-  default: undefined,
-});
-
 export const serviceIdState = atom<number>({
   key: "local.serviceId",
   default: 0,

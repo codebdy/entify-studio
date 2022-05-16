@@ -1,7 +1,7 @@
 import { useRecoilValue } from "recoil";
-import { serviceIdState } from "../recoil/atoms";
+import { selectedServiceIdState } from "recoil/atoms";
 
 export function useServiceId(){
-  const serviceId = useRecoilValue(serviceIdState);
+  const serviceId = useRecoilValue(selectedServiceIdState);
   return serviceId
 }

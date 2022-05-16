@@ -13,11 +13,17 @@ const gql = `
   }
 `;
 
-export function useServices(): {
+export function useGQLServices(): {
   services?: Service[];
   loading?: boolean;
   error?: GraphQLError;
+  refresh: () => void;
 } {
-  const {data, loading, error} = useGQLQuery<Service[]>(gql)
-  return {services: data ? data["services"]: undefined, loading, error}
+  const { data, loading, error, refresh } = useGQLQuery<Service[]>(gql);
+  return {
+    services: data ? data["services"] : undefined,
+    loading,
+    error,
+    refresh,
+  };
 }

@@ -45,10 +45,17 @@ export const authServiceState =  atom<Service|undefined|null>({
   default: undefined,
 })
 
-export const selectedServiceState = atom<Service|undefined|null>({
-  key: "selectedService",
-  default: undefined,
+export const selectedServiceIdState = atom<number>({
+  key: "selectedServiceId",
+  default: 0,
 })
+
+export const servicesState = atom<Service[]>(
+  {
+    key: "services",
+    default: [],
+  }
+)
 // export const tokenState = atom<string|undefined>({
 //   key: "token",
 //   default: undefined,

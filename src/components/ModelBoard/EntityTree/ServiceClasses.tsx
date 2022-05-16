@@ -8,12 +8,12 @@ import { ClassNode } from "./ClassNode";
 import intl from "react-intl-universal";
 import { memo } from "react";
 import { Graph } from "@antv/x6";
-import { useServices } from "../hooks/useServices";
+import { useServiceClasses } from "../hooks/useServices";
 
-export const Services = memo((props: { graph?: Graph }) => {
+export const ServiceClasses = memo((props: { graph?: Graph }) => {
   const { graph } = props;
   const serviceId = useServiceId();
-  const services = useServices(serviceId);
+  const services = useServiceClasses(serviceId);
 
   return services.length > 0 ? (
     <TreeItem

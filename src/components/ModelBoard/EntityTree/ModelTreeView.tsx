@@ -3,32 +3,24 @@ import TreeView from "@mui/lab/TreeView";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import TreeItem from "@mui/lab/TreeItem";
-import intl from "react-intl-universal";
 import { NodeText } from "./NodeText";
 import { TreeNodeLabel } from "./TreeNodeLabel";
 import { TREE_ROOT_ID } from "util/consts";
-import LocalModelAction from "./LocalModelAction";
 import { SvgIcon } from "@mui/material";
 import { useRecoilValue } from "recoil";
-import {
-  diagramsState,
-  selectedDiagramState,
-  selectedElementState,
-} from "../recoil/atoms";
-import { DiagramNode } from "./DiagramNode";
+import { selectedDiagramState, selectedElementState } from "../recoil/atoms";
+
 import { Graph } from "@antv/x6";
 import { useServiceId } from "../hooks/useServiceId";
-import { Classes } from "./Classes";
-import { Enums } from "./Enums";
-import { ValueObjects } from "./ValueObjects";
-import { Services } from "./Services";
+import { servicesState } from "recoil/atoms";
+import { GqlServiceNode } from "./GqlServiceNode";
 
 export const ModelTreeView = memo((props: { graph?: Graph }) => {
   const { graph } = props;
+  const services = useRecoilValue(servicesState);
   const serviceId = useServiceId();
   const selectedDiagram = useRecoilValue(selectedDiagramState(serviceId));
   const selectedElement = useRecoilValue(selectedElementState(serviceId));
-  const diagrams = useRecoilValue(diagramsState(serviceId));
 
   const fileInputRef = useRef(null);
 
@@ -87,42 +79,11 @@ export const ModelTreeView = memo((props: { graph?: Graph }) => {
           },
         }}
       >
-        <TreeItem
-          nodeId={TREE_ROOT_ID}
-          label={
-            <TreeNodeLabel
-              action={
-                <LocalModelAction
-                  onPublish={function (): void {
-                    throw new Error("Function not implemented.");
-                  }}
-                  onDownloadJson={function (): void {
-                    throw new Error("Function not implemented.");
-                  }}
-                  onExportInterface={function (): void {
-                    throw new Error("Function not implemented.");
-                  }}
-                />
-              }
-            >
-              <SvgIcon>
-                <path
-                  fill="currentColor"
-                  d="M20 6H12L10 4H4A2 2 0 0 0 2 6V18A2 2 0 0 0 4 20H20A2 2 0 0 0 22 18V8A2 2 0 0 0 20 6M20 18H4V8H20M13 17V14H15V17H17V13H19L14 9L9 13H11V17Z"
-                />
-              </SvgIcon>
-              <NodeText>{intl.get("local-models")}</NodeText>
-            </TreeNodeLabel>
-          }
-        >
-          {diagrams.map((diagram) => {
-            return <DiagramNode key={diagram.uuid} diagram={diagram} />;
-          })}
-          <Classes graph={graph} />
-          <Enums graph={graph} />
-          <ValueObjects graph={graph} />
-          <Services graph={graph} />
-        </TreeItem>
+        {services.map((service) => {
+          return (
+            <GqlServiceNode key={service.id} service={service} graph={graph} />
+          );
+        })}
         <TreeItem
           nodeId={TREE_ROOT_ID + 1}
           label={
