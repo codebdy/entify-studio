@@ -1,3 +1,4 @@
+import { Service } from "components/ModelBoard/meta/Service";
 import { atom } from "recoil";
 import { AppError } from "./AppError";
 import { Confirm } from "./confirm";
@@ -8,11 +9,6 @@ export interface User {
   isSupper?: boolean;
   isDemo?: boolean;
 }
-
-export interface AuthenticationService {
-  url: string;
-}
-
 
 export const themeModeState = atom<"light"|"dark">({
   key: "themeMode",
@@ -44,11 +40,15 @@ export const installedState = atom<boolean|undefined>({
   default: undefined,
 })
 
-export const authServiceState =  atom<AuthenticationService|undefined|null>({
+export const authServiceState =  atom<Service|undefined|null>({
   key: "authService",
   default: undefined,
 })
 
+export const selectedServiceState = atom<Service|undefined|null>({
+  key: "selectedService",
+  default: undefined,
+})
 // export const tokenState = atom<string|undefined>({
 //   key: "token",
 //   default: undefined,

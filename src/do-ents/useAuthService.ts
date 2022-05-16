@@ -1,5 +1,5 @@
+import { Service } from "components/ModelBoard/meta/Service";
 import { GraphQLError } from "graphql-request/dist/types";
-import { AuthenticationService } from "recoil/atoms";
 import { useGQLQuery } from "./useGQLQuery";
 
 const gql = `
@@ -12,10 +12,10 @@ const gql = `
 `;
 
 export function useAuthService(): {
-  authService?: AuthenticationService;
+  authService?: Service;
   loading?: boolean;
   error?: GraphQLError;
 } {
-  const {data, loading, error} = useGQLQuery<AuthenticationService>(gql)
+  const {data, loading, error} = useGQLQuery<Service>(gql)
   return {authService: data ? data["authenticationService"]: undefined, loading, error}
 }
