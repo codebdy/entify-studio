@@ -6,16 +6,17 @@ export interface GQLData<T>{
   [key:string]:T
 }
 
-export function useGQLQuery<T>(gql: string): {
+export function useGQLQuery<T>(gql: string, serverUrl?: string): {
   data?: GQLData<T>;
   loading?: boolean;
   error?: GraphQLError;
+  refresh: () => void;
 } {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<GraphQLError>();
   const [data, setData] = useState<GQLData<T>>();
-  const excute = useCallback((server?: string) => {
-    const graphQLClient = createGraphQLClient(server);
+  const excute = useCallback(() => {
+    const graphQLClient = createGraphQLClient(serverUrl);
 
     setLoading(true);
     setError(undefined);
@@ -35,11 +36,15 @@ export function useGQLQuery<T>(gql: string): {
         setError(error);
         console.error(err);
       });
-  }, [gql]);
+  }, [gql, serverUrl]);
 
   useEffect(() => {
     excute();
   }, [excute]);
 
-  return { data, loading, error };
+  const refreshFn = useCallback(() => {
+    excute();
+  }, [excute]);
+
+  return { data, loading, error,  refresh: refreshFn };
 }
