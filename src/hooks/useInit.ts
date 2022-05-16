@@ -20,6 +20,7 @@ export function useInit() {
   const { authService, loading, error } = useAuthService();
 
   useEffect(() => {
+    console.log(authService)
     setAuthService(authService);
   }, [authService, setAuthService]);
 

@@ -44,7 +44,7 @@ export const installedState = atom<boolean|undefined>({
   default: undefined,
 })
 
-export const authServiceState =  atom<AuthenticationService|undefined>({
+export const authServiceState =  atom<AuthenticationService|undefined|null>({
   key: "authService",
   default: undefined,
 })
