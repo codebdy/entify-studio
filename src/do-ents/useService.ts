@@ -16,6 +16,6 @@ export function useService(serverUrl?: string): {
   error?: GraphQLError;
   refresh: () => void;
 } {
-  const {data, loading, error, refresh} = useGQLQuery<Service>(gql)
+  const {data, loading, error, refresh} = useGQLQuery<Service>(gql, serverUrl)
   return {service: data ? data["_service"]: undefined, loading, error, refresh}
 }
