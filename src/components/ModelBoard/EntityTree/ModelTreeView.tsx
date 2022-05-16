@@ -11,14 +11,14 @@ import { useRecoilValue } from "recoil";
 import { selectedDiagramState, selectedElementState } from "../recoil/atoms";
 
 import { Graph } from "@antv/x6";
-import { useServiceId } from "../hooks/useServiceId";
+import { useSelectedServiceId } from "../hooks/useSelectedServiceId";
 import { servicesState } from "recoil/atoms";
 import { GqlServiceNode } from "./GqlServiceNode";
 
 export const ModelTreeView = memo((props: { graph?: Graph }) => {
   const { graph } = props;
   const services = useRecoilValue(servicesState);
-  const serviceId = useServiceId();
+  const serviceId = useSelectedServiceId();
   const selectedDiagram = useRecoilValue(selectedDiagramState(serviceId));
   const selectedElement = useRecoilValue(selectedElementState(serviceId));
 

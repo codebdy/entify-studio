@@ -14,7 +14,7 @@ import React from "react";
 import intl from "react-intl-universal";
 import { TypeInput } from "../TypeInput";
 import { Type } from "components/ModelBoard/meta/Type";
-import { useServiceId } from "components/ModelBoard/hooks/useServiceId";
+import { useSelectedServiceId } from "components/ModelBoard/hooks/useSelectedServiceId";
 import { useGetTypeLabel } from "components/ModelBoard/hooks/useGetTypeLabel";
 
 export interface FieldMeta {
@@ -42,7 +42,7 @@ export const FieldItem = memo(
       setTypeUuid(field.typeUuid);
     }, [field]);
 
-    const serviceId = useServiceId();
+    const serviceId = useSelectedServiceId();
     const getTypeName = useGetTypeLabel(serviceId);
 
     const typeName = useMemo(() => {

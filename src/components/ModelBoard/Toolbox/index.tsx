@@ -19,7 +19,7 @@ import { useRecoilState } from "recoil";
 import { useCreateTempClassNodeForNew } from "../hooks/useCreateTempClassNodeForNew";
 import { useScrollbarStyles } from "theme/useScrollbarStyles";
 import { Box } from "@mui/material";
-import { useServiceId } from "../hooks/useServiceId";
+import { useSelectedServiceId } from "../hooks/useSelectedServiceId";
 import { ClassRect } from "./ClassRect";
 import { StereoType } from "../meta/ClassMeta";
 import { CategoryCollapse } from "./CategoryCollapse";
@@ -57,7 +57,7 @@ export const ToolItem = memo(
 export const Toolbox = memo((props: { graph?: Graph }) => {
   const { graph } = props;
   const [dnd, setDnd] = React.useState<any>();
-  const serviceId = useServiceId();
+  const serviceId = useSelectedServiceId();
   const [pressedLineType, setPressedLineType] = useRecoilState(
     pressedLineTypeState(serviceId)
   );

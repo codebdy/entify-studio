@@ -18,7 +18,7 @@ import { ClassView } from "../GraphCanvas/ClassView";
 import { NODE_INIT_SIZE } from "../GraphCanvas/nodeInitSize";
 import { useDeleteClass } from "../hooks/useDeleteClass";
 import { useCreateClassAttribute } from "../hooks/useCreateClassAttribute";
-import { useServiceId } from "../hooks/useServiceId";
+import { useSelectedServiceId } from "../hooks/useSelectedServiceId";
 import { useFirstChildrenUuids } from "../hooks/useFirstChildrenUuids";
 import { MethodNode } from "./MethodNode";
 import { StereoType } from "../meta/ClassMeta";
@@ -28,7 +28,7 @@ export const ClassNode = memo(
   (props: { uuid: string; parentId?: string; graph?: Graph }) => {
     const { uuid, parentId, graph } = props;
     const [dnd, setDnd] = React.useState<any>();
-    const serviceId = useServiceId();
+    const serviceId = useSelectedServiceId();
     const setSelectedElement = useSetRecoilState(
       selectedElementState(serviceId)
     );

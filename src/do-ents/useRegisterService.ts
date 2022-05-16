@@ -3,19 +3,19 @@ import { useCallback, useState } from "react";
 import { createGraphQLClient } from "./createGraphQLClient";
 import { PostOptions } from "./PostOptions";
 import { ServerError } from "./ServerError";
-import { ServiceInput } from "./ServiceInput";
+import { Service } from "../components/ModelBoard/meta/Service";
 
 export function useRegisterService(
   options?: PostOptions
 ): [
-  (data: ServiceInput) => void,
+  (data: Service) => void,
   { loading: boolean; error: ServerError | undefined }
 ] {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<ServerError | undefined>();
 
   const post = useCallback(
-    (input: ServiceInput) => {
+    (input: Service) => {
       const graphQLClient = createGraphQLClient(options?.serverUrl);
       const postMutation = gql`
         mutation addService($input: ServiceInput!) {

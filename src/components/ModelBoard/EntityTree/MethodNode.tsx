@@ -5,13 +5,13 @@ import { TreeNodeLabel } from "./TreeNodeLabel";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import { useSetRecoilState } from "recoil";
 import { selectedElementState } from "../recoil/atoms";
-import { useServiceId } from "../hooks/useServiceId";
+import { useSelectedServiceId } from "../hooks/useSelectedServiceId";
 import { MethodMeta } from "../meta/MethodMeta";
 import { useDeleteMethod } from "../hooks/useDeleteMethod";
 
 export const MethodNode = (props: { method: MethodMeta }) => {
   const { method } = props;
-  const serviceId = useServiceId();
+  const serviceId = useSelectedServiceId();
   const setSelectedElement = useSetRecoilState(selectedElementState(serviceId));
   const deletedMethod = useDeleteMethod(serviceId);
   const handleClick = () => {

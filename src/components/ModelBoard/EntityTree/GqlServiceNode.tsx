@@ -4,7 +4,6 @@ import { ValueObjects } from "./ValueObjects";
 import { ServiceClasses } from "./ServiceClasses";
 import { DiagramNode } from "./DiagramNode";
 import LocalModelAction from "./LocalModelAction";
-import intl from "react-intl-universal";
 import { memo } from "react";
 import { NodeText } from "./NodeText";
 import { Graph } from "@antv/x6";

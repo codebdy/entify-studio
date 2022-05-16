@@ -12,7 +12,7 @@ import LazyTextField from "components/ModelBoard/PropertyBox/LazyTextField";
 import { ArgMeta, MethodMeta, MethodImplementType, MethodOperateType } from "../meta/MethodMeta";
 import { Type } from "../meta/Type";
 import { ClassMeta } from "../meta/ClassMeta";
-import { useServiceId } from "../hooks/useServiceId";
+import { useSelectedServiceId } from "../hooks/useSelectedServiceId";
 import { TypeInput } from "./TypeInput";
 import { useChangeMethod } from "../hooks/useChangeMethod";
 import { useGetTypeLabel } from "../hooks/useGetTypeLabel";
@@ -21,7 +21,7 @@ import { ScriptInput } from "./ScriptInput";
 
 export const MethodPanel = (props: { method: MethodMeta; cls: ClassMeta }) => {
   const { method, cls } = props;
-  const serviceId = useServiceId();
+  const serviceId = useSelectedServiceId();
   const changeMethod = useChangeMethod(serviceId);
   const getTypeLabel = useGetTypeLabel(serviceId);
 

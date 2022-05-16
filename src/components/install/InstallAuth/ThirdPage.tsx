@@ -9,7 +9,7 @@ import { GraphQLError } from "graphql-request/dist/types";
 import { Service } from "components/ModelBoard/meta/Service";
 import { useRegisterService } from "do-ents/useRegisterService";
 import { LOGIN_URL } from "util/consts";
-import { ServiceType } from "do-ents/ServiceInput";
+import { ServiceType } from "components/ModelBoard/meta/Service";
 
 export const ThirdPage = memo(
   (props: {

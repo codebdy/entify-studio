@@ -10,7 +10,7 @@ import { memo, useCallback } from "react";
 import intl from "react-intl-universal";
 import { useEntities } from "../hooks/useEntities";
 import { useEnums } from "../hooks/useEnums";
-import { useServiceId } from "../hooks/useServiceId";
+import { useSelectedServiceId } from "../hooks/useSelectedServiceId";
 import { useValueObjects } from "../hooks/useValueObjects";
 import { Type } from "../meta/Type";
 
@@ -31,7 +31,7 @@ export const TypeInput = memo(
       onTypeChange,
       onTypeUuidChange,
     } = props;
-    const serviceId = useServiceId();
+    const serviceId = useSelectedServiceId();
     const enums = useEnums(serviceId);
     const valueObjects = useValueObjects(serviceId);
     const entities = useEntities(serviceId);

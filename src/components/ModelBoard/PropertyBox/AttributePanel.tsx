@@ -6,7 +6,7 @@ import { AttributeMeta } from "../meta/AttributeMeta";
 import { Type } from "../meta/Type";
 import { ClassMeta, StereoType } from "../meta/ClassMeta";
 import { useChangeAttribute } from "../hooks/useChangeAttribute";
-import { useServiceId } from "../hooks/useServiceId";
+import { useSelectedServiceId } from "../hooks/useSelectedServiceId";
 import { CONST_ID } from "../meta/Meta";
 import { TypeInput } from "./TypeInput";
 import { useGetTypeLabel } from "../hooks/useGetTypeLabel";
@@ -16,7 +16,7 @@ export const AttributePanel = (props: {
   cls: ClassMeta;
 }) => {
   const { attribute, cls } = props;
-  const serviceId = useServiceId();
+  const serviceId = useSelectedServiceId();
   const changeAttribute = useChangeAttribute(serviceId);
   const getTypeLabel = useGetTypeLabel(serviceId);
 

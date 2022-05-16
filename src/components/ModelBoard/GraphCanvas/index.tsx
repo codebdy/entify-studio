@@ -11,7 +11,7 @@ import { useNodeChange } from "./useNodeChange";
 import { useNodeSelect } from "./useNodeSelect";
 import { useEdgesShow } from "./useEdgesShow";
 import { useEdgeSelect } from "./useEdgeSelect";
-import { useServiceId } from "../hooks/useServiceId";
+import { useSelectedServiceId } from "../hooks/useSelectedServiceId";
 import { useTriggerSelectedEvent } from "./useTriggerSelectedEvent";
 import { useEdgeHover } from "./useEdgeHover";
 import { useTriggerPressedLineTypeEvent } from "./useTriggerPressedLineTypeEvent";
@@ -19,7 +19,7 @@ import { useTriggerPressedLineTypeEvent } from "./useTriggerPressedLineTypeEvent
 export const GraphCanvas = memo(
   (props: { graph?: Graph; onSetGraph: (graph?: Graph) => void }) => {
     const { graph, onSetGraph } = props;
-    const serviceId = useServiceId();
+    const serviceId = useSelectedServiceId();
     const theme = useTheme();
     useEffect(() => {
       const config = getGraphConfig(theme);
