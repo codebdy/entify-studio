@@ -2,9 +2,6 @@ import { GraphQLError } from "graphql-request/dist/types";
 import { Service } from "components/ModelBoard/meta/Service";
 import { useGQLQuery } from "./useGQLQuery";
 
-export interface IQueryOpions {}
-export type MutateFn<T> = (data?: T) => void;
-
 const gql = `
   query{
     _service{
