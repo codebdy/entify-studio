@@ -1,7 +1,6 @@
-import { ClientError, GraphQLError } from "graphql-request/dist/types";
-import { useCallback, useEffect, useState } from "react";
-import { createGraphQLClient } from "./createGraphQLClient";
+import { GraphQLError } from "graphql-request/dist/types";
 import { Service } from "components/ModelBoard/meta/Service";
+import { useGQLQuery } from "./useGQLQuery";
 
 export interface IQueryOpions {}
 export type MutateFn<T> = (data?: T) => void;
@@ -22,38 +21,6 @@ export function useServices(): {
   loading?: boolean;
   error?: GraphQLError;
 } {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<GraphQLError>();
-  const [services, setServices] = useState<Service[]>();
-  const excute = useCallback((server?: string) => {
-    const graphQLClient = createGraphQLClient(server);
-
-    setLoading(true);
-    setError(undefined);
-    graphQLClient
-      .request(gql)
-      .then((data) => {
-        setLoading(false);
-        if (data) {
-          setServices(data["services"]);
-        } else {
-          setServices(undefined);
-        }
-      })
-      .catch((err: ClientError) => {
-        const error: GraphQLError | undefined = err.response?.errors
-          ? err.response.errors[0]
-          : err;
-        setLoading(false);
-        setError(error);
-        setServices(undefined);
-        console.error(err);
-      });
-  }, []);
-
-  useEffect(() => {
-    excute();
-  }, [excute]);
-
-  return { services, loading, error };
+  const {data, loading, error} = useGQLQuery<Service[]>(gql)
+  return {services: data ? data["services"]: undefined, loading, error}
 }
