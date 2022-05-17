@@ -4,23 +4,60 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
+  Grid,
   SvgIcon,
-  TextField,
 } from "@mui/material";
-import React from "react";
+import { ServiceInstallFragment } from "components/install/InstallAuth/ServiceInstallFragment";
+import { InstallServiceInput } from "do-ents/useInstallAuth";
+import React, { useCallback, useEffect, useState } from "react";
 import { memo } from "react";
 import intl from "react-intl-universal";
+import { useCreateServiceId } from "../hooks/useCreateServiceId";
+import { Service, ServiceType } from "../meta/Service";
+import LazyTextField from "../PropertyBox/LazyTextField";
 
 export const AddServiceDialog = memo(() => {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const serviceId = useCreateServiceId();
+  const [service, setService] = useState<Service>({
+    id: serviceId,
+    name: "New service",
+    serviceType: ServiceType.Entify,
+    url: "http://localhost:4000/graphql",
+  });
+  const [values, setValues] = useState<InstallServiceInput>({
+    id: serviceId,
+    driver: "mysql",
+    host: "localhost",
+    port: "3306",
+    database: "",
+    user: "root",
+    password: "",
+  });
 
-  const handleClickOpen = () => {
+  useEffect(() => {
+    setService((service) => ({ ...service, id: serviceId }));
+    setValues((values) => ({ ...values, id: serviceId }));
+  }, [serviceId]);
+
+  const handleClickOpen = useCallback(() => {
     setOpen(true);
-  };
+  }, []);
 
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     setOpen(false);
-  };
+  }, []);
+
+  const handleChangeUrl = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setService((service) => ({ ...service, url: event.target.value }));
+    },
+    []
+  );
+
+  const handleValuesChange = useCallback((newValues: InstallServiceInput) => {
+    setValues((values) => ({ ...values, ...newValues }));
+  }, []);
 
   return (
     <>
@@ -42,15 +79,24 @@ export const AddServiceDialog = memo(() => {
       <Dialog open={open} onClose={handleClose} fullWidth>
         <DialogTitle>{intl.get("add-service")}</DialogTitle>
         <DialogContent>
-          <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Email Address"
-            type="email"
-            fullWidth
-            variant="standard"
-          />
+          <Grid container spacing={2} sx={{ pt: 2, pb: 2 }}>
+            <Grid item xs={12}>
+              <LazyTextField
+                fullWidth
+                label="URL"
+                type="url"
+                value={service.url || ""}
+                variant="outlined"
+                onChange={handleChangeUrl}
+                size="small"
+                required
+              />
+            </Grid>
+            <ServiceInstallFragment
+              values={values}
+              onValuesChange={handleValuesChange}
+            />
+          </Grid>
         </DialogContent>
         <DialogActions>
           <Button color="inherit" sx={{ mb: 1 }} onClick={handleClose}>

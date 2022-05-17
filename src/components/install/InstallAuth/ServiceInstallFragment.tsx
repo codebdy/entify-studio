@@ -55,6 +55,7 @@ export const ServiceInstallFragment = memo(
             variant="outlined"
             onChange={handleChangeServiceId}
             size="small"
+            disabled
             required
           />
         </Grid>
