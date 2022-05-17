@@ -152,5 +152,6 @@
   "auth-module": "权限模块",
   "service-id": "服务ID",
   "auth-finished": "权限模块已安装",
-  "finish": "完成"
+  "finish": "完成",
+  "add":"添加"
 }

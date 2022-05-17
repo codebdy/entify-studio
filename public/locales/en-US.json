@@ -152,5 +152,6 @@
   "auth-module": "Auth Module",
   "service-id": "Service ID",
   "auth-finished": "Auth module finished",
-  "finish": "Finish"
+  "finish": "Finish",
+  "add":"Add"
 }
