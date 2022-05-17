@@ -118,10 +118,7 @@ export const ServiceInstallFragment = memo(
         </Grid>
         <Grid item xs={6}>
           <FormControl fullWidth variant="outlined" size="small">
-            <InputLabel
-              htmlFor="standard-adornment-password"
-              style={{ background: "#fff", padding: "0 8px" }}
-            >
+            <InputLabel htmlFor="standard-adornment-password">
               {intl.get("password")}
             </InputLabel>
             <OutlinedInput
@@ -141,6 +138,7 @@ export const ServiceInstallFragment = memo(
                   </IconButton>
                 </InputAdornment>
               }
+              label={intl.get("password")}
             />
           </FormControl>
         </Grid>
