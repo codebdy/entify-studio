@@ -151,6 +151,7 @@
   "duplicated-property-error": "Class {cls} has duplicated property",
   "auth-module": "Auth Module",
   "service-id": "Service ID",
+  "service-name":"Service Name",
   "auth-finished": "Auth module finished",
   "finish": "Finish",
   "add":"Add"

@@ -151,6 +151,7 @@
   "duplicated-property-error": "类{cls}上属性或方法重名",
   "auth-module": "权限模块",
   "service-id": "服务ID",
+  "service-name":"服务名称",
   "auth-finished": "权限模块已安装",
   "finish": "完成",
   "add":"添加"

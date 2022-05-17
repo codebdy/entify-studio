@@ -91,7 +91,7 @@ export const ThirdPage = memo(
         <Grid item xs={12}>
           <TextField
             fullWidth
-            label={intl.get("name")}
+            label={intl.get("service-name")}
             value={name}
             variant="outlined"
             onChange={handleChangeName}

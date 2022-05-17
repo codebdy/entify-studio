@@ -6,6 +6,7 @@ import {
   DialogTitle,
   Grid,
   SvgIcon,
+  TextField,
 } from "@mui/material";
 import { ServiceInstallFragment } from "components/install/InstallAuth/ServiceInstallFragment";
 import { InstallServiceInput } from "do-ents/useInstallAuth";
@@ -23,7 +24,7 @@ export const AddServiceDialog = memo(() => {
     id: serviceId,
     name: "New service",
     serviceType: ServiceType.Entify,
-    url: "http://localhost:4000/graphql",
+    url: "",
   });
   const [values, setValues] = useState<InstallServiceInput>({
     id: serviceId,
@@ -47,6 +48,13 @@ export const AddServiceDialog = memo(() => {
   const handleClose = useCallback(() => {
     setOpen(false);
   }, []);
+
+  const handleChangeServiceName =  useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setService((service) => ({ ...service, name: event.target.value }));
+    },
+    []
+  );
 
   const handleChangeUrl = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
