@@ -132,7 +132,7 @@ export const AddServiceDialog = memo(() => {
           <LoadingButton
             variant="contained"
             sx={{ mr: 2, mb: 1 }}
-            disabled={!!values.name || !!values.url || loading}
+            disabled={!values.name || !values.url || loading}
             loading={adding}
             onClick={handleAdd}
           >
