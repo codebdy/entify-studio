@@ -17,7 +17,7 @@ import { SvgIcon } from "@mui/material";
 export const EntifyServiceNode = memo(
   (props: { graph?: Graph; service: Service }) => {
     const { graph, service } = props;
-    const diagrams = useRecoilValue(diagramsState(service.id));
+    const diagrams = useRecoilValue(diagramsState(service.id||0));
 
     return (
       <TreeItem

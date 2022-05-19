@@ -5,7 +5,6 @@ import { Graph } from "@antv/x6";
 import "@antv/x6-react-shape";
 import { useSelectedService } from "./hooks/useSelectedService";
 import { ModelContent } from "./ModelContent";
-import { ServiceType } from "./meta/Service";
 
 export const ModelsBoard = memo(() => {
   const [graph, setGraph] = useState<Graph>();
@@ -21,8 +20,7 @@ export const ModelsBoard = memo(() => {
       }}
     >
       <EntityTree graph={graph}></EntityTree>
-      {(selectedService?.serviceType === ServiceType.Entify ||
-        selectedService?.serviceType === ServiceType.EntifyAuth) && (
+      {!!selectedService?.id && (
         <ModelContent onSetGraph={setGraph} serviceId={selectedService.id} />
       )}
     </Box>

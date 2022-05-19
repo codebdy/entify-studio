@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   Dialog,
   DialogActions,
@@ -8,37 +9,18 @@ import {
   SvgIcon,
   TextField,
 } from "@mui/material";
-import { InstallServiceInput } from "do-ents/useInstallAuth";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { memo } from "react";
 import intl from "react-intl-universal";
-import { useCreateServiceId } from "../hooks/useCreateServiceId";
-import { Service, ServiceType } from "../meta/Service";
+import { Service } from "../meta/Service";
 import LazyTextField from "../PropertyBox/LazyTextField";
 
 export const AddServiceDialog = memo(() => {
   const [open, setOpen] = useState(false);
-  const serviceId = useCreateServiceId();
-  const [service, setService] = useState<Service>({
-    id: serviceId,
+  const [values, setValues] = useState<Service>({
     name: "New service",
-    serviceType: ServiceType.Entify,
     url: "",
   });
-  const [values, setValues] = useState<InstallServiceInput>({
-    id: serviceId,
-    driver: "mysql",
-    host: "localhost",
-    port: "3306",
-    database: "",
-    user: "root",
-    password: "",
-  });
-
-  useEffect(() => {
-    setService((service) => ({ ...service, id: serviceId }));
-    setValues((values) => ({ ...values, id: serviceId }));
-  }, [serviceId]);
 
   const handleClickOpen = useCallback(() => {
     setOpen(true);
@@ -50,21 +32,17 @@ export const AddServiceDialog = memo(() => {
 
   const handleChangeServiceName = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
-      setService((service) => ({ ...service, name: event.target.value }));
+      setValues((values) => ({ ...values, name: event.target.value }));
     },
     []
   );
 
   const handleChangeUrl = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
-      setService((service) => ({ ...service, url: event.target.value }));
+      setValues((values) => ({ ...values, url: event.target.value }));
     },
     []
   );
-
-  const handleValuesChange = useCallback((newValues: InstallServiceInput) => {
-    setValues((values) => ({ ...values, ...newValues }));
-  }, []);
 
   return (
     <>
@@ -92,7 +70,7 @@ export const AddServiceDialog = memo(() => {
                 fullWidth
                 label="URL"
                 type="url"
-                value={service.url || ""}
+                value={values.url || ""}
                 variant="outlined"
                 onChange={handleChangeUrl}
                 size="small"
@@ -103,14 +81,15 @@ export const AddServiceDialog = memo(() => {
               <TextField
                 fullWidth
                 label={intl.get("service-name")}
-                value={service.name}
+                value={values.name}
                 variant="outlined"
-                //onChange={handleChangeName}
+                onChange={handleChangeServiceName}
                 size="small"
                 required
               />
             </Grid>
           </Grid>
+          <Box sx={{ color: "red" }}>erroror roe rwrw</Box>
         </DialogContent>
         <DialogActions>
           <Button color="inherit" sx={{ mb: 1 }} onClick={handleClose}>
@@ -119,6 +98,9 @@ export const AddServiceDialog = memo(() => {
           <Button
             variant="contained"
             sx={{ mr: 2, mb: 1 }}
+            disabled = {
+              !!values.name || !!values.url
+            }
             onClick={handleClose}
           >
             {intl.get("add")}
