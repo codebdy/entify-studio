@@ -1,19 +1,19 @@
-import { useRegistryStatus } from "do-ents/useRegistryStatus";
+import { useAuthUrl } from "do-ents/useAuthUrl";
 import { useEffect } from "react";
 import { useSetRecoilState } from "recoil";
-import { registryStatusState } from "recoil/atoms";
+import { authUrlState } from "recoil/atoms";
 
 export function useInit() {
-  const setInstallStatus = useSetRecoilState(registryStatusState);
+  const setAuthUrl = useSetRecoilState(authUrlState);
   const {
-    status,
+    authUrl,
     loading,
     error,
-  } = useRegistryStatus();
+  } = useAuthUrl();
 
   useEffect(() => {
-    setInstallStatus(status);
-  }, [status, setInstallStatus]);
+    setAuthUrl(authUrl);
+  }, [setAuthUrl, authUrl]);
 
   return {
     loading,

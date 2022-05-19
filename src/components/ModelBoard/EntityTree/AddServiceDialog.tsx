@@ -6,8 +6,8 @@ import {
   DialogTitle,
   Grid,
   SvgIcon,
+  TextField,
 } from "@mui/material";
-import { ServiceInstallFragment } from "components/install/InstallAuth/ServiceInstallFragment";
 import { InstallServiceInput } from "do-ents/useInstallAuth";
 import React, { useCallback, useEffect, useState } from "react";
 import { memo } from "react";
@@ -48,7 +48,7 @@ export const AddServiceDialog = memo(() => {
     setOpen(false);
   }, []);
 
-  const handleChangeServiceName =  useCallback(
+  const handleChangeServiceName = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       setService((service) => ({ ...service, name: event.target.value }));
     },
@@ -99,10 +99,17 @@ export const AddServiceDialog = memo(() => {
                 required
               />
             </Grid>
-            <ServiceInstallFragment
-              values={values}
-              onValuesChange={handleValuesChange}
-            />
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label={intl.get("service-name")}
+                value={service.name}
+                variant="outlined"
+                //onChange={handleChangeName}
+                size="small"
+                required
+              />
+            </Grid>
           </Grid>
         </DialogContent>
         <DialogActions>

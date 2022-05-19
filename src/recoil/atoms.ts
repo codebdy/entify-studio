@@ -10,11 +10,6 @@ export interface User {
   isDemo?: boolean;
 }
 
-export interface RegistryStatus {
-  installed?: boolean;
-  authInstalled?: boolean;
-}
-
 export const themeModeState = atom<"light" | "dark">({
   key: "themeMode",
   default: "dark",
@@ -40,15 +35,11 @@ export const confirmState = atom<Confirm | undefined>({
   default: undefined,
 });
 
-export const registryStatusState = atom<RegistryStatus|undefined>({
-  key: "installStatus",
+export const authUrlState = atom<string|undefined>({
+  key: "authUrlStatus",
   default:undefined,
 });
 
-export const authServiceState = atom<Service | undefined | null>({
-  key: "authService",
-  default: undefined,
-});
 
 export const selectedServiceIdState = atom<number>({
   key: "selectedServiceId",

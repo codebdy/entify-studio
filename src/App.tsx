@@ -3,7 +3,6 @@ import {
   ThemeProvider,
   StyledEngineProvider,
 } from "@mui/material";
-import { InstallAuth } from "components/install/InstallAuth";
 import React from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 import { useRecoilValue } from "recoil";
@@ -12,22 +11,14 @@ import { useInit } from "hooks/useInit";
 import { useShowServerError } from "hooks/useShowServerError";
 import "./App.css";
 import Loading from "./components/common/loading";
-import { InstallRegistry } from "./components/install/InstallRegistry";
 import { Login } from "./components/login";
 import { Studio } from "./components/studio";
 import { ConfirmDialog } from "./components/widgets/ConfirmDialog";
 import { ErrorDialog } from "./components/widgets/ErrorDialog";
 import { SuccessAlertBar } from "./components/widgets/SuccessAlertBar";
-import {
-  INDEX_URL,
-  INTALL_AUTH_URL,
-  INTALL_REGISTRY_URL,
-  LOGIN_URL,
-  PRIMARY_COLOR,
-} from "./util/consts";
+import { INDEX_URL, LOGIN_URL, PRIMARY_COLOR } from "./util/consts";
 import { useIntl } from "./util/useIntl";
 import useShadows from "./util/useShadows";
-import { useInstallCheck } from "hooks/useInstallCheck";
 
 function App() {
   const themeMode = useRecoilValue(themeModeState);
@@ -44,7 +35,7 @@ function App() {
 
     shadows: [...useShadows()] as any,
   });
-  useInstallCheck();
+
   return langLoading || loading ? (
     <Loading />
   ) : (
@@ -52,8 +43,6 @@ function App() {
       <ThemeProvider theme={theme}>
         <Switch>
           <Route path={LOGIN_URL} component={Login}></Route>
-          <Route path={INTALL_REGISTRY_URL} component={InstallRegistry}></Route>
-          <Route path={INTALL_AUTH_URL} component={InstallAuth}></Route>
           <Route path={INDEX_URL} component={Studio}></Route>
           <Redirect to={INDEX_URL} from="/" />
         </Switch>

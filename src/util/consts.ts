@@ -1,7 +1,5 @@
 export const TOKEN_NAME = "EntifyToken";
 export const LOGIN_URL = "/login";
-export const INTALL_REGISTRY_URL = "/install-registry";
-export const INTALL_AUTH_URL = "/install-auth";
 export const INDEX_URL = "/studio";
 export const PRIMARY_COLOR = "#5d78ff";
 export const TREE_ROOT_ID = "root";
