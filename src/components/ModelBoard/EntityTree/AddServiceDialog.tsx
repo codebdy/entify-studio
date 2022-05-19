@@ -1,6 +1,8 @@
+import { LoadingButton } from "@mui/lab";
 import {
   Box,
   Button,
+  CircularProgress,
   Dialog,
   DialogActions,
   DialogContent,
@@ -9,6 +11,9 @@ import {
   SvgIcon,
   TextField,
 } from "@mui/material";
+import { useRegisterService } from "do-ents/useRegisterService";
+import { useServiceCheck } from "do-ents/useServiceCheck";
+import { useShowServerError } from "hooks/useShowServerError";
 import React, { useCallback, useState } from "react";
 import { memo } from "react";
 import intl from "react-intl-universal";
@@ -18,9 +23,22 @@ import LazyTextField from "../PropertyBox/LazyTextField";
 export const AddServiceDialog = memo(() => {
   const [open, setOpen] = useState(false);
   const [values, setValues] = useState<Service>({
-    name: "New service",
+    name: intl.get("new-service"),
     url: "",
   });
+
+  const [add, { loading: adding, error: addError }] = useRegisterService({
+    onCompleted: (status: boolean) => {
+      if (status) {
+        setOpen(false);
+        setValues({ name: intl.get("new-service"), url: "" });
+      }
+    },
+  });
+
+  const [check, { installed, loading, error: checkError }] = useServiceCheck();
+
+  useShowServerError(addError);
 
   const handleClickOpen = useCallback(() => {
     setOpen(true);
@@ -39,10 +57,18 @@ export const AddServiceDialog = memo(() => {
 
   const handleChangeUrl = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
-      setValues((values) => ({ ...values, url: event.target.value }));
+      const url = event.target.value;
+      setValues((values) => ({ ...values, url }));
+      if (url) {
+        check(url);
+      }
     },
-    []
+    [check]
   );
+
+  const handleAdd = useCallback(() => {
+    add(values);
+  }, [add, values]);
 
   return (
     <>
@@ -75,6 +101,11 @@ export const AddServiceDialog = memo(() => {
                 onChange={handleChangeUrl}
                 size="small"
                 required
+                InputProps={{
+                  endAdornment: loading ? (
+                    <CircularProgress size={24} />
+                  ) : undefined,
+                }}
               />
             </Grid>
             <Grid item xs={12}>
@@ -89,22 +120,24 @@ export const AddServiceDialog = memo(() => {
               />
             </Grid>
           </Grid>
-          <Box sx={{ color: "red" }}>erroror roe rwrw</Box>
+          <Box sx={{ color: "red" }}>
+            {!!values.url && checkError?.message}
+            {installed === false && intl.get("service-not-install")}
+          </Box>
         </DialogContent>
         <DialogActions>
           <Button color="inherit" sx={{ mb: 1 }} onClick={handleClose}>
             {intl.get("cancel")}
           </Button>
-          <Button
+          <LoadingButton
             variant="contained"
             sx={{ mr: 2, mb: 1 }}
-            disabled = {
-              !!values.name || !!values.url
-            }
-            onClick={handleClose}
+            disabled={!!values.name || !!values.url || loading}
+            loading={adding}
+            onClick={handleAdd}
           >
             {intl.get("add")}
-          </Button>
+          </LoadingButton>
         </DialogActions>
       </Dialog>
     </>

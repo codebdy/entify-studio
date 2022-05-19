@@ -154,5 +154,7 @@
   "service-name":"Service Name",
   "auth-finished": "Auth module finished",
   "finish": "Finish",
-  "add":"Add"
+  "add":"Add",
+  "new-service":"New service",
+  "service-not-install":"Service not install"
 }
