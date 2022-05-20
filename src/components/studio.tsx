@@ -17,6 +17,7 @@ import { loggedUserState, themeModeState } from "recoil/atoms";
 import { LOGIN_URL, TOKEN_NAME } from "util/consts";
 import LiveHelpIcon from "@mui/icons-material/LiveHelp";
 import GitHubIcon from "@mui/icons-material/GitHub";
+import { ServiceList } from "./ServiceList";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -81,7 +82,11 @@ export const Studio = memo(() => {
         elevation={0}
         variant="outlined"
       >
-        <Toolbar>
+        <Toolbar
+          sx={{
+            color: (theme) => theme.palette.text.primary,
+          }}
+        >
           <Avatar variant="rounded" className={classes.logoIcon}>
             <SvgIcon sx={{ fontSize: 32 }}>
               <path
@@ -90,6 +95,7 @@ export const Studio = memo(() => {
               />
             </SvgIcon>
           </Avatar>
+          <ServiceList />
           <NavLink
             className={classes.navLink}
             activeClassName={classes.activeLink}
@@ -118,12 +124,12 @@ export const Studio = memo(() => {
             title={intl.get("document")}
             aria-label={intl.get("document")}
           >
-            <IconButton href="https://rxdrag.com/docs/intro" target ="_blank">
+            <IconButton href="https://rxdrag.com/docs/intro" target="_blank">
               <LiveHelpIcon />
             </IconButton>
           </Tooltip>
           <Tooltip title="Github" aria-label="Github">
-            <IconButton href="https://github.com/rxdrag" target ="_blank">
+            <IconButton href="https://github.com/rxdrag" target="_blank">
               <GitHubIcon />
             </IconButton>
           </Tooltip>
