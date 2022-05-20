@@ -15,9 +15,9 @@ import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness5Icon from "@mui/icons-material/Brightness5";
 import { loggedUserState, themeModeState } from "recoil/atoms";
 import { LOGIN_URL, TOKEN_NAME } from "util/consts";
-import LiveHelpIcon from "@mui/icons-material/LiveHelp";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import { ServiceSelect } from "./ServiceSelect";
+import LiveHelpIcon from '@mui/icons-material/LiveHelp';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -124,12 +124,12 @@ export const Studio = memo(() => {
             title={intl.get("document")}
             aria-label={intl.get("document")}
           >
-            <IconButton href="https://rxdrag.com/docs/intro" target="_blank">
+            <IconButton size="large" href="https://rxdrag.com/docs/intro" target="_blank">
               <LiveHelpIcon />
             </IconButton>
           </Tooltip>
           <Tooltip title="Github" aria-label="Github">
-            <IconButton href="https://github.com/rxdrag" target="_blank">
+            <IconButton size="large" href="https://github.com/rxdrag" target="_blank">
               <GitHubIcon />
             </IconButton>
           </Tooltip>
