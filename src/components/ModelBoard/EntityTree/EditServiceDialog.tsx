@@ -30,7 +30,7 @@ export const EditServiceDialog = memo(
       setName(service?.name);
     }, [service]);
 
-    const [update, { loading: adding, error: addError }] = useUpdateService({
+    const [update, { loading: updating, error: updateError }] = useUpdateService({
       onCompleted: (status: boolean) => {
         if (status) {
           handleClose();
@@ -39,7 +39,7 @@ export const EditServiceDialog = memo(
       },
     });
 
-    useShowServerError(addError);
+    useShowServerError(updateError);
 
     const handleClose = useCallback(() => {
       setName(service?.name);
@@ -95,7 +95,7 @@ export const EditServiceDialog = memo(
               variant="contained"
               sx={{ mr: 2, mb: 1 }}
               disabled={!name || !service?.url}
-              loading={adding}
+              loading={updating}
               onClick={handleEdit}
             >
               {intl.get("edit")}

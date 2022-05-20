@@ -8,7 +8,6 @@ const gql = `
       id
       name
       url
-      version
     }
   }
 `;
