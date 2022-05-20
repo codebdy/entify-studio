@@ -160,5 +160,6 @@
   "service-not-install": "服务未安装",
   "dark": "暗色主题",
   "light": "亮色主题",
-  "select-service": "选择服务"
+  "select-service": "选择服务",
+  "confirm-delete":"确实要删除吗?"
 }

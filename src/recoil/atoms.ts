@@ -1,7 +1,7 @@
 import { Service } from "components/ModelBoard/meta/Service";
 import { atom } from "recoil";
 import { AppError } from "./AppError";
-import { Confirm } from "./confirm";
+import { IConfirm } from "./confirm";
 
 export interface User {
   id: number;
@@ -30,7 +30,7 @@ export const loggedUserState = atom<User | undefined>({
   default: undefined,
 });
 
-export const confirmState = atom<Confirm | undefined>({
+export const confirmState = atom<IConfirm | undefined>({
   key: "confirm",
   default: undefined,
 });

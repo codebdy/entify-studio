@@ -15,6 +15,7 @@ import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import ArrowRightOutlinedIcon from "@mui/icons-material/ArrowRightOutlined";
 import { EditServiceDialog } from "./EditServiceDialog";
+import { useConfirm } from "hooks/useConfirm";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -37,6 +38,8 @@ export const RootMenu = memo(
     const [subAnchorEl, setSubAnchorEl] = React.useState<null | HTMLElement>(
       null
     );
+
+    const confirm = useConfirm();
 
     const setSelectedDiagram = useSetRecoilState(
       selectedDiagramState(serviceId)
@@ -142,9 +145,12 @@ export const RootMenu = memo(
     }, [onClose]);
 
     const handleDelete = useCallback(() => {
+      confirm(intl.get("confirm-delete"), ()=>{
+        
+      })
       setSubAnchorEl(null);
       onClose();
-    }, [onClose]);
+    }, [confirm, onClose]);
 
     const handleEditDlgClose = useCallback(() => {
       setEditOpen(false);
