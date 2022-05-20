@@ -105,7 +105,13 @@ export const ServiceSelect = memo(() => {
           >
             <List>
               {services?.map((service) => {
-                return <ServiceItem key={service.id} service={service} />;
+                return (
+                  <ServiceItem
+                    key={service.id}
+                    service={service}
+                    onClose={handleClose}
+                  />
+                );
               })}
             </List>
           </Box>
