@@ -7,6 +7,9 @@ export function useAttribute(uuid: string, serviceId: number) {
 
   const rt = useMemo(() => {
     for (const cls of classes) {
+      if (!cls.attributes) {
+        continue;
+      }
       for (const attribute of cls.attributes) {
         if (attribute.uuid === uuid) {
           return { cls, attribute };
@@ -14,7 +17,7 @@ export function useAttribute(uuid: string, serviceId: number) {
       }
     }
 
-    return {}
+    return {};
   }, [classes, uuid]);
 
   return rt;

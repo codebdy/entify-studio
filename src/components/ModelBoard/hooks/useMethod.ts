@@ -7,6 +7,9 @@ export function useMethod(uuid: string, serviceId: number) {
 
   const rt = useMemo(() => {
     for (const cls of classes) {
+      if (!cls.methods) {
+        continue;
+      }
       for (const method of cls.methods) {
         if (method.uuid === uuid) {
           return { cls, method };
@@ -14,7 +17,7 @@ export function useMethod(uuid: string, serviceId: number) {
       }
     }
 
-    return {}
+    return {};
   }, [classes, uuid]);
 
   return rt;

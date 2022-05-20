@@ -24,15 +24,14 @@ import { useShowServerError } from "hooks/useShowServerError";
 import { gql } from "graphql-request";
 import { PropertyBox } from "./PropertyBox";
 import { selectedServiceIdState } from "recoil/atoms";
+import { useSelectedService } from "./hooks/useSelectedService";
 
 export const ModelContent = memo(
-  (props: {
-    graph?: Graph;
-    onSetGraph: (graph?: Graph) => void;
-  }) => {
-    const {graph, onSetGraph } = props;
+  (props: { graph?: Graph; onSetGraph: (graph?: Graph) => void }) => {
+    const { graph, onSetGraph } = props;
     const scrollStyles = useChildrenScrollStyles();
-    const serviceId = useRecoilValue(selectedServiceIdState)
+    const serviceId = useRecoilValue(selectedServiceIdState);
+    const selecedService = useSelectedService();
     const setMeta = useSetRecoilState(metaState(serviceId));
     const setEntities = useSetRecoilState(classesState(serviceId));
     const setRelations = useSetRecoilState(relationsState(serviceId));
@@ -54,7 +53,7 @@ export const ModelContent = memo(
       }
     `;
     }, [queryName]);
-  
+
     const queryPubishedGql = useMemo(() => {
       return gql`
       query ${queryName} {
@@ -68,13 +67,16 @@ export const ModelContent = memo(
       }
     `;
     }, [queryName]);
-  
+
     const {
       data: publishedData,
       error: publishedError,
       loading: publishedLoading,
-    } = useQueryOne<Meta>(queryPubishedGql);
-    const { data, error, loading } = useQueryOne<Meta>(queryGql);
+    } = useQueryOne<Meta>(queryPubishedGql, selecedService?.url);
+    const { data, error, loading } = useQueryOne<Meta>(
+      queryGql,
+      selecedService?.url
+    );
     useShowServerError(error || publishedError);
     useEffect(() => {
       const meta = publishedData ? publishedData[queryName] : undefined;
@@ -101,7 +103,7 @@ export const ModelContent = memo(
       setX6Edges,
       setX6Nodes,
     ]);
-    
+
     return (
       <Box
         sx={{

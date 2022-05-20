@@ -11,7 +11,8 @@ export interface QueryOneResult<T> {
 }
 
 export function useQueryOne<T extends IObject>(
-  gql: string
+  gql: string,
+  serverUrl?: string
 ): {
   data?: QueryOneResult<T>;
   mutate: MutateFn<T>;
@@ -23,7 +24,7 @@ export function useQueryOne<T extends IObject>(
   const [error, setError] = useState<GraphQLError>();
   const [data, setData] = useState<QueryOneResult<T>>();
   const excute = useCallback(() => {
-    const graphQLClient = createGraphQLClient();
+    const graphQLClient = createGraphQLClient(serverUrl);
 
     setLoading(true);
     setError(undefined);
@@ -43,7 +44,7 @@ export function useQueryOne<T extends IObject>(
         setError(error);
         console.error(err);
       });
-  }, [gql]);
+  }, [gql, serverUrl]);
 
   useEffect(() => {
     excute();
