@@ -158,5 +158,6 @@
   "new-service":"New service",
   "service-not-install":"Service not install",
   "dark":"Dark",
-  "light":"Light"
+  "light":"Light",
+  "select-service":"Select service"
 }
