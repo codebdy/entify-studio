@@ -10,18 +10,21 @@ import { Graph } from "@antv/x6";
 import { useSelectedServiceId } from "../hooks/useSelectedServiceId";
 import { TreeItem } from "@mui/lab";
 import { TreeNodeLabel } from "./TreeNodeLabel";
-import LocalModelAction from "./LocalModelAction";
+import RootMenu from "./RootMenu";
 import { NodeText } from "./NodeText";
 import { diagramsState } from "../recoil/atoms";
-import { SvgIcon } from "@mui/material";
+import { IconButton, SvgIcon } from "@mui/material";
 import { Enums } from "./Enums";
 import { ValueObjects } from "./ValueObjects";
 import { ExternalClasses } from "./ExternalClasses";
 import { DiagramNode } from "./DiagramNode";
 import intl from "react-intl-universal";
+import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
 
 export const ModelTreeView = memo((props: { graph?: Graph }) => {
   const { graph } = props;
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+
   const selectedServiceId = useSelectedServiceId();
   const selectedDiagram = useRecoilValue(
     selectedDiagramState(selectedServiceId)
@@ -66,6 +69,15 @@ export const ModelTreeView = memo((props: { graph?: Graph }) => {
     []
   );
 
+  const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+    event.stopPropagation();
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+
   return (
     <>
       <TreeView
@@ -92,17 +104,9 @@ export const ModelTreeView = memo((props: { graph?: Graph }) => {
           label={
             <TreeNodeLabel
               action={
-                <LocalModelAction
-                  onPublish={function (): void {
-                    throw new Error("Function not implemented.");
-                  }}
-                  onDownloadJson={function (): void {
-                    throw new Error("Function not implemented.");
-                  }}
-                  onExportInterface={function (): void {
-                    throw new Error("Function not implemented.");
-                  }}
-                />
+                <IconButton size="small" onClick={handleMenuOpen}>
+                  <MoreVertOutlinedIcon fontSize="small" />
+                </IconButton>
               }
             >
               <SvgIcon>
@@ -115,15 +119,16 @@ export const ModelTreeView = memo((props: { graph?: Graph }) => {
             </TreeNodeLabel>
           }
         >
-          {diagrams.map((diagram) => {
-            return <DiagramNode key={diagram.uuid} diagram={diagram} />;
-          })}
           <Classes graph={graph} />
           <Enums graph={graph} />
           <ValueObjects graph={graph} />
           <ExternalClasses graph={graph} />
+          {diagrams.map((diagram) => {
+            return <DiagramNode key={diagram.uuid} diagram={diagram} />;
+          })}
         </TreeItem>
       </TreeView>
+      <RootMenu anchorEl={anchorEl} onClose={handleMenuClose} />
       <input
         ref={fileInputRef}
         type="file"
