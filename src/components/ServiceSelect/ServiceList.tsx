@@ -8,7 +8,7 @@ import ListItemText from "@mui/material/ListItemText";
 import { memo } from "react";
 import { servicesState } from "recoil/atoms";
 import { useRecoilValue } from "recoil";
-import SvgIcon from "@mui/icons-material/Inbox";
+import SvgIcon from "@mui/material/SvgIcon";
 
 export const ServiceList = memo(() => {
   const services = useRecoilValue(servicesState);
