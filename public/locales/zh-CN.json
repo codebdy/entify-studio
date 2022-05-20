@@ -125,6 +125,7 @@
   "root-node": "根节点",
   "services": "服务列表",
   "add-service": "添加服务",
+  "edit-service": "编辑服务",
   "description": "描述",
   "add-attribute": "添加属性",
   "add-method": "添加方法",
@@ -151,13 +152,13 @@
   "duplicated-property-error": "类{cls}上属性或方法重名",
   "auth-module": "权限模块",
   "service-id": "服务ID",
-  "service-name":"服务名称",
+  "service-name": "服务名称",
   "auth-finished": "权限模块已安装",
   "finish": "完成",
-  "add":"添加",
-  "new-service":"新服务",
-  "service-not-install":"服务未安装",
-  "dark":"暗色主题",
-  "light":"亮色主题",
-  "select-service":"选择服务"
+  "add": "添加",
+  "new-service": "新服务",
+  "service-not-install": "服务未安装",
+  "dark": "暗色主题",
+  "light": "亮色主题",
+  "select-service": "选择服务"
 }

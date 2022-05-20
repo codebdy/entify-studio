@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useRef } from "react";
+import React, { memo, useCallback, useRef, useState } from "react";
 import TreeView from "@mui/lab/TreeView";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
@@ -23,7 +23,7 @@ import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
 
 export const ModelTreeView = memo((props: { graph?: Graph }) => {
   const { graph } = props;
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const selectedServiceId = useSelectedServiceId();
   const selectedDiagram = useRecoilValue(
@@ -69,14 +69,14 @@ export const ModelTreeView = memo((props: { graph?: Graph }) => {
     []
   );
 
-  const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+  const handleMenuOpen = useCallback((event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
     event.stopPropagation();
-  };
+  }, []);
 
-  const handleMenuClose = () => {
+  const handleMenuClose = useCallback(() => {
     setAnchorEl(null);
-  };
+  }, []);
 
   return (
     <>

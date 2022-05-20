@@ -1,4 +1,4 @@
-import React, { memo, useCallback } from "react";
+import React, { memo, useCallback, useState } from "react";
 import { Box, Divider, Menu, MenuItem, SvgIcon, Theme } from "@mui/material";
 import createStyles from "@mui/styles/createStyles";
 import makeStyles from "@mui/styles/makeStyles";
@@ -14,6 +14,7 @@ import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import ArrowRightOutlinedIcon from "@mui/icons-material/ArrowRightOutlined";
+import { EditServiceDialog } from "./EditServiceDialog";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -32,6 +33,7 @@ export const RootMenu = memo(
     const createNewClass = useCreateNewClass(serviceId);
     const createNewDiagram = useCreateNewDiagram(serviceId);
     const setEntities = useSetRecoilState(classesState(serviceId));
+    const [editOpen, setEditOpen] = useState(false);
     const [subAnchorEl, setSubAnchorEl] = React.useState<null | HTMLElement>(
       null
     );
@@ -134,6 +136,20 @@ export const RootMenu = memo(
       setSubAnchorEl(null);
     }, []);
 
+    const handleEdit = useCallback(() => {
+      setEditOpen(true);
+      onClose();
+    }, [onClose]);
+
+    const handleDelete = useCallback(() => {
+      setSubAnchorEl(null);
+      onClose();
+    }, [onClose]);
+
+    const handleEditDlgClose = useCallback(() => {
+      setEditOpen(false);
+    }, []);
+
     return (
       <>
         <Menu
@@ -150,13 +166,11 @@ export const RootMenu = memo(
           open={isMenuOpen}
           onClose={onClose}
         >
-          <MenuItem
-            onClick={handleAddClick}
-          >
+          <MenuItem onClick={handleAddClick}>
             <AddOutlinedIcon fontSize="small" />
             <span className={classes.text}>{intl.get("add")} </span>
             <Box sx={{ flex: 1 }}></Box>
-            <ArrowRightOutlinedIcon sx={{ mr: -1 }} fontSize = "small" />
+            <ArrowRightOutlinedIcon sx={{ mr: -1 }} fontSize="small" />
           </MenuItem>
 
           <Divider />
@@ -188,11 +202,11 @@ export const RootMenu = memo(
             <span className={classes.text}>{intl.get("export-inteface")} </span>
           </MenuItem>
           <Divider />
-          <MenuItem onClick={handleExportInterface}>
+          <MenuItem onClick={handleEdit}>
             <EditOutlinedIcon fontSize="small" />
             <span className={classes.text}>{intl.get("edit")} </span>
           </MenuItem>
-          <MenuItem onClick={handleExportInterface}>
+          <MenuItem onClick={handleDelete}>
             <DeleteOutlineOutlinedIcon fontSize="small" />
             <span className={classes.text}>{intl.get("delete")} </span>
           </MenuItem>
@@ -226,6 +240,7 @@ export const RootMenu = memo(
             {intl.get("add-external-class")}
           </MenuItem>
         </Menu>
+        <EditServiceDialog open={editOpen} onClose={handleEditDlgClose} />
       </>
     );
   }

@@ -11,8 +11,8 @@ import { memo, useCallback, useEffect, useState } from "react";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import intl from "react-intl-universal";
 import { useScrollbarStyles } from "theme/useScrollbarStyles";
-import { servicesState } from "recoil/atoms";
-import { useSetRecoilState } from "recoil";
+import { refreshServicesState, servicesState } from "recoil/atoms";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { useGQLServices } from "do-ents/useGQLServices";
 import { useShowServerError } from "hooks/useShowServerError";
 import { AddServiceDialog } from "components/ServiceSelect/AddServiceDialog";
@@ -24,7 +24,14 @@ export const ServiceSelect = memo(() => {
   const scrollStyles = useScrollbarStyles();
   const setServices = useSetRecoilState(servicesState);
   const selectedService = useSelectedService();
+  const refreshFlg = useRecoilValue(refreshServicesState);
   const { services, loading, error, refresh } = useGQLServices();
+
+  useEffect(() => {
+    if (refreshFlg && refresh) {
+      refresh();
+    }
+  }, [refresh, refreshFlg]);
 
   useShowServerError(error);
 
@@ -101,7 +108,7 @@ export const ServiceSelect = memo(() => {
             </Typography>
             {loading && <CircularProgress sx={{ ml: 1 }} size={24} />}
             <Box sx={{ flex: 1 }}></Box>
-            <AddServiceDialog onAddFinished={refresh} onClose={handleClose} />
+            <AddServiceDialog onClose={handleClose} />
           </Box>
           <Box
             sx={{

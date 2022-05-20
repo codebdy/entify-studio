@@ -46,6 +46,11 @@ export const selectedServiceIdState = atom<number>({
   default: 0,
 });
 
+export const refreshServicesState = atom<number>({
+  key: "refreshServices",
+  default: 0,
+});
+
 export const servicesState = atom<Service[]>({
   key: "services",
   default: [],

@@ -125,6 +125,7 @@
   "root-node": "Root node",
   "services": "Services",
   "add-service": "Add Service",
+  "edit-service": "Edit Service",
   "description": "Description",
   "add-attribute": "Add attribute",
   "add-method": "Add method",
