@@ -90,7 +90,7 @@ export const ServiceList = memo(() => {
             <Typography sx={{ color: (theme) => theme.palette.text.primary }}>
               {intl.get("services")}
             </Typography>
-            <AddServiceDialog onAddFinished={refresh} />
+            <AddServiceDialog onAddFinished={refresh} onClose = {handleClose} />
           </Box>
           <Box
             sx={{

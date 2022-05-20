@@ -34,22 +34,6 @@ export const EntityTree = memo((props: { graph?: Graph }) => {
     >
       <Box
         sx={{
-          height: (theme) => theme.spacing(6),
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          borderBottom: (theme) => theme.palette.divider + " solid 1px",
-          pl: 2,
-          pr: 2,
-        }}
-      >
-        <Typography sx={{ color: (theme) => theme.palette.text.primary }}>
-          {intl.get("services")}
-        </Typography>
-        <AddServiceDialog  onAddFinished = {refresh}/>
-      </Box>
-      <Box
-        sx={{
           flex: 1,
           overflow: "auto",
           p: 1,
