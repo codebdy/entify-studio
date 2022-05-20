@@ -22,7 +22,7 @@ export const ModelsBoard = memo(() => {
       {!!selectedService && (
         <>
           <EntityTree graph={graph}></EntityTree>
-          <ModelContent onSetGraph={setGraph} />
+          <ModelContent graph={graph} onSetGraph={setGraph} />
         </>
       )}
     </Box>
