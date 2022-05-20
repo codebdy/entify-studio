@@ -10,7 +10,7 @@ import { Graph } from "@antv/x6";
 import { useSelectedServiceId } from "../hooks/useSelectedServiceId";
 import { TreeItem } from "@mui/lab";
 import { TreeNodeLabel } from "./TreeNodeLabel";
-import RootMenu from "./RootMenu";
+import { RootMenu } from "./RootMenu";
 import { NodeText } from "./NodeText";
 import { diagramsState } from "../recoil/atoms";
 import { IconButton, SvgIcon } from "@mui/material";
@@ -103,6 +103,7 @@ export const ModelTreeView = memo((props: { graph?: Graph }) => {
           nodeId={"node_" + selectedServiceId}
           label={
             <TreeNodeLabel
+              fixedAction={true}
               action={
                 <IconButton size="small" onClick={handleMenuOpen}>
                   <MoreVertOutlinedIcon fontSize="small" />

@@ -9,8 +9,10 @@ export function TreeNodeLabel(props: {
   onDragStart?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
   color?: string;
   italic?: boolean;
+  fixedAction?: boolean;
 }) {
-  const { action, children, onClick, onDragStart, color, italic } = props;
+  const { action, children, onClick, onDragStart, color, italic, fixedAction } =
+    props;
   const [hover, setHover] = useState(false);
 
   return (
@@ -31,7 +33,7 @@ export function TreeNodeLabel(props: {
       draggable
     >
       {children}
-      {hover && <NodeAction>{action}</NodeAction>}
+      {(hover || fixedAction) && <NodeAction>{action}</NodeAction>}
     </Box>
   );
 }
