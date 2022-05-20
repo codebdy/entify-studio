@@ -5,10 +5,12 @@ import SvgIcon from "@mui/material/SvgIcon";
 import { Service } from "components/ModelBoard/meta/Service";
 import { useSetRecoilState } from "recoil";
 import { selectedServiceIdState } from "recoil/atoms";
+import { useSelectedServiceId } from "components/ModelBoard/hooks/useSelectedServiceId";
 
 export const ServiceItem = memo(
   (props: { service: Service; onClose: () => void }) => {
     const { service, onClose } = props;
+    const selectedServiceId = useSelectedServiceId();
     const setSelectedServiceId = useSetRecoilState(selectedServiceIdState);
     const handleClick = useCallback(() => {
       setSelectedServiceId(service.id || 0);
@@ -16,7 +18,10 @@ export const ServiceItem = memo(
     }, [onClose, service.id, setSelectedServiceId]);
 
     return (
-      <ListItemButton onClick={handleClick}>
+      <ListItemButton
+        onClick={handleClick}
+        selected={selectedServiceId === service.id}
+      >
         <SvgIcon sx={{ mr: 2 }}>
           <path
             fill="currentColor"
