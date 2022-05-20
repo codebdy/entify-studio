@@ -34,6 +34,7 @@ import { CONST_ID, EntityNameMeta, Meta, MetaStatus } from "../meta/Meta";
 import { SyncButton } from "./SyncButton";
 import { useSelectedServiceId } from "../hooks/useSelectedServiceId";
 import { useValidate } from "../hooks/useValidate";
+import { useSelectedService } from "../hooks/useSelectedService";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -65,6 +66,7 @@ const useStyles = makeStyles((theme: Theme) =>
 export const ModelToolbar = memo(() => {
   const classes = useStyles();
   const serviceId = useSelectedServiceId();
+  const service = useSelectedService();
   const [meta, setMeta] = useRecoilState(metaState(serviceId));
   const classeMetas = useRecoilValue(classesState(serviceId));
   const relations = useRecoilValue(relationsState(serviceId));
@@ -132,13 +134,14 @@ export const ModelToolbar = memo(() => {
             __type: EntityNameMeta,
             content,
           };
-    excuteSave(data);
+    excuteSave(data, service?.url);
   }, [
     classeMetas,
     diagrams,
     excuteSave,
     meta,
     relations,
+    service?.url,
     validate,
     x6Edges,
     x6Nodes,

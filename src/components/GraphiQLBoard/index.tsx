@@ -6,18 +6,21 @@ import { SERVER_URL, SERVER_SUBSCRIPTION_URL } from "util/consts";
 import { createGraphiQLFetcher } from "@graphiql/toolkit";
 import { memo, useMemo } from "react";
 import { SubscriptionClient } from "subscriptions-transport-ws";
+import { useSelectedService } from "components/ModelBoard/hooks/useSelectedService";
 
 //例子連接
 //https://github.com/graphql/graphiql/blob/main/packages/graphiql-toolkit/docs/create-fetcher.md#subscriptionurl
 export const GraphiQLBoard = memo(() => {
+  const service = useSelectedService();
   const fetcher = useMemo(() => {
     const fetcher = createGraphiQLFetcher({
-      url: SERVER_URL,
+      url: service?.url || SERVER_URL,
       legacyWsClient: new SubscriptionClient(SERVER_SUBSCRIPTION_URL),
     });
 
     return fetcher;
-  }, []);
+  }, [service?.url]);
+  
   return (
     <Box
       sx={{

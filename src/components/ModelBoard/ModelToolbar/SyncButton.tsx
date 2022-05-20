@@ -19,12 +19,14 @@ import { usePublishMeta } from "do-ents/usePublishMeta";
 import { successAlertState } from "recoil/atoms";
 import { MetaStatus } from "../meta/Meta";
 import { useSelectedServiceId } from "../hooks/useSelectedServiceId";
+import { useSelectedService } from "../hooks/useSelectedService";
 
 export const SyncButton = memo(() => {
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef<HTMLDivElement>(null);
   const setSuccessAlertState = useSetRecoilState(successAlertState);
   const serviceId = useSelectedServiceId();
+  const service = useSelectedService();
   const publishedId = useRecoilValue(publishedIdState(serviceId));
   const changed = useRecoilValue(changedState(serviceId));
   const [meta, setMeta] = useRecoilState(metaState(serviceId));
@@ -59,8 +61,8 @@ export const SyncButton = memo(() => {
   }, [changed, meta?.id, meta?.publishedAt, publishedId]);
 
   const handlePublish = React.useCallback(() => {
-    publish();
-  }, [publish]);
+    publish(service?.url);
+  }, [publish, service?.url]);
 
   return (
     <React.Fragment>

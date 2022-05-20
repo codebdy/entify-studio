@@ -8,7 +8,7 @@ import { IPostOptions } from "./usePostOne";
 export function usePublishMeta(
   options?: IPostOptions<Meta>
 ): [
-  () => void,
+  (serverUrl: string | undefined) => void,
   { loading: boolean; error: ServerError | undefined }
 ] {
   //const { noRefresh, ...axioOptions } = useMemo(() => options || {}, [options]);
@@ -17,11 +17,11 @@ export function usePublishMeta(
   //const postedDataRef = useRef<any>();
 
   const publish = useCallback(
-    () => {
-      const graphQLClient = createGraphQLClient();
+    (serverUrl: string | undefined) => {
+      const graphQLClient = createGraphQLClient(serverUrl);
       const postMutation = gql`
         mutation publish {
-          publish{
+          publish {
             id
           }
         }

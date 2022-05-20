@@ -13,16 +13,16 @@ export interface IPostOptions<T extends IObject> {
 
 export function usePostOne<T extends IObject>(
   options?: IPostOptions<T>
-): [(data: T) => void, { loading: boolean; error: ServerError | undefined }] {
+): [(data: T, serverUrl?: string) => void, { loading: boolean; error: ServerError | undefined }] {
   //const { noRefresh, ...axioOptions } = useMemo(() => options || {}, [options]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<ServerError | undefined>();
   //const postedDataRef = useRef<any>();
 
   const post = useCallback(
-    (data: T) => {
+    (data: T, serverUrl?: string) => {
       const { __type, ...object } = data;
-      const graphQLClient = createGraphQLClient();
+      const graphQLClient = createGraphQLClient(serverUrl);
       const postName = "upsertOne" + data.__type;
       const typeName = data.__type + "Input";
       const postMutation = gql`
