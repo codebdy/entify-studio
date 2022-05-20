@@ -17,7 +17,7 @@ import { loggedUserState, themeModeState } from "recoil/atoms";
 import { LOGIN_URL, TOKEN_NAME } from "util/consts";
 import LiveHelpIcon from "@mui/icons-material/LiveHelp";
 import GitHubIcon from "@mui/icons-material/GitHub";
-import { ServiceList } from "./ServiceList";
+import { ServiceSelect } from "./ServiceSelect";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -95,7 +95,7 @@ export const Studio = memo(() => {
               />
             </SvgIcon>
           </Avatar>
-          <ServiceList />
+          <ServiceSelect />
           <NavLink
             className={classes.navLink}
             activeClassName={classes.activeLink}

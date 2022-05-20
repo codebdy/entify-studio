@@ -1,9 +1,9 @@
 import {
   Box,
   Button,
+  CircularProgress,
   Popover,
   SvgIcon,
-  CircularProgress,
   Typography,
 } from "@mui/material";
 import { memo, useCallback, useEffect, useState } from "react";
@@ -15,8 +15,9 @@ import { useSetRecoilState } from "recoil";
 import { useGQLServices } from "do-ents/useGQLServices";
 import { useShowServerError } from "hooks/useShowServerError";
 import { AddServiceDialog } from "components/ModelBoard/EntityTree/AddServiceDialog";
+import { ServiceList } from "./ServiceList";
 
-export const ServiceList = memo(() => {
+export const ServiceSelect = memo(() => {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const scrollStyles = useScrollbarStyles();
   const setServices = useSetRecoilState(servicesState);
@@ -80,7 +81,6 @@ export const ServiceList = memo(() => {
             sx={{
               height: (theme) => theme.spacing(6),
               display: "flex",
-              justifyContent: "space-between",
               alignItems: "center",
               borderBottom: (theme) => theme.palette.divider + " solid 1px",
               pl: 2,
@@ -90,7 +90,9 @@ export const ServiceList = memo(() => {
             <Typography sx={{ color: (theme) => theme.palette.text.primary }}>
               {intl.get("services")}
             </Typography>
-            <AddServiceDialog onAddFinished={refresh} onClose = {handleClose} />
+            {loading && <CircularProgress sx={{ ml: 1 }} size={24} />}
+            <Box sx={{ flex: 1 }}></Box>
+            <AddServiceDialog onAddFinished={refresh} onClose={handleClose} />
           </Box>
           <Box
             sx={{
@@ -100,7 +102,7 @@ export const ServiceList = memo(() => {
               ...scrollStyles,
             }}
           >
-            {loading ? <CircularProgress /> : <></>}
+            <ServiceList />
           </Box>
         </Box>
       </Popover>
