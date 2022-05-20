@@ -152,12 +152,11 @@ export const RootMenu = memo(
         >
           <MenuItem
             onClick={handleAddClick}
-            //onMouseLeave={handleMouseLeave}
           >
             <AddOutlinedIcon fontSize="small" />
             <span className={classes.text}>{intl.get("add")} </span>
             <Box sx={{ flex: 1 }}></Box>
-            <ArrowRightOutlinedIcon sx={{ mr: -1 }} />
+            <ArrowRightOutlinedIcon sx={{ mr: -1 }} fontSize = "small" />
           </MenuItem>
 
           <Divider />
