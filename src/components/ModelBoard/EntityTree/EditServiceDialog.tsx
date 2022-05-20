@@ -1,8 +1,6 @@
 import { LoadingButton } from "@mui/lab";
 import {
-  Box,
   Button,
-  CircularProgress,
   Dialog,
   DialogActions,
   DialogContent,
@@ -10,8 +8,7 @@ import {
   Grid,
   TextField,
 } from "@mui/material";
-import { useRegisterService } from "do-ents/useRegisterService";
-import { useServiceCheck } from "do-ents/useServiceCheck";
+import { useUpdateService } from "do-ents/useUpateService";
 import { useSelectedService } from "hooks/useSelectedService";
 import { useShowServerError } from "hooks/useShowServerError";
 import React, { useCallback, useEffect, useState } from "react";
@@ -33,7 +30,7 @@ export const EditServiceDialog = memo(
       setName(service?.name);
     }, [service]);
 
-    const [add, { loading: adding, error: addError }] = useRegisterService({
+    const [update, { loading: adding, error: addError }] = useUpdateService({
       onCompleted: (status: boolean) => {
         if (status) {
           handleClose();
@@ -45,8 +42,9 @@ export const EditServiceDialog = memo(
     useShowServerError(addError);
 
     const handleClose = useCallback(() => {
+      setName(service?.name);
       onClose();
-    }, [onClose]);
+    }, [onClose, service?.name]);
 
     const handleChangeServiceName = useCallback(
       (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -56,8 +54,8 @@ export const EditServiceDialog = memo(
     );
 
     const handleEdit = useCallback(() => {
-      //add(values);
-    }, []);
+      service && update({ ...service, name: name || "" });
+    }, [name, service, update]);
 
     return (
       <>
