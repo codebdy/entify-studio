@@ -17,8 +17,8 @@ export function useRemoveService(
     (id: number) => {
       const graphQLClient = createGraphQLClient(options?.serverUrl);
       const postMutation = gql`
-        mutation removeService($input: ServiceInput!) {
-          removeService(input: $input) {
+        mutation removeService($id: Int!) {
+          removeService(id: $id) {
             id
           }
         }

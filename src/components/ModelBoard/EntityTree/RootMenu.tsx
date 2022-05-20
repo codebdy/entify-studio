@@ -26,8 +26,12 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export const RootMenu = memo(
-  (props: { anchorEl: HTMLElement | null; onClose: () => void }) => {
-    const { anchorEl, onClose } = props;
+  (props: {
+    anchorEl: HTMLElement | null;
+    onClose: () => void;
+    onDelete: () => void;
+  }) => {
+    const { anchorEl, onClose, onDelete } = props;
     const classes = useStyles();
     const isMenuOpen = Boolean(anchorEl);
     const serviceId = useSelectedServiceId();
@@ -145,12 +149,12 @@ export const RootMenu = memo(
     }, [onClose]);
 
     const handleDelete = useCallback(() => {
-      confirm(intl.get("confirm-delete"), ()=>{
-        
-      })
+      confirm(intl.get("confirm-delete"), () => {
+        onDelete();
+      });
       setSubAnchorEl(null);
       onClose();
-    }, [confirm, onClose]);
+    }, [confirm, onClose, onDelete]);
 
     const handleEditDlgClose = useCallback(() => {
       setEditOpen(false);
