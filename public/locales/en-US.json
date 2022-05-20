@@ -156,5 +156,7 @@
   "finish": "Finish",
   "add":"Add",
   "new-service":"New service",
-  "service-not-install":"Service not install"
+  "service-not-install":"Service not install",
+  "dark":"Dark",
+  "light":"Light"
 }

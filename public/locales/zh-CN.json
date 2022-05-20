@@ -156,5 +156,7 @@
   "finish": "完成",
   "add":"添加",
   "new-service":"新服务",
-  "service-not-install":"服务未安装"
+  "service-not-install":"服务未安装",
+  "dark":"暗色主题",
+  "light":"亮色主题"
 }

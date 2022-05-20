@@ -1,10 +1,10 @@
-import React, { memo, useCallback, useEffect } from "react";
+import React, { memo, useCallback, useMemo } from "react";
 import { Theme } from "@mui/material/styles";
 import createStyles from "@mui/styles/createStyles";
 import makeStyles from "@mui/styles/makeStyles";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
-import { Avatar, Box, IconButton, Link, SvgIcon, Tooltip } from "@mui/material";
+import { Avatar, Box, IconButton, SvgIcon, Tooltip } from "@mui/material";
 import intl from "react-intl-universal";
 import { NavLink, Redirect, Route, Switch, useHistory } from "react-router-dom";
 import { GraphiQLBoard } from "./GraphiQLBoard";
@@ -15,6 +15,8 @@ import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness5Icon from "@mui/icons-material/Brightness5";
 import { loggedUserState, themeModeState } from "recoil/atoms";
 import { LOGIN_URL, TOKEN_NAME } from "util/consts";
+import LiveHelpIcon from "@mui/icons-material/LiveHelp";
+import GitHubIcon from "@mui/icons-material/GitHub";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -66,6 +68,11 @@ export const Studio = memo(() => {
     setThemeMode((mode) => (mode === "dark" ? "light" : "dark"));
   }, [setThemeMode]);
 
+  const themeToSwitch = useMemo(
+    () => (themeMode === "dark" ? "light" : "dark"),
+    [themeMode]
+  );
+
   return (
     <div className={classes.root}>
       <AppBar
@@ -98,25 +105,29 @@ export const Studio = memo(() => {
           >
             {"API"}
           </NavLink>
-          <Link
-            className={classes.navLink}
-            target="_blank"
-            href="https://rxdrag.com/docs/intro"
-          >
-            {intl.get("document")}
-          </Link>
-          <Link
-            className={classes.navLink}
-            target="_blank"
-            href="https://github.com/rxdrag/rx-models"
-          >
-            Github
-          </Link>
           <Box sx={{ flex: 1 }} />
-          <IconButton size="large" onClick={handleSwitchThemeMode}>
-            {themeMode === "dark" ? <Brightness5Icon /> : <Brightness4Icon />}
-          </IconButton>
-          <Tooltip title="Logout" aria-label="Logout">
+          <Tooltip
+            title={intl.get(themeToSwitch)}
+            aria-label={intl.get(themeToSwitch)}
+          >
+            <IconButton size="large" onClick={handleSwitchThemeMode}>
+              {themeMode === "dark" ? <Brightness5Icon /> : <Brightness4Icon />}
+            </IconButton>
+          </Tooltip>
+          <Tooltip
+            title={intl.get("document")}
+            aria-label={intl.get("document")}
+          >
+            <IconButton href="https://rxdrag.com/docs/intro" target ="_blank">
+              <LiveHelpIcon />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Github" aria-label="Github">
+            <IconButton href="https://github.com/rxdrag" target ="_blank">
+              <GitHubIcon />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title={intl.get("logout")} aria-label={intl.get("logout")}>
             <IconButton size="large" onClick={handleLogout}>
               <LogoutOutlinedIcon />
             </IconButton>
