@@ -1,4 +1,4 @@
-import { atom, atomFamily } from "recoil";
+import { atomFamily } from "recoil";
 import { DiagramMeta } from "../meta/DiagramMeta";
 import { ClassMeta } from "../meta/ClassMeta";
 import { Meta } from "../meta/Meta";
@@ -16,11 +16,6 @@ export interface Snapshot {
   selectedElement?: string;
   selectedDiagram?: string;
 }
-
-export const serviceIdState = atom<number>({
-  key: "local.serviceId",
-  default: 0,
-})
 
 export const minMapState = atomFamily<boolean, number>({
   key: "local.minMap",
