@@ -12,37 +12,35 @@ import {
 } from "@mui/material";
 import { useRegisterService } from "do-ents/useRegisterService";
 import { useServiceCheck } from "do-ents/useServiceCheck";
+import { useSelectedService } from "hooks/useSelectedService";
 import { useShowServerError } from "hooks/useShowServerError";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { memo } from "react";
 import intl from "react-intl-universal";
 import { useSetRecoilState } from "recoil";
 import { refreshServicesState } from "recoil/atoms";
-import { Service } from "../meta/Service";
 import LazyTextField from "../PropertyBox/LazyTextField";
 
 export const EditServiceDialog = memo(
   (props: { open: boolean; onClose: () => void }) => {
     const { open, onClose } = props;
-    const [values, setValues] = useState<Service>({
-      name: intl.get("new-service"),
-      url: "",
-    });
+    const service = useSelectedService();
+    const [name, setName] = useState(service?.name);
 
     const setRefresh = useSetRecoilState(refreshServicesState);
+
+    useEffect(() => {
+      setName(service?.name);
+    }, [service]);
 
     const [add, { loading: adding, error: addError }] = useRegisterService({
       onCompleted: (status: boolean) => {
         if (status) {
           handleClose();
-          setValues({ name: intl.get("new-service"), url: "" });
           setRefresh((flag) => flag + 1);
         }
       },
     });
-
-    const [check, { installed, loading, error: checkError }] =
-      useServiceCheck();
 
     useShowServerError(addError);
 
@@ -52,25 +50,14 @@ export const EditServiceDialog = memo(
 
     const handleChangeServiceName = useCallback(
       (event: React.ChangeEvent<HTMLInputElement>) => {
-        setValues((values) => ({ ...values, name: event.target.value }));
+        setName(event.target.value);
       },
       []
     );
 
-    const handleChangeUrl = useCallback(
-      (event: React.ChangeEvent<HTMLInputElement>) => {
-        const url = event.target.value;
-        setValues((values) => ({ ...values, url }));
-        if (url) {
-          check(url);
-        }
-      },
-      [check]
-    );
-
-    const handleAdd = useCallback(() => {
-      add(values);
-    }, [add, values]);
+    const handleEdit = useCallback(() => {
+      //add(values);
+    }, []);
 
     return (
       <>
@@ -83,23 +70,17 @@ export const EditServiceDialog = memo(
                   fullWidth
                   label="URL"
                   type="url"
-                  value={values.url || ""}
+                  value={service?.url || ""}
                   variant="outlined"
-                  onChange={handleChangeUrl}
                   size="small"
-                  required
-                  InputProps={{
-                    endAdornment: loading ? (
-                      <CircularProgress size={24} />
-                    ) : undefined,
-                  }}
+                  disabled
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
                   fullWidth
                   label={intl.get("service-name")}
-                  value={values.name}
+                  value={name}
                   variant="outlined"
                   onChange={handleChangeServiceName}
                   size="small"
@@ -107,10 +88,6 @@ export const EditServiceDialog = memo(
                 />
               </Grid>
             </Grid>
-            <Box sx={{ color: "red" }}>
-              {!!values.url && checkError?.message}
-              {installed === false && intl.get("service-not-install")}
-            </Box>
           </DialogContent>
           <DialogActions>
             <Button color="inherit" sx={{ mb: 1 }} onClick={handleClose}>
@@ -119,17 +96,11 @@ export const EditServiceDialog = memo(
             <LoadingButton
               variant="contained"
               sx={{ mr: 2, mb: 1 }}
-              disabled={
-                !values.name ||
-                !values.url ||
-                loading ||
-                !!checkError ||
-                !installed
-              }
+              disabled={!name || !service?.url}
               loading={adding}
-              onClick={handleAdd}
+              onClick={handleEdit}
             >
-              {intl.get("add")}
+              {intl.get("edit")}
             </LoadingButton>
           </DialogActions>
         </Dialog>
