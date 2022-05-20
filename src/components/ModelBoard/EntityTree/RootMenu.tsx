@@ -70,6 +70,15 @@ export const RootMenu = memo(
       [addClass]
     );
 
+    const handleAddAbstract = useCallback(
+      (event: React.MouseEvent<HTMLElement>) => {
+        addClass(StereoType.Abstract);
+        event.stopPropagation();
+        setSubAnchorEl(null);
+      },
+      [addClass]
+    );
+
     const handleAddEnum = useCallback(
       (event: React.MouseEvent<HTMLElement>) => {
         addClass(StereoType.Enum);
@@ -239,6 +248,9 @@ export const RootMenu = memo(
           </MenuItem>
           <MenuItem onClick={handleAddEntity}>
             {intl.get("add-entity-class")}
+          </MenuItem>
+          <MenuItem onClick={handleAddAbstract}>
+            {intl.get("add-abstract-class")}
           </MenuItem>
           <MenuItem onClick={handleAddEnum}>
             {intl.get("add-enum-class")}

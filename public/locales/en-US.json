@@ -139,6 +139,7 @@
   "children-class": "Children",
   "methods": "Methods",
   "add-entity-class": "Add entity",
+  "add-abstract-class": "Add abstract class",
   "add-enum-class": "Add enum",
   "add-value-object": "Add value object",
   "add-external-class": "Add external class",

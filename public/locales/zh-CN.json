@@ -139,6 +139,7 @@
   "children-class": "子类",
   "methods": "方法",
   "add-entity-class": "添加实体类",
+  "add-abstract-class": "添加抽象类",
   "add-enum-class": "添加枚举类",
   "add-value-object": "添加值类",
   "add-external-class": "添加外部实体",
