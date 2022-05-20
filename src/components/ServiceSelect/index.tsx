@@ -2,6 +2,7 @@ import {
   Box,
   Button,
   CircularProgress,
+  List,
   Popover,
   SvgIcon,
   Typography,
@@ -15,7 +16,7 @@ import { useSetRecoilState } from "recoil";
 import { useGQLServices } from "do-ents/useGQLServices";
 import { useShowServerError } from "hooks/useShowServerError";
 import { AddServiceDialog } from "components/ModelBoard/EntityTree/AddServiceDialog";
-import { ServiceList } from "./ServiceList";
+import { ServiceItem } from "./ServiceItem";
 
 export const ServiceSelect = memo(() => {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
@@ -102,7 +103,11 @@ export const ServiceSelect = memo(() => {
               ...scrollStyles,
             }}
           >
-            <ServiceList />
+            <List>
+              {services?.map((service) => {
+                return <ServiceItem key={service.id} service={service} />;
+              })}
+            </List>
           </Box>
         </Box>
       </Popover>
