@@ -20,7 +20,8 @@ import intl from "react-intl-universal";
 import { Service } from "../meta/Service";
 import LazyTextField from "../PropertyBox/LazyTextField";
 
-export const AddServiceDialog = memo(() => {
+export const AddServiceDialog = memo((props: { onAddFinished: () => void }) => {
+  const { onAddFinished } = props;
   const [open, setOpen] = useState(false);
   const [values, setValues] = useState<Service>({
     name: intl.get("new-service"),
@@ -33,6 +34,7 @@ export const AddServiceDialog = memo(() => {
         setOpen(false);
         setValues({ name: intl.get("new-service"), url: "" });
       }
+      onAddFinished()
     },
   });
 
@@ -132,7 +134,13 @@ export const AddServiceDialog = memo(() => {
           <LoadingButton
             variant="contained"
             sx={{ mr: 2, mb: 1 }}
-            disabled={!values.name || !values.url || loading || !!checkError || !installed}
+            disabled={
+              !values.name ||
+              !values.url ||
+              loading ||
+              !!checkError ||
+              !installed
+            }
             loading={adding}
             onClick={handleAdd}
           >
