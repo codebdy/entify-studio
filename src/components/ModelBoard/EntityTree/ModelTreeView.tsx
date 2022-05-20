@@ -16,7 +16,7 @@ import { diagramsState } from "../recoil/atoms";
 import { SvgIcon } from "@mui/material";
 import { Enums } from "./Enums";
 import { ValueObjects } from "./ValueObjects";
-import { ServiceClasses } from "./ServiceClasses";
+import { ExternalClasses } from "./ExternalClasses";
 import { DiagramNode } from "./DiagramNode";
 import intl from "react-intl-universal";
 
@@ -121,7 +121,7 @@ export const ModelTreeView = memo((props: { graph?: Graph }) => {
           <Classes graph={graph} />
           <Enums graph={graph} />
           <ValueObjects graph={graph} />
-          <ServiceClasses graph={graph} />
+          <ExternalClasses graph={graph} />
         </TreeItem>
       </TreeView>
       <input

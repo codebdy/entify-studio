@@ -8,20 +8,20 @@ import { ClassNode } from "./ClassNode";
 import intl from "react-intl-universal";
 import { memo } from "react";
 import { Graph } from "@antv/x6";
-import { useServiceClasses } from "../hooks/useServiceClasses";
+import { useExternalClasses } from "../hooks/useExternalClasses";
 
-export const ServiceClasses = memo((props: { graph?: Graph }) => {
+export const ExternalClasses = memo((props: { graph?: Graph }) => {
   const { graph } = props;
   const serviceId = useSelectedServiceId();
-  const services = useServiceClasses(serviceId);
+  const services = useExternalClasses(serviceId);
 
   return services.length > 0 ? (
     <TreeItem
-      nodeId={TREE_ROOT_ID + "SERVICES"}
+      nodeId={TREE_ROOT_ID + "EXTERNALS"}
       label={
         <TreeNodeLabel>
           <FolderOutlinedIcon />
-          <NodeText>{intl.get("service-classes")}</NodeText>
+          <NodeText>{intl.get("external-classes")}</NodeText>
         </TreeNodeLabel>
       }
     >

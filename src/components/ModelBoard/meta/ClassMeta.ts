@@ -14,7 +14,7 @@ export enum StereoType {
   Entity = "Entity",
   //GQLInterface = "GQLInterface",
   //Association = "Association",
-  Service = "Service",//"DDD"中的 service 类
+  External = "External",//外部实体
 }
 
 /**

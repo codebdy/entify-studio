@@ -10,7 +10,7 @@ export function useCreateTempClassNodeForNew(serviceId: number) {
       const classMeta = creatNewClassMeta(stereoType);
       if (
         stereoType === StereoType.ValueObject ||
-        stereoType === StereoType.Service ||
+        stereoType === StereoType.External ||
         stereoType === StereoType.Enum
       ) {
         classMeta.methods = [];
@@ -22,7 +22,7 @@ export function useCreateTempClassNodeForNew(serviceId: number) {
         shape: "react-shape",
         data: {
           ...classMeta,
-          root: stereoType === StereoType.Service,
+          root: stereoType === StereoType.External,
           isTempForNew: true,
         },
       };

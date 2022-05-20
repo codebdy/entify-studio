@@ -30,7 +30,7 @@ export function useCreateNewClass(serviceId: number) {
         attributes:
           stereoType === StereoType.Enum ||
           stereoType === StereoType.ValueObject ||
-          stereoType === StereoType.Service
+          stereoType === StereoType.External
             ? []
             : [
                 {

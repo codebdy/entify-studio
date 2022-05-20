@@ -374,7 +374,7 @@ export const ClassView = memo(
                       sx={{
                         padding: theme.spacing(1, 3),
                       }}
-                      disabled={data?.stereoType === StereoType.Service}
+                      disabled={data?.stereoType === StereoType.External}
                       onClick={handleAttributeCreate}
                     >
                       <SvgIcon fontSize="small">
@@ -443,7 +443,7 @@ export const ClassView = memo(
                 cursor: canLinkFrom ? "crosshair" : "default",
               }}
             >
-              {data?.stereoType !== StereoType.Service && (
+              {data?.stereoType !== StereoType.External && (
                 <Box
                   sx={{
                     display: "flex",

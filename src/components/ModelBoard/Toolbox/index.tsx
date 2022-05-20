@@ -135,9 +135,9 @@ export const Toolbox = memo((props: { graph?: Graph }) => {
           <ClassRect stereoChar="V" oneBorder={true} />
           {intl.get("value-object")}
         </ToolItem>
-        <ToolItem onMouseDown={startDragFn(StereoType.Service)}>
-          <ClassRect stereoChar="S" oneBorder={true} />
-          {intl.get("service-class")}
+        <ToolItem onMouseDown={startDragFn(StereoType.External)}>
+          <ClassRect stereoChar="X" oneBorder={true} />
+          {intl.get("external-class")}
         </ToolItem>
         <ToolItem
           selected={pressedLineType === RelationType.INHERIT}

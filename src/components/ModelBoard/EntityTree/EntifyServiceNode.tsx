@@ -1,7 +1,7 @@
 import { Classes } from "./Classes";
 import { Enums } from "./Enums";
 import { ValueObjects } from "./ValueObjects";
-import { ServiceClasses } from "./ServiceClasses";
+import { ExternalClasses } from "./ExternalClasses";
 import { DiagramNode } from "./DiagramNode";
 import LocalModelAction from "./LocalModelAction";
 import { memo } from "react";
@@ -54,7 +54,7 @@ export const EntifyServiceNode = memo(
         <Classes graph={graph} />
         <Enums graph={graph} />
         <ValueObjects graph={graph} />
-        <ServiceClasses graph={graph} />
+        <ExternalClasses graph={graph} />
       </TreeItem>
     );
   }
