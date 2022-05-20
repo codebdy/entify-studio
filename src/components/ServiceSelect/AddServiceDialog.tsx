@@ -17,8 +17,8 @@ import { useShowServerError } from "hooks/useShowServerError";
 import React, { useCallback, useState } from "react";
 import { memo } from "react";
 import intl from "react-intl-universal";
-import { Service } from "../meta/Service";
-import LazyTextField from "../PropertyBox/LazyTextField";
+import { Service } from "../ModelBoard/meta/Service";
+import LazyTextField from "../ModelBoard/PropertyBox/LazyTextField";
 
 export const AddServiceDialog = memo(
   (props: { onAddFinished: () => void; onClose: () => void }) => {
@@ -90,7 +90,7 @@ export const AddServiceDialog = memo(
           }
           onClick={handleClickOpen}
         >
-          {intl.get("add-service")}
+          {intl.get("add")}
         </Button>
         <Dialog open={open} onClose={handleClose} fullWidth>
           <DialogTitle>{intl.get("add-service")}</DialogTitle>

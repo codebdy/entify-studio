@@ -29,7 +29,7 @@
   "redo": "Redo",
   "delete": "Delete",
   "export-inteface": "Export models interface",
-  "local-models": "Local models",
+  "domain-models": "Domain models",
   "commands": "Commands",
   "toolbox": "Toolbox",
   "class": "Class",

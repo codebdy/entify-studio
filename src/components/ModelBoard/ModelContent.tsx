@@ -23,15 +23,16 @@ import { EntityNameMeta, Meta } from "./meta/Meta";
 import { useShowServerError } from "hooks/useShowServerError";
 import { gql } from "graphql-request";
 import { PropertyBox } from "./PropertyBox";
+import { selectedServiceIdState } from "recoil/atoms";
 
 export const ModelContent = memo(
   (props: {
     graph?: Graph;
     onSetGraph: (graph?: Graph) => void;
-    serviceId: number;
   }) => {
-    const {graph, onSetGraph, serviceId } = props;
+    const {graph, onSetGraph } = props;
     const scrollStyles = useChildrenScrollStyles();
+    const serviceId = useRecoilValue(selectedServiceIdState)
     const setMeta = useSetRecoilState(metaState(serviceId));
     const setEntities = useSetRecoilState(classesState(serviceId));
     const setRelations = useSetRecoilState(relationsState(serviceId));

@@ -19,9 +19,11 @@ export const ModelsBoard = memo(() => {
         height: "0",
       }}
     >
-      <EntityTree graph={graph}></EntityTree>
-      {!!selectedService?.id && (
-        <ModelContent onSetGraph={setGraph} serviceId={selectedService.id} />
+      {!!selectedService && (
+        <>
+          <EntityTree graph={graph}></EntityTree>
+          <ModelContent onSetGraph={setGraph} />
+        </>
       )}
     </Box>
   );

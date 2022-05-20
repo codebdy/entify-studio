@@ -1,26 +1,12 @@
-import React, { memo, useEffect } from "react";
-import { Box, CircularProgress } from "@mui/material";
+import React, { memo } from "react";
+import { Box } from "@mui/material";
 import { ModelTreeView } from "./ModelTreeView";
 import { Graph } from "@antv/x6";
 import { useScrollbarStyles } from "theme/useScrollbarStyles";
-import { useGQLServices } from "do-ents/useGQLServices";
-import { useSetRecoilState } from "recoil";
-import { servicesState } from "recoil/atoms";
-import { useShowServerError } from "hooks/useShowServerError";
 
 export const EntityTree = memo((props: { graph?: Graph }) => {
   const { graph } = props;
   const scrollStyles = useScrollbarStyles();
-  const setServices = useSetRecoilState(servicesState);
-
-  const { services, loading, error, refresh } = useGQLServices();
-
-  useShowServerError(error);
-
-  useEffect(() => {
-    setServices(services || []);
-  }, [services, setServices]);
-
   return (
     <Box
       sx={{
@@ -38,7 +24,7 @@ export const EntityTree = memo((props: { graph?: Graph }) => {
           ...scrollStyles,
         }}
       >
-        {loading ? <CircularProgress /> : <ModelTreeView graph={graph} />}
+        <ModelTreeView graph={graph} />
       </Box>
     </Box>
   );

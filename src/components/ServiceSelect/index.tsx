@@ -15,7 +15,7 @@ import { servicesState } from "recoil/atoms";
 import { useSetRecoilState } from "recoil";
 import { useGQLServices } from "do-ents/useGQLServices";
 import { useShowServerError } from "hooks/useShowServerError";
-import { AddServiceDialog } from "components/ModelBoard/EntityTree/AddServiceDialog";
+import { AddServiceDialog } from "components/ServiceSelect/AddServiceDialog";
 import { ServiceItem } from "./ServiceItem";
 import { useSelectedService } from "hooks/useSelectedService";
 
@@ -24,7 +24,6 @@ export const ServiceSelect = memo(() => {
   const scrollStyles = useScrollbarStyles();
   const setServices = useSetRecoilState(servicesState);
   const selectedService = useSelectedService();
-
   const { services, loading, error, refresh } = useGQLServices();
 
   useShowServerError(error);

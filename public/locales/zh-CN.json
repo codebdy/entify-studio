@@ -29,7 +29,7 @@
   "redo": "重做",
   "delete": "删除",
   "export-inteface": "导出模型接口类",
-  "local-models": "本地模型",
+  "domain-models": "业务模型",
   "commands": "指令",
   "toolbox": "工具箱",
   "class": "类",
