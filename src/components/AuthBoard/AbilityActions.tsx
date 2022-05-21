@@ -10,6 +10,7 @@ import { memo } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { authChangedState, selectedRoleState } from "./recoil/atoms";
 import { AbilityType } from "./meta/AbilityType";
+import { useSelectedServiceId } from "components/ModelBoard/hooks/useSelectedServiceId";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -31,8 +32,9 @@ export const AbilityActions = memo(
   (props: { entityMeta: ClassMeta; columnUuid?: string }) => {
     const { entityMeta, columnUuid } = props;
     const classes = useStyles();
-    const selectedRole = useRecoilValue(selectedRoleState);
-    const setChanged = useSetRecoilState(authChangedState);
+    const selectedServiceId = useSelectedServiceId();
+    const selectedRole = useRecoilValue(selectedRoleState(selectedServiceId));
+    const setChanged = useSetRecoilState(authChangedState(selectedServiceId));
 
     const findAbilityByType = (type: AbilityType): Ability => {
       return (

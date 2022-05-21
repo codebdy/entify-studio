@@ -15,6 +15,7 @@ import RouterPrompt from "components/common/RouterPrompt";
 import { LoadingButton } from "@mui/lab";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { authChangedState, selectedRoleState } from "./recoil/atoms";
+import { useSelectedServiceId } from "components/ModelBoard/hooks/useSelectedServiceId";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -32,8 +33,11 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const Topbar = memo((props: {}) => {
   const classes = useStyles();
-  const changed = useRecoilValue(authChangedState);
-  const [selectedRole, setSelectedRole] = useRecoilState(selectedRoleState);
+  const selectedServiceId = useSelectedServiceId();
+  const changed = useRecoilValue(authChangedState(selectedServiceId));
+  const [selectedRole, setSelectedRole] = useRecoilState(
+    selectedRoleState(selectedServiceId)
+  );
   // const appStore = useAppStore();
   // const boardStore = useAuthBoardStore();
   // const { data, error, loading } = useMagicQuery<Role[]>(

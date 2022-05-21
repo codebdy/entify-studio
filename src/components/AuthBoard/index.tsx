@@ -10,7 +10,6 @@ import { EntityAuthSettings } from "./meta/EntityAuthSettings";
 import { useSelectedService } from "components/ModelBoard/hooks/useSelectedService";
 
 export const AuthBoard = memo(() => {
-  // const [boardStore] = useState(new AuthBoardStore());
   const scrollStyles = useChildrenScrollStyles();
   const selectedServie = useSelectedService();
   const [entityAuths, setEntityAuths] = useState<EntityAuthSettings[]>([]);

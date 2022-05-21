@@ -1,12 +1,12 @@
-import { atom } from "recoil";
+import { atomFamily } from "recoil";
 import { Role } from "../meta/Role";
 
-export const selectedRoleState = atom<Role|undefined>({
+export const selectedRoleState = atomFamily<Role|undefined, number>({
   key: "selectedRole",
   default: undefined,
 });
 
-export const authChangedState =  atom<boolean>({
+export const authChangedState =  atomFamily<boolean, number>({
   key: "authChanged",
   default: false,
 });
