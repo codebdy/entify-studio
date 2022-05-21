@@ -19,6 +19,9 @@ import GitHubIcon from "@mui/icons-material/GitHub";
 import { ServiceSelect } from "./ServiceSelect";
 import LiveHelpIcon from "@mui/icons-material/LiveHelp";
 import { AuthBoard } from "./AuthBoard";
+import { useShowServerError } from "hooks/useShowServerError";
+import { useReadMeta } from "do-ents/useReadMeta";
+import Loading from "./common/loading";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -59,6 +62,10 @@ export const Studio = memo(() => {
   const classes = useStyles();
   const history = useHistory();
   const setLoggedUser = useSetRecoilState(loggedUserState);
+
+  const { loading, error } = useReadMeta();
+
+  useShowServerError(error);
 
   const handleLogout = useCallback(() => {
     setLoggedUser(undefined);
@@ -156,12 +163,16 @@ export const Studio = memo(() => {
           </Tooltip>
         </Toolbar>
       </AppBar>
-      <Switch>
-        <Route path="/studio/models" component={ModelsBoard}></Route>
-        <Route path="/studio/api" component={GraphiQLBoard}></Route>
-        <Route path="/studio/auth" component={AuthBoard}></Route>
-        <Redirect to={`/studio/models`} from="/studio" />
-      </Switch>
+      {loading ? (
+        <Loading />
+      ) : (
+        <Switch>
+          <Route path="/studio/models" component={ModelsBoard}></Route>
+          <Route path="/studio/api" component={GraphiQLBoard}></Route>
+          <Route path="/studio/auth" component={AuthBoard}></Route>
+          <Redirect to={`/studio/models`} from="/studio" />
+        </Switch>
+      )}
     </div>
   );
 });

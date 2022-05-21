@@ -47,8 +47,10 @@ export function useQueryOne<T extends IObject>(
   }, [gql, serverUrl]);
 
   useEffect(() => {
-    excute();
-  }, [excute]);
+    if (gql) {
+      excute();
+    }
+  }, [excute, gql]);
 
   const mutate = useCallback((data?: T) => {
     console.log("执行Mutate");

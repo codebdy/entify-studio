@@ -8,15 +8,9 @@ import { Toolbox } from "./Toolbox";
 import EmpertyCanvas from "./EmpertyCanvas";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import {
-  diagramsState,
-  classesState,
-  metaState,
   minMapState,
   publishedIdState,
-  relationsState,
   selectedDiagramState,
-  x6EdgesState,
-  x6NodesState,
 } from "./recoil/atoms";
 import { useQueryOne } from "do-ents/useQueryOne";
 import { EntityNameMeta, Meta } from "./meta/Meta";
@@ -32,27 +26,10 @@ export const ModelContent = memo(
     const scrollStyles = useChildrenScrollStyles();
     const serviceId = useRecoilValue(selectedServiceIdState);
     const selecedService = useSelectedService();
-    const setMeta = useSetRecoilState(metaState(serviceId));
-    const setEntities = useSetRecoilState(classesState(serviceId));
-    const setRelations = useSetRecoilState(relationsState(serviceId));
-    const setDiagrams = useSetRecoilState(diagramsState(serviceId));
-    const setX6Nodes = useSetRecoilState(x6NodesState(serviceId));
-    const setX6Edges = useSetRecoilState(x6EdgesState(serviceId));
     const setPublishedId = useSetRecoilState(publishedIdState(serviceId));
     const selectedDiagram = useRecoilValue(selectedDiagramState(serviceId));
     const minMap = useRecoilValue(minMapState(serviceId));
     const queryName = useMemo(() => "one" + EntityNameMeta, []);
-    const queryGql = useMemo(() => {
-      return gql`
-      query ${queryName} {
-        ${queryName}{
-          id
-          content
-          status
-        }
-      }
-    `;
-    }, [queryName]);
 
     const queryPubishedGql = useMemo(() => {
       return gql`
@@ -73,36 +50,11 @@ export const ModelContent = memo(
       error: publishedError,
       loading: publishedLoading,
     } = useQueryOne<Meta>(queryPubishedGql, selecedService?.url);
-    const { data, error, loading } = useQueryOne<Meta>(
-      queryGql,
-      selecedService?.url
-    );
-    useShowServerError(error || publishedError);
+    useShowServerError(publishedError);
     useEffect(() => {
       const meta = publishedData ? publishedData[queryName] : undefined;
       setPublishedId(meta?.id || undefined);
     }, [publishedData, queryName, setPublishedId]);
-
-    useEffect(() => {
-      if (data) {
-        const meta = data[queryName];
-        setMeta(meta);
-        setEntities(meta?.content?.classes || []);
-        setRelations(meta?.content?.relations || []);
-        setDiagrams(meta?.content?.diagrams || []);
-        setX6Nodes(meta?.content?.x6Nodes || []);
-        setX6Edges(meta?.content?.x6Edges || []);
-      }
-    }, [
-      data,
-      queryName,
-      setDiagrams,
-      setEntities,
-      setMeta,
-      setRelations,
-      setX6Edges,
-      setX6Nodes,
-    ]);
 
     return (
       <Box

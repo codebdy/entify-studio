@@ -24,8 +24,6 @@ import { useRecoilValue } from "recoil";
 import { LoadingButton } from "@mui/lab";
 import { useSelectedServiceId } from "components/ModelBoard/hooks/useSelectedServiceId";
 
-const SqlWhereParser = require("sql-where-parser");
-const OPERATOR_UNARY_MINUS = Symbol("-");
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -109,71 +107,71 @@ export const ExpressDialog = memo(
     };
 
     const validateExpression = (exp: string) => {
-      const parser = new SqlWhereParser();
+      // const parser = new SqlWhereParser();
 
-      const evaluator = (
-        operatorValue: string | typeof OPERATOR_UNARY_MINUS,
-        operands: any[]
-      ) => {
-        if (operatorValue === OPERATOR_UNARY_MINUS) {
-          operatorValue = "-";
-        }
-        if (operatorValue === ",") {
-          return [].concat(operands[0], operands[1]);
-        }
+      // const evaluator = (
+      //   operatorValue: string | typeof OPERATOR_UNARY_MINUS,
+      //   operands: any[]
+      // ) => {
+      //   if (operatorValue === OPERATOR_UNARY_MINUS) {
+      //     operatorValue = "-";
+      //   }
+      //   if (operatorValue === ",") {
+      //     return [].concat(operands[0], operands[1]);
+      //   }
 
-        switch (operatorValue) {
-          case "OR":
-            return `(${operands.join(" OR ")})`;
-          case "AND":
-            return `(${operands.join(" AND ")})`;
-          default:
-            const arr = operands[0].split(".");
+      //   switch (operatorValue) {
+      //     case "OR":
+      //       return `(${operands.join(" OR ")})`;
+      //     case "AND":
+      //       return `(${operands.join(" AND ")})`;
+      //     default:
+      //       const arr = operands[0].split(".");
 
-            if (arr.length > 1) {
-              const [roleName, columnName] = arr;
+      //       if (arr.length > 1) {
+      //         const [roleName, columnName] = arr;
 
-              const relation = getRelationByName(entityMeta.uuid, roleName);
-              if (!relation) {
-                throw new Error(
-                  `Entity ${entityMeta.name} has not relation ${roleName}`
-                );
-              }
+      //         const relation = getRelationByName(entityMeta.uuid, roleName);
+      //         if (!relation) {
+      //           throw new Error(
+      //             `Entity ${entityMeta.name} has not relation ${roleName}`
+      //           );
+      //         }
 
-              const targetUuid =
-                entityMeta.uuid === relation.sourceId
-                  ? relation.targetId
-                  : relation.sourceId;
-              const targetEntity = getEntityByUuid(targetUuid);
+      //         const targetUuid =
+      //           entityMeta.uuid === relation.sourceId
+      //             ? relation.targetId
+      //             : relation.sourceId;
+      //         const targetEntity = getEntityByUuid(targetUuid);
 
-              if (
-                !targetEntity?.methods.find(
-                  (column) => column.name === columnName
-                )
-              ) {
-                throw new Error(
-                  `Relation ${roleName} target entity ${targetEntity?.name} has not column ${columnName}`
-                );
-              }
-            } else {
-              if (
-                !entityMeta.methods.find(
-                  (column) => column.name === operands[0]
-                )
-              ) {
-                throw new Error(
-                  `Entity ${entityMeta.name} has not column ${operands[0]}`
-                );
-              }
-            }
-        }
-      };
+      //         if (
+      //           !targetEntity?.methods.find(
+      //             (column) => column.name === columnName
+      //           )
+      //         ) {
+      //           throw new Error(
+      //             `Relation ${roleName} target entity ${targetEntity?.name} has not column ${columnName}`
+      //           );
+      //         }
+      //       } else {
+      //         if (
+      //           !entityMeta.methods.find(
+      //             (column) => column.name === operands[0]
+      //           )
+      //         ) {
+      //           throw new Error(
+      //             `Entity ${entityMeta.name} has not column ${operands[0]}`
+      //           );
+      //         }
+      //       }
+      //   }
+      // };
 
-      try {
-        parser.parse(exp, evaluator);
-      } catch (error) {
-        //return error.message;
-      }
+      // try {
+      //   parser.parse(exp, evaluator);
+      // } catch (error) {
+      //   //return error.message;
+      // }
     };
 
     const handleConfirm = () => {

@@ -8,11 +8,16 @@ import { useState } from "react";
 import { useChildrenScrollStyles } from "theme/useChildrenScrollStyles";
 import { EntityAuthSettings } from "./meta/EntityAuthSettings";
 import { useSelectedService } from "components/ModelBoard/hooks/useSelectedService";
+import { useEntities } from "components/ModelBoard/hooks/useEntities";
+import { useSelectedServiceId } from "components/ModelBoard/hooks/useSelectedServiceId";
+import { ClassNode } from "./ClassNode";
 
 export const AuthBoard = memo(() => {
   const scrollStyles = useChildrenScrollStyles();
   const selectedServie = useSelectedService();
+  const selectedServiceId = useSelectedServiceId();
   const [entityAuths, setEntityAuths] = useState<EntityAuthSettings[]>([]);
+  const entities = useEntities(selectedServiceId);
   // const {data, loading, error} = useSWRQuery<PackageMeta[]>(API_PUSLISHED_SCHEMA);
   // const {
   //   data: authData,
@@ -53,7 +58,7 @@ export const AuthBoard = memo(() => {
               flex: 1,
               border: (theme) => `${theme.palette.divider} solid 1px`,
               overflow: "auto",
-              height: "0",
+              height: 0,
               marginTop: (theme) => theme.spacing(1),
               padding: (theme) => theme.spacing(2),
             }}
@@ -63,15 +68,15 @@ export const AuthBoard = memo(() => {
               defaultExpandIcon={<ChevronRightIcon />}
               selected=""
             >
-              {/* {data?.map((aPackage) => {
-                  return (
-                    <PackageNode
-                      key={aPackage.uuid}
-                      packageMeta={aPackage}
-                      entityAuths={entityAuths}
-                    />
-                  );
-                })} */}
+              {entities.map((entity) => {
+                return (
+                  <ClassNode
+                    key={entity.uuid}
+                    entityMeta={entity}
+                    entityAuths={entityAuths}
+                  />
+                );
+              })}
             </TreeView>
           </Box>
         </Box>
