@@ -17,7 +17,8 @@ import { loggedUserState, themeModeState } from "recoil/atoms";
 import { LOGIN_URL, TOKEN_NAME } from "util/consts";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import { ServiceSelect } from "./ServiceSelect";
-import LiveHelpIcon from '@mui/icons-material/LiveHelp';
+import LiveHelpIcon from "@mui/icons-material/LiveHelp";
+import { AuthBoard } from "./AuthBoard";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -111,6 +112,13 @@ export const Studio = memo(() => {
           >
             {"API"}
           </NavLink>
+          <NavLink
+            className={classes.navLink}
+            activeClassName={classes.activeLink}
+            to="/studio/auth"
+          >
+            {intl.get("authority")}
+          </NavLink>
           <Box sx={{ flex: 1 }} />
           <Tooltip
             title={intl.get(themeToSwitch)}
@@ -124,12 +132,20 @@ export const Studio = memo(() => {
             title={intl.get("document")}
             aria-label={intl.get("document")}
           >
-            <IconButton size="large" href="https://rxdrag.com/docs/intro" target="_blank">
+            <IconButton
+              size="large"
+              href="https://rxdrag.com/docs/intro"
+              target="_blank"
+            >
               <LiveHelpIcon />
             </IconButton>
           </Tooltip>
           <Tooltip title="Github" aria-label="Github">
-            <IconButton size="large" href="https://github.com/rxdrag" target="_blank">
+            <IconButton
+              size="large"
+              href="https://github.com/rxdrag"
+              target="_blank"
+            >
               <GitHubIcon />
             </IconButton>
           </Tooltip>
@@ -143,6 +159,7 @@ export const Studio = memo(() => {
       <Switch>
         <Route path="/studio/models" component={ModelsBoard}></Route>
         <Route path="/studio/api" component={GraphiQLBoard}></Route>
+        <Route path="/studio/auth" component={AuthBoard}></Route>
         <Redirect to={`/studio/models`} from="/studio" />
       </Switch>
     </div>

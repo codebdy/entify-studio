@@ -1,12 +1,12 @@
-import { RxRole } from './RxRole';
+import { Role } from './Role';
 import { AbilityType } from './AbilityType';
 
-export interface RxAbility {
+export interface Ability {
   id?: number;
   entityUuid: string;
   columnUuid?: string;
   can: boolean;
   expression?: string;
   abilityType: AbilityType;
-  role?: RxRole;
+  role?: Role;
 }
