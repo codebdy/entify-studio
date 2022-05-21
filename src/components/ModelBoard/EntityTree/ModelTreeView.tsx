@@ -96,6 +96,7 @@ export const ModelTreeView = memo((props: { graph?: Graph }) => {
     selectedServiceId && remove(selectedServiceId);
   }, [remove, selectedServiceId]);
 
+ 
   return (
     <>
       <TreeView
@@ -118,7 +119,7 @@ export const ModelTreeView = memo((props: { graph?: Graph }) => {
         }}
       >
         <TreeItem
-          nodeId={"node_" + selectedServiceId}
+          nodeId={TREE_ROOT_ID}
           label={
             <TreeNodeLabel
               fixedAction={true}
@@ -126,10 +127,7 @@ export const ModelTreeView = memo((props: { graph?: Graph }) => {
                 removing ? (
                   <CircularProgress size={18} />
                 ) : (
-                  <IconButton
-                    size="small"
-                    onClick={handleMenuOpen}
-                  >
+                  <IconButton size="small" onClick={handleMenuOpen}>
                     <MoreVertOutlinedIcon fontSize="small" />
                   </IconButton>
                 )
