@@ -10,15 +10,13 @@ import {
 import makeStyles from "@mui/styles/makeStyles";
 import createStyles from "@mui/styles/createStyles";
 import intl from "react-intl-universal";
-import { Skeleton } from "@mui/material";
 import RouterPrompt from "components/common/RouterPrompt";
 import { LoadingButton } from "@mui/lab";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { authChangedState, selectedRoleIdState } from "./recoil/atoms";
 import { useSelectedServiceId } from "components/ModelBoard/hooks/useSelectedServiceId";
-import { useRoles } from "do-ents/useRoles";
-import { useShowServerError } from "hooks/useShowServerError";
 import { rolesState } from "recoil/atoms";
+import { useConfirm } from "hooks/useConfirm";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -43,12 +41,8 @@ export const Topbar = memo((props: {}) => {
   );
 
   const roles = useRecoilValue(rolesState);
+  const confirm = useConfirm();
 
-  // const appStore = useAppStore();
-  // const boardStore = useAuthBoardStore();
-  // const { data, error, loading } = useMagicQuery<Role[]>(
-  //   new MagicQueryBuilder().setEntity("RxRole").addRelation("abilities")
-  // );
   // const [excuteSave, { loading: saving, error: saveError }] = useLazyMagicPost({
   //   onCompleted() {
   //     appStore.showSuccessAlert();
@@ -58,22 +52,21 @@ export const Topbar = memo((props: {}) => {
 
   //useShowServerError(error || saveError);
 
-  const changeRole = (roleId: number | "") => {
-    // const role = data?.data.find((rl) => rl.id === roleId);
-    // boardStore.setSelecRole(role ? new RxRoleStore(role) : undefined);
-  };
-
   const handleChange = (event: SelectChangeEvent<"" | number>) => {
-    // const roleId = event.target.value;
-    // if (roleId !== boardStore.selectRole?.id) {
-    //   if (boardStore.changed) {
-    //     appStore.confirmAction(intl.get("changing-not-save-message"), () => {
-    //       changeRole(roleId as any);
-    //     });
-    //   } else {
-    //     changeRole(roleId as any);
-    //   }
-    // }
+    const roleId = event.target.value;
+    if (roleId === "") {
+      setSelectedRoleId(undefined);
+      return;
+    }
+    if (roleId !== selectedRoleId) {
+      if (changed) {
+        confirm(intl.get("changing-not-save-message"), () => {
+          setSelectedRoleId(roleId as any);
+        });
+      } else {
+        setSelectedRoleId(roleId as any);
+      }
+    }
   };
 
   const handleSave = () => {
