@@ -5,6 +5,7 @@ import {
   SvgIcon,
   Switch,
   Theme,
+  useTheme,
 } from "@mui/material";
 import createStyles from "@mui/styles/createStyles";
 import makeStyles from "@mui/styles/makeStyles";
@@ -15,7 +16,7 @@ import { AbilityActions } from "./AbilityActions";
 import { NodeLabel } from "./NodeLabel";
 import { AttributeNode } from "./ColumnNode";
 import { ExpressArea } from "./ExpressArea";
-import { memo, useState } from "react";
+import { memo, useMemo, useState } from "react";
 import intl from "react-intl-universal";
 import { createId } from "util/createId";
 import { EntityAuthSettings } from "./meta/EntityAuthSettings";
@@ -44,6 +45,7 @@ export const ClassNode = memo(
   }) => {
     const { entityMeta, entityAuth, entityAuths } = props;
     const classes = useStyles();
+    const theme = useTheme();
     const [hover, setHover] = useState(false);
     // const [excutePost, { loading, error }] = useLazyMagicPost({
     //   onCompleted(data: any) {
@@ -71,8 +73,6 @@ export const ClassNode = memo(
       // excutePost({ data });
     };
 
-    const loading = false;
-
     return (
       <TreeItem
         nodeId={entityMeta.uuid}
@@ -84,18 +84,10 @@ export const ClassNode = memo(
             <div className={classes.nodeName}>
               <SvgIcon>
                 <path
-                  d="
-                  M 1,6
-                  L 14,6
-                  L 14,19
-                  L 1,19
-                  L 1,6
-                  M 1,11
-                  L 14,11
-                "
-                  stroke="#000"
+                  d=" M 1,6 L 14,6 L 14,19 L 1,19 L 1,6  M 1,11 L 14,11"
+                  stroke={theme.palette.text.primary}
                   strokeWidth="1"
-                  fill="#fff"
+                  fill="transparent"
                 ></path>
               </SvgIcon>
               {entityMeta.name}
@@ -106,7 +98,7 @@ export const ClassNode = memo(
             >
               <ExpressArea>
                 <Grid item xs={6}>
-                  {(hover || entityAuth?.expand) && !loading && (
+                  {(hover || entityAuth?.expand) && (
                     <FormControlLabel
                       control={
                         <Switch
@@ -119,7 +111,6 @@ export const ClassNode = memo(
                       label={<ActionLabel>{intl.get("expand")}</ActionLabel>}
                     />
                   )}
-                  {loading && <CircularProgress size={24} />}
                 </Grid>
               </ExpressArea>
               {<AbilityActions entityMeta={entityMeta} />}

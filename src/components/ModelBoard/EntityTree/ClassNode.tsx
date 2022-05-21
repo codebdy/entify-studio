@@ -116,7 +116,7 @@ export const ClassNode = memo(
         label={
           <TreeNodeLabel
             color={color}
-            italic = {cls?.stereoType === StereoType.Abstract}
+            italic={cls?.stereoType === StereoType.Abstract}
             action={
               <IconButton size="small" onClick={handleDelete}>
                 <DeleteOutlineOutlinedIcon fontSize="small" />
@@ -128,14 +128,14 @@ export const ClassNode = memo(
             <SvgIcon>
               <path
                 d="
-            M 1,6
-            L 14,6
-            L 14,19
-            L 1,19
-            L 1,6
-            M 1,11
-            L 14,11
-          "
+                  M 1,6
+                  L 14,6
+                  L 14,19
+                  L 1,19
+                  L 1,6
+                  M 1,11
+                  L 14,11
+                "
                 stroke={color}
                 strokeWidth="1"
                 fill="transparent"
@@ -194,7 +194,7 @@ export const ClassNode = memo(
             })}
           </TreeItem>
         )}
-        {!!cls?.methods?.length &&  (
+        {!!cls?.methods?.length && (
           <TreeItem
             nodeId={cls?.uuid + "methods"}
             label={
@@ -210,12 +210,7 @@ export const ClassNode = memo(
             }
           >
             {cls?.methods.map((method) => {
-              return (
-                <MethodNode
-                  key={method.uuid}
-                  method={method}
-                />
-              );
+              return <MethodNode key={method.uuid} method={method} />;
             })}
           </TreeItem>
         )}

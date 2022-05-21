@@ -1,5 +1,5 @@
 import React, { memo } from "react";
-import { Container, Box } from "@mui/material";
+import { Box } from "@mui/material";
 import { Topbar } from "./Topbar";
 import { TreeView } from "@mui/lab";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -35,52 +35,58 @@ export const AuthBoard = memo(() => {
 
   // useShowServerError(error || authError);
 
-  return (
-    <Container
+  return selectedServie ? (
+    <Box
       sx={{
+        flex: 1,
+        display: "flex",
+        flexFlow: "row",
+        pt: 2,
+        height: 0,
+        color: (theme) => theme.palette.text.primary,
         ...scrollStyles,
       }}
-      maxWidth="lg"
     >
-      {selectedServie && (
+      <Box sx={{ width: 280 }}></Box>
+      <Box
+        sx={{
+          flex: 1,
+          display: "flex",
+          flexFlow: "column",
+          height: "100%",
+          pr: 4,
+        }}
+      >
+        <Topbar />
         <Box
           sx={{
             flex: 1,
-            display: "flex",
-            flexFlow: "column",
+            border: (theme) => `${theme.palette.divider} solid 1px`,
+            overflow: "auto",
             height: 0,
-            pt: 2,
+            marginTop: (theme) => theme.spacing(1),
+            padding: (theme) => theme.spacing(2),
           }}
         >
-          <Topbar />
-          <Box
-            sx={{
-              flex: 1,
-              border: (theme) => `${theme.palette.divider} solid 1px`,
-              overflow: "auto",
-              height: 0,
-              marginTop: (theme) => theme.spacing(1),
-              padding: (theme) => theme.spacing(2),
-            }}
+          <TreeView
+            defaultCollapseIcon={<ExpandMoreIcon />}
+            defaultExpandIcon={<ChevronRightIcon />}
+            selected=""
           >
-            <TreeView
-              defaultCollapseIcon={<ExpandMoreIcon />}
-              defaultExpandIcon={<ChevronRightIcon />}
-              selected=""
-            >
-              {entities.map((entity) => {
-                return (
-                  <ClassNode
-                    key={entity.uuid}
-                    entityMeta={entity}
-                    entityAuths={entityAuths}
-                  />
-                );
-              })}
-            </TreeView>
-          </Box>
+            {entities.map((entity) => {
+              return (
+                <ClassNode
+                  key={entity.uuid}
+                  entityMeta={entity}
+                  entityAuths={entityAuths}
+                />
+              );
+            })}
+          </TreeView>
         </Box>
-      )}
-    </Container>
+      </Box>
+    </Box>
+  ) : (
+    <></>
   );
 });
