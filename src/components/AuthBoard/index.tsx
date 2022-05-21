@@ -11,6 +11,7 @@ import { useSelectedService } from "components/ModelBoard/hooks/useSelectedServi
 import { useEntities } from "components/ModelBoard/hooks/useEntities";
 import { useSelectedServiceId } from "components/ModelBoard/hooks/useSelectedServiceId";
 import { ClassNode } from "./ClassNode";
+import { RoleSelectList } from "./RoleSelectList";
 
 export const AuthBoard = memo(() => {
   const scrollStyles = useChildrenScrollStyles();
@@ -41,13 +42,12 @@ export const AuthBoard = memo(() => {
         flex: 1,
         display: "flex",
         flexFlow: "row",
-        pt: 2,
         height: 0,
         color: (theme) => theme.palette.text.primary,
         ...scrollStyles,
       }}
     >
-      <Box sx={{ width: 280 }}></Box>
+      <RoleSelectList />
       <Box
         sx={{
           flex: 1,
@@ -62,9 +62,9 @@ export const AuthBoard = memo(() => {
           sx={{
             flex: 1,
             border: (theme) => `${theme.palette.divider} solid 1px`,
+            borderLeft: 0,
             overflow: "auto",
             height: 0,
-            marginTop: (theme) => theme.spacing(1),
             padding: (theme) => theme.spacing(2),
           }}
         >
