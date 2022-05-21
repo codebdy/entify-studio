@@ -16,6 +16,8 @@ import { LoadingButton } from "@mui/lab";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { authChangedState, selectedRoleState } from "./recoil/atoms";
 import { useSelectedServiceId } from "components/ModelBoard/hooks/useSelectedServiceId";
+import { useRoles } from "do-ents/useRoles";
+import { useShowServerError } from "hooks/useShowServerError";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -38,12 +40,14 @@ export const Topbar = memo((props: {}) => {
   const [selectedRole, setSelectedRole] = useRecoilState(
     selectedRoleState(selectedServiceId)
   );
+
+  const {roles, loading, error} = useRoles();
+  useShowServerError(error)
   // const appStore = useAppStore();
   // const boardStore = useAuthBoardStore();
   // const { data, error, loading } = useMagicQuery<Role[]>(
   //   new MagicQueryBuilder().setEntity("RxRole").addRelation("abilities")
   // );
-  const loading = false;
   // const [excuteSave, { loading: saving, error: saveError }] = useLazyMagicPost({
   //   onCompleted() {
   //     appStore.showSuccessAlert();
@@ -110,13 +114,13 @@ export const Topbar = memo((props: {}) => {
             <MenuItem value="">
               <em>None</em>
             </MenuItem>
-            {/* {data?.data?.map((role) => {
+            {roles?.map((role) => {
               return (
                 <MenuItem key={role.id} value={role.id}>
                   {role.name}
                 </MenuItem>
               );
-            })} */}
+            })}
           </Select>
         </FormControl>
       )}
