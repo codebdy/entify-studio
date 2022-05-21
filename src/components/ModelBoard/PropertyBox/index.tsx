@@ -45,24 +45,19 @@ export const PropertyBox = () => {
       </ToolbarArea>
       <Box
         sx={{
-          p: 2,
           flex: 1,
           overflow: "auto",
           color: (theme) => theme.palette.text.secondary,
           ...scrollStyles,
         }}
       >
-        <Grid container spacing={2}>
-          {selectedEntity && <ClassPanel cls={selectedEntity} />}
-          {attribute && attributeCls && (
-            <AttributePanel attribute={attribute} cls={attributeCls} />
-          )}
-          {method && methodCls && (
-            <MethodPanel method={method} cls={methodCls} />
-          )}
-          {relation && <RelationPanel relation={relation} />}
-          {!selectedElement && <Grid item>{intl.get("no-selected")}</Grid>}
-        </Grid>
+        {selectedEntity && <ClassPanel cls={selectedEntity} />}
+        {attribute && attributeCls && (
+          <AttributePanel attribute={attribute} cls={attributeCls} />
+        )}
+        {method && methodCls && <MethodPanel method={method} cls={methodCls} />}
+        {relation && <RelationPanel relation={relation} />}
+        {!selectedElement && <Grid item>{intl.get("no-selected")}</Grid>}
       </Box>
     </Box>
   );

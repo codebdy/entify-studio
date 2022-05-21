@@ -3,7 +3,7 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { Collapse, Paper, Typography } from "@mui/material";
 
-export const RelationBlockCollapse = memo(
+export const PropertyBlockCollapse = memo(
   (props: {
     title: string;
     children: React.ReactNode;
@@ -27,8 +27,7 @@ export const RelationBlockCollapse = memo(
             alignItems: "center",
             p: 1,
             pl: 2,
-            zIndex: 1,
-            mr: -2,
+            zIndex: 2,
           }}
           square
           onClick={handleToggle}
@@ -36,7 +35,7 @@ export const RelationBlockCollapse = memo(
           <Typography variant="subtitle1">{title}</Typography>
           {expanded ? <KeyboardArrowDownIcon /> : <ChevronRightIcon />}
         </Paper>
-        <Collapse in={expanded} timeout="auto" unmountOnExit>
+        <Collapse in={expanded} timeout="auto" unmountOnExit sx={{ p: 2 }}>
           {children}
         </Collapse>
       </>

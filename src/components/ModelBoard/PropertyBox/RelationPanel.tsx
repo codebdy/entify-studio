@@ -17,7 +17,7 @@ import {
 import { useClass } from "../hooks/useClass";
 import { useChangeRelation } from "../hooks/useChangeRelation";
 import { useSelectedServiceId } from "../hooks/useSelectedServiceId";
-import { RelationBlockCollapse } from "./RelationBlockCollapse";
+import { PropertyBlockCollapse } from "./PropertyBlockCollapse";
 
 export const RelationPanel = (props: { relation: RelationMeta }) => {
   const { relation } = props;
@@ -144,11 +144,11 @@ export const RelationPanel = (props: { relation: RelationMeta }) => {
         </Grid>
       ) : (
         <>
-          <RelationBlockCollapse
+          <PropertyBlockCollapse
             title={source?.name + intl.get("side")}
             defaultExpand
           >
-            <Grid container spacing={2} sx={{ p: 2, pr: 0 }}>
+            <Grid container spacing={2}>
               <Grid item xs={12}>
                 <FormControl variant="outlined" fullWidth size="small">
                   <InputLabel>{intl.get("multiplicity")}</InputLabel>
@@ -194,12 +194,12 @@ export const RelationPanel = (props: { relation: RelationMeta }) => {
                   </>
                 )}
             </Grid>
-          </RelationBlockCollapse>
-          <RelationBlockCollapse
+          </PropertyBlockCollapse>
+          <PropertyBlockCollapse
             title={target?.name + intl.get("side")}
             defaultExpand
           >
-            <Grid container spacing={2} sx={{ p: 2, pr: 0 }}>
+            <Grid container spacing={2}>
               <Grid item xs={12}>
                 <FormControl variant="outlined" fullWidth size="small">
                   <InputLabel>{intl.get("multiplicity")}</InputLabel>
@@ -235,7 +235,7 @@ export const RelationPanel = (props: { relation: RelationMeta }) => {
                 />
               </Grid>
             </Grid>
-          </RelationBlockCollapse>
+          </PropertyBlockCollapse>
           {/* 关联类暂缓实现<RelationBlockCollapse title={intl.get("association-class")}>
             <Grid container spacing={2} sx={{ p: 2, pr: 0 }}>
               <Grid item xs={12}>
