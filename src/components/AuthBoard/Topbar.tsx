@@ -8,6 +8,7 @@ import { LoadingButton } from "@mui/lab";
 import { useRecoilValue } from "recoil";
 import { authChangedState } from "./recoil/atoms";
 import { useSelectedServiceId } from "components/ModelBoard/hooks/useSelectedServiceId";
+import { TOOLBAR_HEIGHT } from "./consts";
 
 export const Topbar = memo((props: {}) => {
   const selectedServiceId = useSelectedServiceId();
@@ -34,7 +35,7 @@ export const Topbar = memo((props: {}) => {
   return (
     <Box
       sx={{
-        height: "50px",
+        height: TOOLBAR_HEIGHT,
         display: "flex",
         alignItems: "center",
         justifyContent: "flex-end",

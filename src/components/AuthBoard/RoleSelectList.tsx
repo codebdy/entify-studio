@@ -6,7 +6,8 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { rolesState } from "recoil/atoms";
 import { authChangedState, selectedRoleIdState } from "./recoil/atoms";
 import intl from "react-intl-universal";
-import RouterPrompt from "components/common/RouterPrompt"
+import RouterPrompt from "components/common/RouterPrompt";
+import { TOOLBAR_HEIGHT } from "./consts";
 
 export const RoleSelectList = memo(() => {
   const selectedServiceId = useSelectedServiceId();
@@ -50,12 +51,20 @@ export const RoleSelectList = memo(() => {
         width: 280,
         height: "100%",
         borderRight: (theme) => theme.palette.divider + " solid 1px",
+        display: "flex",
+        flexFlow:"column",
       }}
     >
       <RouterPrompt
         promptBoolean={changed}
         message={intl.get("changing-not-save-message")}
       />
+      <Box
+        sx={{
+          height: TOOLBAR_HEIGHT,
+          borderBottom: (theme) => theme.palette.divider + " solid 1px",
+        }}
+      ></Box>
     </Box>
   );
 });
