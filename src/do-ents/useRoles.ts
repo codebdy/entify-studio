@@ -18,7 +18,10 @@ export function useRoles(): {
   error?: GraphQLError;
 } {
   const authUrl = useRecoilValue(authUrlState);
-  const { data, loading, error } = useGQLQuery<Role[]>(gql, authUrl);
+  const { data, loading, error } = useGQLQuery<Role[]>(
+    authUrl ? gql : "",
+    authUrl
+  );
   return {
     roles: data ? data["role"] : undefined,
     loading,

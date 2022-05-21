@@ -1,3 +1,4 @@
+import { Role } from "components/AuthBoard/meta/Role";
 import { Service } from "components/ModelBoard/meta/Service";
 import { atom } from "recoil";
 import { AppError } from "./AppError";
@@ -55,6 +56,12 @@ export const servicesState = atom<Service[]>({
   key: "services",
   default: [],
 });
+
+export const rolesState = atom<Role[]>({
+  key: "roles",
+  default: [],
+});
+
 // export const tokenState = atom<string|undefined>({
 //   key: "token",
 //   default: undefined,

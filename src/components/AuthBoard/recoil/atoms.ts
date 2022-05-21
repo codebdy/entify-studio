@@ -1,8 +1,7 @@
 import { atomFamily } from "recoil";
-import { Role } from "../meta/Role";
 
-export const selectedRoleState = atomFamily<Role|undefined, number>({
-  key: "selectedRole",
+export const selectedRoleIdState = atomFamily<number|undefined, number>({
+  key: "selectedRoleId",
   default: undefined,
 });
 

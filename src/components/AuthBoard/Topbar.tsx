@@ -14,10 +14,11 @@ import { Skeleton } from "@mui/material";
 import RouterPrompt from "components/common/RouterPrompt";
 import { LoadingButton } from "@mui/lab";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { authChangedState, selectedRoleState } from "./recoil/atoms";
+import { authChangedState, selectedRoleIdState } from "./recoil/atoms";
 import { useSelectedServiceId } from "components/ModelBoard/hooks/useSelectedServiceId";
 import { useRoles } from "do-ents/useRoles";
 import { useShowServerError } from "hooks/useShowServerError";
+import { rolesState } from "recoil/atoms";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -37,12 +38,12 @@ export const Topbar = memo((props: {}) => {
   const classes = useStyles();
   const selectedServiceId = useSelectedServiceId();
   const changed = useRecoilValue(authChangedState(selectedServiceId));
-  const [selectedRole, setSelectedRole] = useRecoilState(
-    selectedRoleState(selectedServiceId)
+  const [selectedRoleId, setSelectedRoleId] = useRecoilState(
+    selectedRoleIdState(selectedServiceId)
   );
 
-  const {roles, loading, error} = useRoles();
-  useShowServerError(error)
+  const roles = useRecoilValue(rolesState);
+
   // const appStore = useAppStore();
   // const boardStore = useAuthBoardStore();
   // const { data, error, loading } = useMagicQuery<Role[]>(
@@ -91,39 +92,32 @@ export const Topbar = memo((props: {}) => {
         promptBoolean={changed}
         message={intl.get("changing-not-save-message")}
       />
-      {loading ? (
-        <Skeleton
-          variant="rectangular"
-          className={classes.roleSelect}
-          height={40}
-        />
-      ) : (
-        <FormControl
-          variant="outlined"
-          size="small"
-          className={classes.roleSelect}
+
+      <FormControl
+        variant="outlined"
+        size="small"
+        className={classes.roleSelect}
+      >
+        <InputLabel id="demo-simple-select-outlined-label">
+          {intl.get("role")}
+        </InputLabel>
+        <Select
+          value={selectedRoleId || ""}
+          onChange={handleChange}
+          label={intl.get("role")}
         >
-          <InputLabel id="demo-simple-select-outlined-label">
-            {intl.get("role")}
-          </InputLabel>
-          <Select
-            value={selectedRole?.id || ""}
-            onChange={handleChange}
-            label={intl.get("role")}
-          >
-            <MenuItem value="">
-              <em>None</em>
-            </MenuItem>
-            {roles?.map((role) => {
-              return (
-                <MenuItem key={role.id} value={role.id}>
-                  {role.name}
-                </MenuItem>
-              );
-            })}
-          </Select>
-        </FormControl>
-      )}
+          <MenuItem value="">
+            <em>None</em>
+          </MenuItem>
+          {roles?.map((role) => {
+            return (
+              <MenuItem key={role.id} value={role.id}>
+                {role.name}
+              </MenuItem>
+            );
+          })}
+        </Select>
+      </FormControl>
 
       <LoadingButton
         variant="contained"

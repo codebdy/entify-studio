@@ -2,11 +2,14 @@ import { ClientError, GraphQLError } from "graphql-request/dist/types";
 import { useCallback, useEffect, useState } from "react";
 import { createGraphQLClient } from "./createGraphQLClient";
 
-export interface GQLData<T>{
-  [key:string]:T
+export interface GQLData<T> {
+  [key: string]: T;
 }
 
-export function useGQLQuery<T>(gql: string, serverUrl?: string): {
+export function useGQLQuery<T>(
+  gql: string,
+  serverUrl?: string
+): {
   data?: GQLData<T>;
   loading?: boolean;
   error?: GraphQLError;
@@ -39,12 +42,14 @@ export function useGQLQuery<T>(gql: string, serverUrl?: string): {
   }, [gql, serverUrl]);
 
   useEffect(() => {
-    excute();
-  }, [excute]);
+    if (gql) {
+      excute();
+    }
+  }, [excute, gql]);
 
   const refreshFn = useCallback(() => {
     excute();
   }, [excute]);
 
-  return { data, loading, error,  refresh: refreshFn };
+  return { data, loading, error, refresh: refreshFn };
 }
