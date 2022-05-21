@@ -82,7 +82,9 @@ export const ClassPanel = (props: { cls: ClassMeta }) => {
         </Grid>
       </PropertyBlockCollapse>
       <PropertyBlockCollapse title={intl.get("authority")}>
-
+        <Grid container spacing={2}>
+          <Grid item xs={12}></Grid>
+        </Grid>
       </PropertyBlockCollapse>
     </>
   );
