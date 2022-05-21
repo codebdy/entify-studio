@@ -10,7 +10,6 @@ import { useSelectedServiceId } from "../hooks/useSelectedServiceId";
 import { CONST_ID } from "../meta/Meta";
 import { TypeInput } from "./TypeInput";
 import { useGetTypeLabel } from "../hooks/useGetTypeLabel";
-import { PropertyBlockCollapse } from "./PropertyBlockCollapse";
 
 export const AttributePanel = (props: {
   attribute: AttributeMeta;
@@ -108,165 +107,156 @@ export const AttributePanel = (props: {
 
   const isId = useMemo(() => attribute.name === CONST_ID, [attribute.name]);
   return (
-    <>
-      <PropertyBlockCollapse title={intl.get("settings")} defaultExpand>
-        <Grid container spacing={2}>
+    <Grid container spacing={2} sx={{ p: 2 }}>
+      <Grid item xs={12}>
+        <LazyTextField
+          label={intl.get("name")}
+          value={attribute.name || ""}
+          onChange={handleStringChange("name")}
+          disabled={isId}
+        />
+      </Grid>
+
+      {cls.stereoType !== StereoType.Enum && (
+        <>
+          <TypeInput
+            valueType={attribute.type}
+            typeUuid={attribute.typeUuid}
+            onTypeChange={handleTypeChange}
+            onTypeUuidChange={handleValueObjectChange}
+            disabled={isId}
+          />
+          {!isId && (
+            <Grid item xs={6}>
+              <FormControlLabel
+                control={
+                  <Switch
+                    checked={attribute.nullable || false}
+                    onChange={handleBooleanChange("nullable")}
+                    color="primary"
+                  />
+                }
+                label={intl.get("nullable")}
+              />
+            </Grid>
+          )}
+          {!isId && (
+            <Grid item xs={6}>
+              <FormControlLabel
+                control={
+                  <Switch
+                    checked={attribute.unique || false}
+                    onChange={handleBooleanChange("unique")}
+                    color="primary"
+                  />
+                }
+                label={intl.get("unique")}
+              />
+            </Grid>
+          )}
+          {!isId && (
+            <Grid item xs={6}>
+              <FormControlLabel
+                control={
+                  <Switch
+                    checked={attribute.index || false}
+                    onChange={handleBooleanChange("index")}
+                    color="primary"
+                  />
+                }
+                label={intl.get("index")}
+              />
+            </Grid>
+          )}
+
+          {attribute.type === Type.Date && (
+            <Grid item xs={6}>
+              <FormControlLabel
+                control={
+                  <Switch
+                    checked={attribute.createDate || false}
+                    onChange={handleBooleanChange("createDate")}
+                    color="primary"
+                  />
+                }
+                label={intl.get("create-date")}
+              />
+            </Grid>
+          )}
+          {attribute.type === Type.Date && (
+            <Grid item xs={6}>
+              <FormControlLabel
+                control={
+                  <Switch
+                    checked={attribute.updateDate || false}
+                    onChange={handleBooleanChange("updateDate")}
+                    color="primary"
+                  />
+                }
+                label={intl.get("update-date")}
+              />
+            </Grid>
+          )}
+          {attribute.type === Type.Date && (
+            <Grid item xs={12}>
+              <FormControlLabel
+                control={
+                  <Switch
+                    checked={attribute.deleteDate || false}
+                    onChange={handleBooleanChange("deleteDate")}
+                    color="primary"
+                  />
+                }
+                label={intl.get("delete-date")}
+              />
+            </Grid>
+          )}
+          {!isId && (
+            <Grid item xs={6}>
+              <FormControlLabel
+                control={
+                  <Switch
+                    checked={attribute.select === false ? true : false}
+                    onChange={handleSelectChange}
+                    color="primary"
+                  />
+                }
+                label={intl.get("hide-field")}
+              />
+            </Grid>
+          )}
+
+          {!isId && (
+            <Grid item xs={12}>
+              <LazyTextField
+                label={intl.get("default-value")}
+                value={attribute.default || ""}
+                onChange={handleDefaultChange}
+              />
+            </Grid>
+          )}
+
+          {!isId && attribute.type === Type.String && (
+            <Grid item xs={12}>
+              <LazyTextField
+                label={intl.get("length")}
+                value={attribute.default || ""}
+                onChange={handleStringChange("length")}
+              />
+            </Grid>
+          )}
+
           <Grid item xs={12}>
             <LazyTextField
-              label={intl.get("name")}
-              value={attribute.name || ""}
-              onChange={handleStringChange("name")}
-              disabled={isId}
+              label={intl.get("description")}
+              value={attribute.description || ""}
+              multiline
+              rows={4}
+              onChange={handleStringChange("description")}
             />
           </Grid>
-
-          {cls.stereoType !== StereoType.Enum && (
-            <>
-              <TypeInput
-                valueType={attribute.type}
-                typeUuid={attribute.typeUuid}
-                onTypeChange={handleTypeChange}
-                onTypeUuidChange={handleValueObjectChange}
-                disabled={isId}
-              />
-              {!isId && (
-                <Grid item xs={6}>
-                  <FormControlLabel
-                    control={
-                      <Switch
-                        checked={attribute.nullable || false}
-                        onChange={handleBooleanChange("nullable")}
-                        color="primary"
-                      />
-                    }
-                    label={intl.get("nullable")}
-                  />
-                </Grid>
-              )}
-              {!isId && (
-                <Grid item xs={6}>
-                  <FormControlLabel
-                    control={
-                      <Switch
-                        checked={attribute.unique || false}
-                        onChange={handleBooleanChange("unique")}
-                        color="primary"
-                      />
-                    }
-                    label={intl.get("unique")}
-                  />
-                </Grid>
-              )}
-              {!isId && (
-                <Grid item xs={6}>
-                  <FormControlLabel
-                    control={
-                      <Switch
-                        checked={attribute.index || false}
-                        onChange={handleBooleanChange("index")}
-                        color="primary"
-                      />
-                    }
-                    label={intl.get("index")}
-                  />
-                </Grid>
-              )}
-
-              {attribute.type === Type.Date && (
-                <Grid item xs={6}>
-                  <FormControlLabel
-                    control={
-                      <Switch
-                        checked={attribute.createDate || false}
-                        onChange={handleBooleanChange("createDate")}
-                        color="primary"
-                      />
-                    }
-                    label={intl.get("create-date")}
-                  />
-                </Grid>
-              )}
-              {attribute.type === Type.Date && (
-                <Grid item xs={6}>
-                  <FormControlLabel
-                    control={
-                      <Switch
-                        checked={attribute.updateDate || false}
-                        onChange={handleBooleanChange("updateDate")}
-                        color="primary"
-                      />
-                    }
-                    label={intl.get("update-date")}
-                  />
-                </Grid>
-              )}
-              {attribute.type === Type.Date && (
-                <Grid item xs={12}>
-                  <FormControlLabel
-                    control={
-                      <Switch
-                        checked={attribute.deleteDate || false}
-                        onChange={handleBooleanChange("deleteDate")}
-                        color="primary"
-                      />
-                    }
-                    label={intl.get("delete-date")}
-                  />
-                </Grid>
-              )}
-              {!isId && (
-                <Grid item xs={6}>
-                  <FormControlLabel
-                    control={
-                      <Switch
-                        checked={attribute.select === false ? true : false}
-                        onChange={handleSelectChange}
-                        color="primary"
-                      />
-                    }
-                    label={intl.get("hide-field")}
-                  />
-                </Grid>
-              )}
-
-              {!isId && (
-                <Grid item xs={12}>
-                  <LazyTextField
-                    label={intl.get("default-value")}
-                    value={attribute.default || ""}
-                    onChange={handleDefaultChange}
-                  />
-                </Grid>
-              )}
-
-              {!isId && attribute.type === Type.String && (
-                <Grid item xs={12}>
-                  <LazyTextField
-                    label={intl.get("length")}
-                    value={attribute.default || ""}
-                    onChange={handleStringChange("length")}
-                  />
-                </Grid>
-              )}
-
-              <Grid item xs={12}>
-                <LazyTextField
-                  label={intl.get("description")}
-                  value={attribute.description || ""}
-                  multiline
-                  rows={4}
-                  onChange={handleStringChange("description")}
-                />
-              </Grid>
-            </>
-          )}
-        </Grid>
-      </PropertyBlockCollapse>
-      <PropertyBlockCollapse
-        title={intl.get("authority")}
-      >
-        
-      </PropertyBlockCollapse>
-    </>
+        </>
+      )}
+    </Grid>
   );
 };
