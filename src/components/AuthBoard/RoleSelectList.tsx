@@ -4,7 +4,7 @@ import { useConfirm } from "hooks/useConfirm";
 import { memo } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { rolesState } from "recoil/atoms";
-import { authChangedState, selectedRoleIdState } from "./recoil/atoms";
+import { selectedRoleIdState } from "./recoil/atoms";
 import intl from "react-intl-universal";
 import RouterPrompt from "components/common/RouterPrompt";
 import { TOOLBAR_HEIGHT } from "./consts";
@@ -13,13 +13,14 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
+import { useAuthChanged } from "./recoil/hooks/useAuthChanged";
 
 export const RoleSelectList = memo(() => {
   const selectedServiceId = useSelectedServiceId();
-  const changed = useRecoilValue(authChangedState(selectedServiceId));
   const [selectedRoleId, setSelectedRoleId] = useRecoilState(
     selectedRoleIdState(selectedServiceId)
   );
+  const changed = useAuthChanged();
 
   const roles = useRecoilValue(rolesState);
   const confirm = useConfirm();

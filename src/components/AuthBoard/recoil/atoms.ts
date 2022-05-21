@@ -5,7 +5,7 @@ export const selectedRoleIdState = atomFamily<number|undefined, number>({
   default: undefined,
 });
 
-export const authChangedState =  atomFamily<boolean, number>({
+export const authChangedState =  atomFamily<boolean, string>({
   key: "authChanged",
   default: false,
 });

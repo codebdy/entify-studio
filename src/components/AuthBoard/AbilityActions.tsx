@@ -7,11 +7,11 @@ import intl from "react-intl-universal";
 import { ClassMeta } from "components/ModelBoard/meta/ClassMeta";
 import { Ability } from "components/AuthBoard/meta/Ability";
 import { memo } from "react";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import { authChangedState } from "./recoil/atoms";
 import { AbilityType } from "./meta/AbilityType";
-import { useSelectedServiceId } from "components/ModelBoard/hooks/useSelectedServiceId";
 import { useSelectedRole } from "./recoil/hooks/useSelectedRole";
+import { useChangedKey } from "./recoil/hooks/useAuthChanged";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -33,9 +33,11 @@ export const AbilityActions = memo(
   (props: { entityMeta: ClassMeta; columnUuid?: string }) => {
     const { entityMeta, columnUuid } = props;
     const classes = useStyles();
-    const selectedServiceId = useSelectedServiceId();
     const selectedRole = useSelectedRole();
-    const setChanged = useSetRecoilState(authChangedState(selectedServiceId));
+    const changedKey = useChangedKey()
+    const setChanged = useSetRecoilState(
+      authChangedState(changedKey)
+    );
 
     const findAbilityByType = (type: AbilityType): Ability => {
       return (

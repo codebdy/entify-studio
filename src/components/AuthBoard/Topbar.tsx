@@ -5,14 +5,11 @@ import {
 import intl from "react-intl-universal";
 
 import { LoadingButton } from "@mui/lab";
-import { useRecoilValue } from "recoil";
-import { authChangedState } from "./recoil/atoms";
-import { useSelectedServiceId } from "components/ModelBoard/hooks/useSelectedServiceId";
 import { TOOLBAR_HEIGHT } from "./consts";
+import { useAuthChanged } from "./recoil/hooks/useAuthChanged";
 
 export const Topbar = memo((props: {}) => {
-  const selectedServiceId = useSelectedServiceId();
-  const changed = useRecoilValue(authChangedState(selectedServiceId));
+  const changed = useAuthChanged();
   // const [excuteSave, { loading: saving, error: saveError }] = useLazyMagicPost({
   //   onCompleted() {
   //     appStore.showSuccessAlert();
