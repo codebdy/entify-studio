@@ -1,57 +1,18 @@
 import React, { memo } from "react";
-import { Theme, Container } from "@mui/material";
-import makeStyles from "@mui/styles/makeStyles";
-import createStyles from "@mui/styles/createStyles";
+import { Container, Box } from "@mui/material";
 import { Topbar } from "./Topbar";
 import { TreeView } from "@mui/lab";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import Loading from "components/common/loading";
 import { useState } from "react";
 import { useChildrenScrollStyles } from "theme/useChildrenScrollStyles";
 import { EntityAuthSettings } from "./meta/EntityAuthSettings";
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      marginTop: theme.spacing(2),
-      flex: 1,
-      display: "flex",
-      flexFlow: "column",
-      height: 0,
-    },
-    container: {
-      flex: 1,
-      display: "flex",
-      flexFlow: "column",
-      height: 0,
-    },
-    belowContent: {
-      flex: 1,
-      border: `${theme.palette.divider} solid 1px`,
-      overflow: "auto",
-      height: "0",
-      marginTop: theme.spacing(1),
-      padding: theme.spacing(2),
-    },
-    nodeLabel: {
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "space-between",
-    },
-    actions: {
-      width: "800px",
-    },
-    actionGrid: {
-      width: "16.6%",
-    },
-  })
-);
+import { useSelectedService } from "components/ModelBoard/hooks/useSelectedService";
 
 export const AuthBoard = memo(() => {
-  const classes = useStyles();
   // const [boardStore] = useState(new AuthBoardStore());
   const scrollStyles = useChildrenScrollStyles();
+  const selectedServie = useSelectedService();
   const [entityAuths, setEntityAuths] = useState<EntityAuthSettings[]>([]);
   // const {data, loading, error} = useSWRQuery<PackageMeta[]>(API_PUSLISHED_SCHEMA);
   // const {
@@ -77,19 +38,33 @@ export const AuthBoard = memo(() => {
       }}
       maxWidth="lg"
     >
-      {
-        /*loading || authLoading*/ false ? (
-          <Loading />
-        ) : (
-          <div className={classes.container}>
-            <Topbar />
-            <div className={classes.belowContent}>
-              <TreeView
-                defaultCollapseIcon={<ExpandMoreIcon />}
-                defaultExpandIcon={<ChevronRightIcon />}
-                selected=""
-              >
-                {/* {data?.map((aPackage) => {
+      {selectedServie && (
+        <Box
+          sx={{
+            flex: 1,
+            display: "flex",
+            flexFlow: "column",
+            height: 0,
+            pt: 2,
+          }}
+        >
+          <Topbar />
+          <Box
+            sx={{
+              flex: 1,
+              border: (theme) => `${theme.palette.divider} solid 1px`,
+              overflow: "auto",
+              height: "0",
+              marginTop: (theme) => theme.spacing(1),
+              padding: (theme) => theme.spacing(2),
+            }}
+          >
+            <TreeView
+              defaultCollapseIcon={<ExpandMoreIcon />}
+              defaultExpandIcon={<ChevronRightIcon />}
+              selected=""
+            >
+              {/* {data?.map((aPackage) => {
                   return (
                     <PackageNode
                       key={aPackage.uuid}
@@ -98,11 +73,10 @@ export const AuthBoard = memo(() => {
                     />
                   );
                 })} */}
-              </TreeView>
-            </div>
-          </div>
-        )
-      }
+            </TreeView>
+          </Box>
+        </Box>
+      )}
     </Container>
   );
 });
