@@ -16,6 +16,7 @@ import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import ArrowRightOutlinedIcon from "@mui/icons-material/ArrowRightOutlined";
 import { EditServiceDialog } from "./EditServiceDialog";
 import { useConfirm } from "hooks/useConfirm";
+import InsertDriveFileOutlinedIcon from '@mui/icons-material/InsertDriveFileOutlined';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -185,6 +186,10 @@ export const RootMenu = memo(
           open={isMenuOpen}
           onClose={onClose}
         >
+          <MenuItem onClick={handleAddDiagram}>
+            <InsertDriveFileOutlinedIcon fontSize="small" />
+            <span className={classes.text}>{intl.get("add-diagram")} </span>
+          </MenuItem>
           <MenuItem onClick={handleAddClick}>
             <AddOutlinedIcon fontSize="small" />
             <span className={classes.text}>{intl.get("add")} </span>
@@ -243,9 +248,6 @@ export const RootMenu = memo(
           anchorEl={subAnchorEl}
           onClose={handleSubClose}
         >
-          <MenuItem onClick={handleAddDiagram}>
-            {intl.get("add-diagram")}
-          </MenuItem>
           <MenuItem onClick={handleAddEntity}>
             {intl.get("add-entity-class")}
           </MenuItem>
