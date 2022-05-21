@@ -163,5 +163,6 @@
   "light": "Light",
   "select-service": "Select service",
   "confirm-delete": "Are you sure to delete?",
-  "settings": "Settings"
+  "settings": "Settings",
+  "authority": "Authority"
 }
