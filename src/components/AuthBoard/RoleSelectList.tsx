@@ -8,6 +8,12 @@ import { authChangedState, selectedRoleIdState } from "./recoil/atoms";
 import intl from "react-intl-universal";
 import RouterPrompt from "components/common/RouterPrompt";
 import { TOOLBAR_HEIGHT } from "./consts";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 
 export const RoleSelectList = memo(() => {
   const selectedServiceId = useSelectedServiceId();
@@ -52,7 +58,7 @@ export const RoleSelectList = memo(() => {
         height: "100%",
         borderRight: (theme) => theme.palette.divider + " solid 1px",
         display: "flex",
-        flexFlow:"column",
+        flexFlow: "column",
       }}
     >
       <RouterPrompt
@@ -63,8 +69,37 @@ export const RoleSelectList = memo(() => {
         sx={{
           height: TOOLBAR_HEIGHT,
           borderBottom: (theme) => theme.palette.divider + " solid 1px",
+          display: "flex",
+          alignItems: "center",
+          pl: 2,
         }}
-      ></Box>
+      >
+        {intl.get("role-list")}
+      </Box>
+      <Box
+        sx={{
+          overflow: "auto",
+        }}
+      >
+        <List
+          sx={{
+            "& .MuiListItemIcon-root": {
+              minWidth: (theme) => theme.spacing(4),
+            },
+          }}
+        >
+          {roles.map((role) => {
+            return (
+              <ListItemButton key={role.id}>
+                <ListItemIcon>
+                  <PersonOutlineOutlinedIcon />
+                </ListItemIcon>
+                <ListItemText primary={role.name} />
+              </ListItemButton>
+            );
+          })}
+        </List>
+      </Box>
     </Box>
   );
 });
