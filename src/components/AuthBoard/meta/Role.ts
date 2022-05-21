@@ -2,7 +2,7 @@ import { User } from './User';
 import { Ability } from './Ability';
 
 export interface Role {
-  id?: number;
+  id: number;
   name: string;
   description?: string;
   createdAt?: Date;

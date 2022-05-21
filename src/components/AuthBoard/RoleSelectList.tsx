@@ -9,7 +9,6 @@ import intl from "react-intl-universal";
 import RouterPrompt from "components/common/RouterPrompt";
 import { TOOLBAR_HEIGHT } from "./consts";
 import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
@@ -34,19 +33,14 @@ export const RoleSelectList = memo(() => {
 
   //useShowServerError(error || saveError);
 
-  const handleChange = (event: any) => {
-    const roleId = event.target.value;
-    if (roleId === "") {
-      setSelectedRoleId(undefined);
-      return;
-    }
+  const handleChange = (roleId: number) => {
     if (roleId !== selectedRoleId) {
       if (changed) {
         confirm(intl.get("changing-not-save-message"), () => {
-          setSelectedRoleId(roleId as any);
+          setSelectedRoleId(roleId);
         });
       } else {
-        setSelectedRoleId(roleId as any);
+        setSelectedRoleId(roleId);
       }
     }
   };
@@ -90,7 +84,11 @@ export const RoleSelectList = memo(() => {
         >
           {roles.map((role) => {
             return (
-              <ListItemButton key={role.id}>
+              <ListItemButton
+                key={role.id}
+                selected = {selectedRoleId === role.id}
+                onClick={() => handleChange(role.id)}
+              >
                 <ListItemIcon>
                   <PersonOutlineOutlinedIcon />
                 </ListItemIcon>
