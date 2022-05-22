@@ -165,5 +165,6 @@
   "confirm-delete": "Are you sure to delete?",
   "settings": "Settings",
   "authority": "Authority",
-  "role-list": "Role List"
+  "role-list": "Role List",
+  "role-auth-setting":"Role Authroity setting"
 }

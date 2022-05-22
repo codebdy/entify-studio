@@ -165,5 +165,6 @@
   "confirm-delete": "确实要删除吗?",
   "settings": "设置",
   "authority": "权限",
-  "role-list": "角色列表"
+  "role-list": "角色列表",
+  "role-auth-setting":" 的权限设置"
 }
