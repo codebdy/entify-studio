@@ -2,6 +2,7 @@ import { ClientError, GraphQLError } from "graphql-request/dist/types";
 import { useCallback, useEffect, useState } from "react";
 import { IObject } from "./IObject";
 import { createGraphQLClient } from "./createGraphQLClient";
+import { useMountRef } from "components/ModelBoard/GraphCanvas/ClassView/useMountRef";
 
 export interface IQueryOpions {}
 export type MutateFn<T> = (data?: T) => void;
@@ -23,6 +24,8 @@ export function useQueryOne<T extends IObject>(
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<GraphQLError>();
   const [data, setData] = useState<QueryOneResult<T>>();
+  const mountRef = useMountRef();
+
   const excute = useCallback(() => {
     const graphQLClient = createGraphQLClient(serverUrl);
 
@@ -31,6 +34,9 @@ export function useQueryOne<T extends IObject>(
     graphQLClient
       .request(gql)
       .then((data) => {
+        if (!mountRef.current) {
+          return;
+        }
         setLoading(false);
         if (data) {
           setData(data);
@@ -44,7 +50,7 @@ export function useQueryOne<T extends IObject>(
         setError(error);
         console.error(err);
       });
-  }, [gql, serverUrl]);
+  }, [gql, mountRef, serverUrl]);
 
   useEffect(() => {
     if (gql) {
