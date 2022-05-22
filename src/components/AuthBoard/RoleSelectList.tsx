@@ -6,7 +6,6 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { rolesState } from "recoil/atoms";
 import { selectedRoleIdState } from "./recoil/atoms";
 import intl from "react-intl-universal";
-import RouterPrompt from "components/common/RouterPrompt";
 import { TOOLBAR_HEIGHT } from "./consts";
 import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
@@ -56,10 +55,6 @@ export const RoleSelectList = memo(() => {
         flexFlow: "column",
       }}
     >
-      <RouterPrompt
-        promptBoolean={changed}
-        message={intl.get("changing-not-save-message")}
-      />
       <Box
         sx={{
           height: TOOLBAR_HEIGHT,
