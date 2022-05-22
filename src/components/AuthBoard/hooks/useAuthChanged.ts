@@ -1,6 +1,6 @@
 import { useSelectedServiceId } from "components/ModelBoard/hooks/useSelectedServiceId";
 import { useRecoilValue } from "recoil";
-import { authChangedState } from "../atoms";
+import { authChangedState } from "../recoil/atoms";
 import { useSelectedRole } from "./useSelectedRole";
 
 export function useChangedKey() {

@@ -12,7 +12,7 @@ import { useEntities } from "components/ModelBoard/hooks/useEntities";
 import { useSelectedServiceId } from "components/ModelBoard/hooks/useSelectedServiceId";
 import { ClassNode } from "./ClassNode";
 import { RoleSelectList } from "./RoleSelectList";
-import { useSelectedRole } from "./recoil/hooks/useSelectedRole";
+import { useSelectedRole } from "./hooks/useSelectedRole";
 
 export const AuthBoard = memo(() => {
   const scrollStyles = useChildrenScrollStyles();
@@ -21,6 +21,7 @@ export const AuthBoard = memo(() => {
   const selectedRole = useSelectedRole();
   const [entityAuths, setEntityAuths] = useState<EntityAuthSettings[]>([]);
   const entities = useEntities(selectedServiceId);
+
   // const {data, loading, error} = useSWRQuery<PackageMeta[]>(API_PUSLISHED_SCHEMA);
   // const {
   //   data: authData,

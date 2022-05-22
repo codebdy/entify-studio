@@ -6,7 +6,7 @@ import { Service } from "components/ModelBoard/meta/Service";
 import { useSetRecoilState } from "recoil";
 import { selectedServiceIdState } from "recoil/atoms";
 import { useSelectedServiceId } from "components/ModelBoard/hooks/useSelectedServiceId";
-import { useAuthChanged } from "components/AuthBoard/recoil/hooks/useAuthChanged";
+import { useAuthChanged } from "components/AuthBoard/hooks/useAuthChanged";
 import intl from "react-intl-universal";
 import { useConfirm } from "hooks/useConfirm";
 

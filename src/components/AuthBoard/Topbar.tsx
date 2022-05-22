@@ -4,8 +4,8 @@ import intl from "react-intl-universal";
 
 import { LoadingButton } from "@mui/lab";
 import { TOOLBAR_HEIGHT } from "./consts";
-import { useAuthChanged } from "./recoil/hooks/useAuthChanged";
-import { useSelectedRole } from "./recoil/hooks/useSelectedRole";
+import { useAuthChanged } from "./hooks/useAuthChanged";
+import { useSelectedRole } from "./hooks/useSelectedRole";
 
 export const Topbar = memo((props: {}) => {
   const changed = useAuthChanged();

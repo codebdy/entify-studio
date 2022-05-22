@@ -4,9 +4,11 @@ import { useRecoilValue } from "recoil";
 import { authUrlState } from "recoil/atoms";
 import { useGQLQuery } from "./useGQLQuery";
 
+const queryName = "role"
+
 const gql = `
   query{
-    role{
+    ${queryName}{
       id
       name
     }
@@ -23,7 +25,7 @@ export function useRoles(): {
     authUrl
   );
   return {
-    roles: data ? data["role"] : undefined,
+    roles: data ? data[queryName] : undefined,
     loading,
     error,
   };

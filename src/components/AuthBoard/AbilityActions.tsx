@@ -10,8 +10,8 @@ import { memo } from "react";
 import { useSetRecoilState } from "recoil";
 import { authChangedState } from "./recoil/atoms";
 import { AbilityType } from "./meta/AbilityType";
-import { useSelectedRole } from "./recoil/hooks/useSelectedRole";
-import { useChangedKey } from "./recoil/hooks/useAuthChanged";
+import { useSelectedRole } from "./hooks/useSelectedRole";
+import { useChangedKey } from "./hooks/useAuthChanged";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

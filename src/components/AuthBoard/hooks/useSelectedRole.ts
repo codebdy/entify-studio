@@ -1,7 +1,7 @@
 import { useSelectedServiceId } from "components/ModelBoard/hooks/useSelectedServiceId";
 import { useRecoilValue } from "recoil";
 import { rolesState } from "recoil/atoms";
-import { selectedRoleIdState } from "../atoms";
+import { selectedRoleIdState } from "../recoil/atoms";
 
 export function useSelectedRole() {
   const selectedServiceId = useSelectedServiceId();

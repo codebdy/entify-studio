@@ -12,7 +12,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
-import { useAuthChanged } from "./recoil/hooks/useAuthChanged";
+import { useAuthChanged } from "./hooks/useAuthChanged";
 
 export const RoleSelectList = memo(() => {
   const selectedServiceId = useSelectedServiceId();
