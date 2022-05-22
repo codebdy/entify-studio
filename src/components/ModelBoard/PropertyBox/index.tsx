@@ -57,7 +57,11 @@ export const PropertyBox = () => {
         )}
         {method && methodCls && <MethodPanel method={method} cls={methodCls} />}
         {relation && <RelationPanel relation={relation} />}
-        {!selectedElement && <Grid item>{intl.get("no-selected")}</Grid>}
+        {!selectedElement && (
+          <Grid item sx={{ p: 2 }}>
+            {intl.get("no-selected")}
+          </Grid>
+        )}
       </Box>
     </Box>
   );
