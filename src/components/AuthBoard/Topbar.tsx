@@ -1,7 +1,5 @@
 import { memo } from "react";
-import {
-  Box,
-} from "@mui/material";
+import { Box } from "@mui/material";
 import intl from "react-intl-universal";
 
 import { LoadingButton } from "@mui/lab";
@@ -36,6 +34,8 @@ export const Topbar = memo((props: {}) => {
         display: "flex",
         alignItems: "center",
         justifyContent: "flex-end",
+        borderBottom: (theme) => `${theme.palette.divider} solid 1px`,
+        pr: 4,
       }}
     >
       <LoadingButton

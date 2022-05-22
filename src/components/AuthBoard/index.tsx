@@ -54,18 +54,16 @@ export const AuthBoard = memo(() => {
           display: "flex",
           flexFlow: "column",
           height: "100%",
-          pr: 4,
         }}
       >
         <Topbar />
         <Box
           sx={{
             flex: 1,
-            border: (theme) => `${theme.palette.divider} solid 1px`,
-            borderLeft: 0,
             overflow: "auto",
             height: 0,
-            padding: (theme) => theme.spacing(2),
+            p: 2,
+            pr: 4,
           }}
         >
           <TreeView
