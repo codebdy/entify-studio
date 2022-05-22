@@ -6,16 +6,28 @@ import { Service } from "components/ModelBoard/meta/Service";
 import { useSetRecoilState } from "recoil";
 import { selectedServiceIdState } from "recoil/atoms";
 import { useSelectedServiceId } from "components/ModelBoard/hooks/useSelectedServiceId";
+import { useAuthChanged } from "components/AuthBoard/recoil/hooks/useAuthChanged";
+import intl from "react-intl-universal";
+import { useConfirm } from "hooks/useConfirm";
 
 export const ServiceItem = memo(
   (props: { service: Service; onClose: () => void }) => {
     const { service, onClose } = props;
     const selectedServiceId = useSelectedServiceId();
     const setSelectedServiceId = useSetRecoilState(selectedServiceIdState);
+    const authChanged = useAuthChanged();
+    const confirm = useConfirm();
+
     const handleClick = useCallback(() => {
-      setSelectedServiceId(service.id || 0);
+      if (authChanged) {
+        confirm(intl.get("changing-not-save-message"), () => {
+          setSelectedServiceId(service.id || 0);
+        });
+      } else {
+        setSelectedServiceId(service.id || 0);
+      }
       onClose();
-    }, [onClose, service.id, setSelectedServiceId]);
+    }, [authChanged, confirm, onClose, service.id, setSelectedServiceId]);
 
     return (
       <ListItemButton
