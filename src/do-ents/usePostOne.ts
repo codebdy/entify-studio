@@ -2,16 +2,16 @@ import { CONST_ID } from "components/ModelBoard/meta/Meta";
 import { ClientError, gql } from "graphql-request";
 import { useCallback, useState } from "react";
 import { createGraphQLClient } from "./createGraphQLClient";
-import { IObject } from "./IObject";
 import { ServerError } from "./ServerError";
 
-export interface IPostOptions<T extends IObject> {
+export interface IPostOptions<T> {
   onCompleted?: (data: T) => void;
   onError?: (error: ServerError) => void;
   noRefresh?: boolean;
 }
 
-export function usePostOne<T extends IObject>(
+export function usePostOne<T>(
+  __type: string,
   options?: IPostOptions<T>
 ): [
   (data: T, serverUrl?: string) => void,
@@ -21,16 +21,15 @@ export function usePostOne<T extends IObject>(
   const [error, setError] = useState<ServerError | undefined>();
 
   const post = useCallback(
-    (data: T, serverUrl?: string) => {
-      const { __type, ...object } = data;
+    (object: T, serverUrl?: string) => {
       const graphQLClient = createGraphQLClient(serverUrl);
-      const postName = "upsertOne" + data.__type;
-      const typeName = data.__type + "Input";
+      const postName = "upsertOne" + __type;
+      const typeName = __type + "Input";
       const postMutation = gql`
         mutation ${postName} ($object: ${typeName}!) {
           ${postName}(object: $object){
             id
-            ${Object.keys(data)
+            ${Object.keys(object)
               .filter((key) => key !== CONST_ID && key !== "__type")
               .join("\n")}
           }
@@ -55,7 +54,7 @@ export function usePostOne<T extends IObject>(
           error && options?.onError && options?.onError(error);
         });
     },
-    [options]
+    [__type, options]
   );
 
   return [post, { loading, error }];

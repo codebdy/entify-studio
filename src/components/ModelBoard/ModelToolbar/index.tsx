@@ -85,7 +85,7 @@ export const ModelToolbar = memo(() => {
   const deleteSelectedElement = useDeleteSelectedElement(serviceId);
   const [minMap, setMinMap] = useRecoilState(minMapState(serviceId));
   const validate = useValidate(serviceId);
-  const [excuteSave, { loading, error }] = usePostOne<Meta>({
+  const [excuteSave, { loading, error }] = usePostOne<Meta>(EntityNameMeta, {
     onCompleted(data: Meta) {
       setSuccessAlertState(true);
       setChanged(false);
@@ -126,12 +126,10 @@ export const ModelToolbar = memo(() => {
     const data: Meta =
       meta?.status === MetaStatus.META_STATUS_PUBLISHED || !meta
         ? {
-            __type: EntityNameMeta,
             content,
           }
         : {
             ...meta,
-            __type: EntityNameMeta,
             content,
           };
     excuteSave(data, service?.url);

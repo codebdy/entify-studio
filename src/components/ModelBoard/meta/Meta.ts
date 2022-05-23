@@ -1,4 +1,3 @@
-import { IObject } from "do-ents/IObject";
 import { DiagramMeta } from "./DiagramMeta";
 import { ClassMeta } from "./ClassMeta";
 import { RelationMeta } from "./RelationMeta";
@@ -14,7 +13,7 @@ export enum MetaStatus {
   META_STATUS_ROLLBACK_ERROR = "rollbackError",
 }
 
-export interface Meta extends IObject {
+export interface Meta {
   id?: number;
   content: {
     classes: ClassMeta[];

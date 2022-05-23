@@ -1,6 +1,5 @@
 import { ClientError, GraphQLError } from "graphql-request/dist/types";
 import { useCallback, useEffect, useState } from "react";
-import { IObject } from "./IObject";
 import { createGraphQLClient } from "./createGraphQLClient";
 import { useMountRef } from "components/ModelBoard/GraphCanvas/ClassView/useMountRef";
 
@@ -11,7 +10,7 @@ export interface QueryOneResult<T> {
   [key: string]: T | undefined;
 }
 
-export function useQueryOne<T extends IObject>(
+export function useQueryOne<T>(
   gql: string,
   serverUrl?: string
 ): {
