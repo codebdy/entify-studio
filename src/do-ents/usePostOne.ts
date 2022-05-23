@@ -13,11 +13,12 @@ export interface IPostOptions<T extends IObject> {
 
 export function usePostOne<T extends IObject>(
   options?: IPostOptions<T>
-): [(data: T, serverUrl?: string) => void, { loading: boolean; error: ServerError | undefined }] {
-  //const { noRefresh, ...axioOptions } = useMemo(() => options || {}, [options]);
+): [
+  (data: T, serverUrl?: string) => void,
+  { loading?: boolean; error?: ServerError }
+] {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<ServerError | undefined>();
-  //const postedDataRef = useRef<any>();
 
   const post = useCallback(
     (data: T, serverUrl?: string) => {

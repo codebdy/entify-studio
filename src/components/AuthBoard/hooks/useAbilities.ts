@@ -27,8 +27,8 @@ export function useAbilities(serverUrl: string | undefined): {
     serverUrl
   );
   return {
-    abilities: data ? data[queryName] : undefined,
-    loading,
-    error,
+    //abilities: data ? data[queryName] : undefined,
+    //loading,
+    //error,
   };
 }

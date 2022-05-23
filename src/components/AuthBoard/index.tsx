@@ -4,9 +4,7 @@ import { Topbar } from "./Topbar";
 import { TreeView } from "@mui/lab";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import { useState } from "react";
 import { useChildrenScrollStyles } from "theme/useChildrenScrollStyles";
-import { EntityAuthSettings } from "./meta/EntityAuthSettings";
 import { useSelectedService } from "components/ModelBoard/hooks/useSelectedService";
 import { useEntities } from "components/ModelBoard/hooks/useEntities";
 import { useSelectedServiceId } from "components/ModelBoard/hooks/useSelectedServiceId";
@@ -22,27 +20,10 @@ export const AuthBoard = memo(() => {
   const selectedServie = useSelectedService();
   const selectedServiceId = useSelectedServiceId();
   const selectedRole = useSelectedRole();
-  const [entityAuths, setEntityAuths] = useState<EntityAuthSettings[]>([]);
   const entities = useEntities(selectedServiceId);
 
   const { loading, error } = useInitAuth();
   useShowServerError(error);
-  // const {data, loading, error} = useSWRQuery<PackageMeta[]>(API_PUSLISHED_SCHEMA);
-  // const {
-  //   data: authData,
-  //   loading: authLoading,
-  //   error: authError,
-  // } = useMagicQuery<RxEntityAuthSettings[]>(ENTITY_AUTH_QUERY);
-
-  // useEffect(() => {
-  //   boardStore.setPackages(data || []);
-  // }, [boardStore, data]);
-
-  // useEffect(() => {
-  //   setEntityAuths(authData?.data || []);
-  // }, [authData]);
-
-  // useShowServerError(error || authError);
 
   return selectedServie ? (
     <Box
