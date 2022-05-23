@@ -19,7 +19,7 @@ import intl from "react-intl-universal";
 import { useEntityAuthSetting } from "./hooks/useEntityAuthSetting";
 import { useSetEntityAuthSetting } from "./hooks/useSetEntityAuthSetting";
 import { useShowServerError } from "hooks/useShowServerError";
-import { EntityAuthSettingsInput } from "./meta/EntityAuthSettingsInput";
+import { EntityAuthSettings } from "./meta/EntityAuthSettings";
 
 export const ClassNode = memo((props: { entityMeta: ClassMeta }) => {
   const { entityMeta } = props;
@@ -31,7 +31,7 @@ export const ClassNode = memo((props: { entityMeta: ClassMeta }) => {
 
   const hanldeExpandChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
-      const auth: EntityAuthSettingsInput = entityAuth
+      const auth: EntityAuthSettings = entityAuth
         ? entityAuth
         : { entityUuid: entityMeta.uuid };
       set({ ...auth, expand: event.target.checked });

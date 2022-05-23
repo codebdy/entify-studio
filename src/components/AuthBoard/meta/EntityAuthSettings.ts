@@ -1,5 +1,5 @@
 export interface EntityAuthSettings {
-  id: number;
+  id?: number;
   entityUuid: string;
   expand?: boolean;
 }
