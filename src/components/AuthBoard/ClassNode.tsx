@@ -98,7 +98,10 @@ export const ClassNode = memo((props: { entityMeta: ClassMeta }) => {
     >
       {entityAuth?.expand &&
         entityMeta.attributes.map((column) => {
-          return column.name !== "id" ? (
+          return column.name !== "id" &&
+            !column.createDate &&
+            !column.updateDate &&
+            !column.deleteDate ? (
             <AttributeNode
               key={column.uuid}
               entityMeta={entityMeta}
