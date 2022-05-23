@@ -193,7 +193,7 @@ export const Login = memo(() => {
                 spacing={3}
               >
                 <Grid item xs={12}>
-                  <h2 className={classes.title}>{intl.get("login")}</h2>
+                  <h2 className={classes.title}>{intl.get("login")} Entify Studio</h2>
                   <Typography variant="subtitle1" color="textSecondary">
                     {intl.get("login-tip")}
                   </Typography>
