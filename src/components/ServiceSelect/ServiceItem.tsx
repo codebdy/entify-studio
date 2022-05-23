@@ -3,23 +3,23 @@ import ListItemText from "@mui/material/ListItemText";
 import { memo, useCallback } from "react";
 import SvgIcon from "@mui/material/SvgIcon";
 import { Service } from "components/ModelBoard/meta/Service";
-import { useSetRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { selectedServiceIdState } from "recoil/atoms";
 import { useSelectedServiceId } from "components/ModelBoard/hooks/useSelectedServiceId";
-import { useAuthChanged } from "components/AuthBoard/hooks/useAuthChanged";
 import intl from "react-intl-universal";
 import { useConfirm } from "hooks/useConfirm";
+import { changedState } from "components/ModelBoard/recoil/atoms";
 
 export const ServiceItem = memo(
   (props: { service: Service; onClose: () => void }) => {
     const { service, onClose } = props;
     const selectedServiceId = useSelectedServiceId();
     const setSelectedServiceId = useSetRecoilState(selectedServiceIdState);
-    const authChanged = useAuthChanged();
+    const changed = useRecoilValue(changedState(selectedServiceId));
     const confirm = useConfirm();
 
     const handleClick = useCallback(() => {
-      if (authChanged) {
+      if (changed) {
         confirm(intl.get("changing-not-save-message"), () => {
           setSelectedServiceId(service.id || 0);
         });
@@ -27,7 +27,7 @@ export const ServiceItem = memo(
         setSelectedServiceId(service.id || 0);
       }
       onClose();
-    }, [authChanged, confirm, onClose, service.id, setSelectedServiceId]);
+    }, [changed, confirm, onClose, service.id, setSelectedServiceId]);
 
     return (
       <ListItemButton

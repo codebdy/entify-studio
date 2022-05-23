@@ -1,6 +1,5 @@
 import React, { memo } from "react";
 import { Box } from "@mui/material";
-import { Topbar } from "./Topbar";
 import { TreeView } from "@mui/lab";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
@@ -49,7 +48,6 @@ export const AuthBoard = memo(() => {
               height: "100%",
             }}
           >
-            <Topbar />
             <Box
               sx={{
                 flex: 1,

@@ -5,10 +5,9 @@ import { ClassMeta } from "components/ModelBoard/meta/ClassMeta";
 import { Ability } from "components/AuthBoard/meta/Ability";
 import { memo, useCallback, useMemo } from "react";
 import { useSetRecoilState } from "recoil";
-import { abilitiesState, authChangedState } from "./recoil/atoms";
+import { abilitiesState } from "./recoil/atoms";
 import { AbilityType } from "./meta/AbilityType";
 import { useSelectedRole } from "./hooks/useSelectedRole";
-import { useChangedKey } from "./hooks/useAuthChanged";
 import { useRoleAbilities } from "./hooks/useRoleAbilities";
 import { useSelectedServiceId } from "components/ModelBoard/hooks/useSelectedServiceId";
 
@@ -17,9 +16,7 @@ export const AbilityActions = memo(
     const { entityMeta, columnUuid } = props;
     const selectedRole = useSelectedRole();
     const selectedServiceId = useSelectedServiceId();
-    const changedKey = useChangedKey();
     const roleAbilities = useRoleAbilities(selectedRole?.id);
-    const setChanged = useSetRecoilState(authChangedState(changedKey));
     const setAbilities = useSetRecoilState(abilitiesState(selectedServiceId));
 
     const findAbilityByType = useCallback(
@@ -83,8 +80,6 @@ export const AbilityActions = memo(
           )
         );
       }
-
-      setChanged(true);
     };
 
     const isEntity = !columnUuid;
