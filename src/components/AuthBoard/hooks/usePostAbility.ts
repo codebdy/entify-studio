@@ -17,16 +17,36 @@ export function usePostAbility(): [
 
   const [post, { loading, error }] = usePostOne<Ability>("Ability", {
     onCompleted(ability: Ability) {
-      setAbilities((abilities) => [
-        ...abilities.filter(
-          (abi) =>
-            abi.entityUuid !== ability.entityUuid ||
-            (ability.columnUuid || undefined) !== ability.columnUuid ||
-            abi.roleId !== ability.roleId ||
-            abi.abilityType !== ability.abilityType
-        ),
-        ability,
-      ]);
+      setAbilities((abilities) => {
+        if (ability.columnUuid) {
+          //字段级别
+          return [
+            ...abilities.filter(
+              (abi) =>
+                !abi.columnUuid ||
+                (abi.columnUuid &&
+                  (abi.entityUuid !== ability.entityUuid ||
+                    abi.roleId !== ability.roleId ||
+                    abi.abilityType !== ability.abilityType ||
+                    abi.columnUuid !== ability.columnUuid))
+            ),
+            ability,
+          ];
+        } else {
+          return [
+            ...abilities.filter(
+              (abi) =>
+                abi.columnUuid ||
+                (!abi.columnUuid &&
+                  (abi.entityUuid !== ability.entityUuid ||
+                    abi.roleId !== ability.roleId ||
+                    abi.columnUuid !== ability.columnUuid ||
+                    abi.abilityType !== ability.abilityType))
+            ),
+            ability,
+          ];
+        }
+      });
     },
   });
 

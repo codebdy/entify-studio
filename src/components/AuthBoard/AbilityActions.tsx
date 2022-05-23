@@ -13,16 +13,33 @@ export const AbilityActions = memo(
     const { entityMeta, columnUuid } = props;
     const selectedRole = useSelectedRole();
     const roleAbilities = useRoleAbilities(selectedRole?.id);
+    const isEntity = !columnUuid;
 
     const findAbilityByType = useCallback(
       (type: AbilityType): Ability => {
-        return (
-          roleAbilities?.find(
+        //实体级别
+        let fundeAbility = roleAbilities?.find(
+          (ability) =>
+            !ability.columnUuid &&
+            isEntity &&
+            ability.entityUuid === entityMeta.uuid &&
+            ability.abilityType === type
+        );
+
+        //字段级别
+        if (!fundeAbility) {
+          fundeAbility = roleAbilities?.find(
             (ability) =>
+              !!ability.columnUuid &&
+              !isEntity &&
               ability.entityUuid === entityMeta.uuid &&
-              (ability.columnUuid || undefined) === columnUuid &&
+              ability.columnUuid === columnUuid &&
               ability.abilityType === type
-          ) || {
+          );
+        }
+
+        return (
+          fundeAbility || {
             can: false,
             expression: "",
             entityUuid: entityMeta.uuid,
@@ -32,7 +49,7 @@ export const AbilityActions = memo(
           }
         );
       },
-      [columnUuid, entityMeta.uuid, roleAbilities, selectedRole?.id]
+      [columnUuid, entityMeta.uuid, isEntity, roleAbilities, selectedRole?.id]
     );
 
     const createAbility = useMemo(
@@ -51,8 +68,6 @@ export const AbilityActions = memo(
       () => findAbilityByType(AbilityType.UPDATE),
       [findAbilityByType]
     );
-
-    const isEntity = !columnUuid;
 
     return (
       <Box
