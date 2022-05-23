@@ -13,7 +13,7 @@ const gql = `
     }
   }
 `;
-export function useEntityAuthSettings(serverUrl: string): {
+export function useEntityAuthSettings(serverUrl: string | undefined): {
   settings?: EntityAuthSettings[];
   loading?: boolean;
   error?: GraphQLError;

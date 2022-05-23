@@ -13,6 +13,9 @@ import { useSelectedServiceId } from "components/ModelBoard/hooks/useSelectedSer
 import { ClassNode } from "./ClassNode";
 import { RoleSelectList } from "./RoleSelectList";
 import { useSelectedRole } from "./hooks/useSelectedRole";
+import { useInitAuth } from "./hooks/useInitAuth";
+import { useShowServerError } from "hooks/useShowServerError";
+import Loading from "components/common/loading";
 
 export const AuthBoard = memo(() => {
   const scrollStyles = useChildrenScrollStyles();
@@ -22,6 +25,8 @@ export const AuthBoard = memo(() => {
   const [entityAuths, setEntityAuths] = useState<EntityAuthSettings[]>([]);
   const entities = useEntities(selectedServiceId);
 
+  const { loading, error } = useInitAuth();
+  useShowServerError(error);
   // const {data, loading, error} = useSWRQuery<PackageMeta[]>(API_PUSLISHED_SCHEMA);
   // const {
   //   data: authData,
@@ -51,42 +56,40 @@ export const AuthBoard = memo(() => {
       }}
     >
       <RoleSelectList />
-      {selectedRole && (
-        <Box
-          sx={{
-            flex: 1,
-            display: "flex",
-            flexFlow: "column",
-            height: "100%",
-          }}
-        >
-          <Topbar />
+      {loading ? (
+        <Loading />
+      ) : (
+        selectedRole && (
           <Box
             sx={{
               flex: 1,
-              overflow: "auto",
-              height: 0,
-              p: 2,
-              pr: 4,
+              display: "flex",
+              flexFlow: "column",
+              height: "100%",
             }}
           >
-            <TreeView
-              defaultCollapseIcon={<ExpandMoreIcon />}
-              defaultExpandIcon={<ChevronRightIcon />}
-              selected=""
+            <Topbar />
+            <Box
+              sx={{
+                flex: 1,
+                overflow: "auto",
+                height: 0,
+                p: 2,
+                pr: 4,
+              }}
             >
-              {entities.map((entity) => {
-                return (
-                  <ClassNode
-                    key={entity.uuid}
-                    entityMeta={entity}
-                    entityAuths={entityAuths}
-                  />
-                );
-              })}
-            </TreeView>
+              <TreeView
+                defaultCollapseIcon={<ExpandMoreIcon />}
+                defaultExpandIcon={<ChevronRightIcon />}
+                selected=""
+              >
+                {entities.map((entity) => {
+                  return <ClassNode key={entity.uuid} entityMeta={entity} />;
+                })}
+              </TreeView>
+            </Box>
           </Box>
-        </Box>
+        )
       )}
     </Box>
   ) : (

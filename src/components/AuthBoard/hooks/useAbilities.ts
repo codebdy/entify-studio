@@ -2,19 +2,23 @@ import { useGQLQuery } from "do-ents/useGQLQuery";
 import { GraphQLError } from "graphql-request/dist/types";
 import { Ability } from "../meta/Ability";
 
-const queryName = "ability"
+const queryName = "ability";
 
 const gql = `
   query{
     ${queryName}{
       id
+      roleId
+      abilityType
+      can
       entityUuid
-      expand
+      columnUuid
+      expression
     }
   }
 `;
-export function useAbilities(serverUrl: string): {
-  settings?: Ability[];
+export function useAbilities(serverUrl: string | undefined): {
+  abilities?: Ability[];
   loading?: boolean;
   error?: GraphQLError;
 } {
@@ -23,7 +27,7 @@ export function useAbilities(serverUrl: string): {
     serverUrl
   );
   return {
-    settings: data ? data[queryName] : undefined,
+    abilities: data ? data[queryName] : undefined,
     loading,
     error,
   };
