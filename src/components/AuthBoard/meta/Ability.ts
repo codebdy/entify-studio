@@ -1,4 +1,3 @@
-import { Role } from './Role';
 import { AbilityType } from './AbilityType';
 
 export interface Ability {
@@ -8,5 +7,5 @@ export interface Ability {
   can: boolean;
   expression?: string;
   abilityType: AbilityType;
-  role?: Role;
+  roleId: number;
 }

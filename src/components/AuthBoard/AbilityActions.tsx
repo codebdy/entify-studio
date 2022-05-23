@@ -1,71 +1,87 @@
-import { Theme, Grid } from "@mui/material";
-import makeStyles from "@mui/styles/makeStyles";
-import createStyles from "@mui/styles/createStyles";
-import classNames from "classnames";
+import { Grid, Box } from "@mui/material";
 import { ActionWithExpression } from "./ActionWithExpression";
 import intl from "react-intl-universal";
 import { ClassMeta } from "components/ModelBoard/meta/ClassMeta";
 import { Ability } from "components/AuthBoard/meta/Ability";
-import { memo } from "react";
+import { memo, useCallback, useMemo } from "react";
 import { useSetRecoilState } from "recoil";
-import { authChangedState } from "./recoil/atoms";
+import { abilitiesState, authChangedState } from "./recoil/atoms";
 import { AbilityType } from "./meta/AbilityType";
 import { useSelectedRole } from "./hooks/useSelectedRole";
 import { useChangedKey } from "./hooks/useAuthChanged";
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      width: "600px",
-    },
-    actionGrid: {
-      width: "25%",
-      display: "flex",
-      alignItems: "center",
-    },
-    createGrid: {
-      width: "20%",
-    },
-  })
-);
+import { useRoleAbilities } from "./hooks/useRoleAbilities";
+import { useSelectedServiceId } from "components/ModelBoard/hooks/useSelectedServiceId";
 
 export const AbilityActions = memo(
   (props: { entityMeta: ClassMeta; columnUuid?: string }) => {
     const { entityMeta, columnUuid } = props;
-    const classes = useStyles();
     const selectedRole = useSelectedRole();
-    const changedKey = useChangedKey()
-    const setChanged = useSetRecoilState(
-      authChangedState(changedKey)
+    const selectedServiceId = useSelectedServiceId();
+    const changedKey = useChangedKey();
+    const roleAbilities = useRoleAbilities(selectedRole?.id);
+    const setChanged = useSetRecoilState(authChangedState(changedKey));
+    const setAbilities = useSetRecoilState(abilitiesState(selectedServiceId));
+
+    const findAbilityByType = useCallback(
+      (type: AbilityType): Ability => {
+        return (
+          roleAbilities?.find(
+            (ability) =>
+              ability.entityUuid === entityMeta.uuid &&
+              (ability.columnUuid || undefined) === columnUuid &&
+              ability.abilityType === type
+          ) || {
+            can: false,
+            expression: "",
+            entityUuid: entityMeta.uuid,
+            columnUuid: columnUuid,
+            abilityType: type,
+            roleId: selectedRole?.id || 0,
+          }
+        );
+      },
+      [columnUuid, entityMeta.uuid, roleAbilities, selectedRole?.id]
     );
 
-    const findAbilityByType = (type: AbilityType): Ability => {
-      return (
-        selectedRole?.abilities?.find(
-          (ability) =>
-            ability.entityUuid === entityMeta.uuid &&
-            (ability.columnUuid || undefined) === columnUuid &&
-            ability.abilityType === type
-        ) || {
-          can: false,
-          expression: "",
-          entityUuid: entityMeta.uuid,
-          columnUuid: columnUuid,
-          abilityType: type,
-        }
-      );
-    };
-
-    const createAbility = findAbilityByType(AbilityType.CREATE);
-    const deleteAbility = findAbilityByType(AbilityType.DELETE);
-    const readAbility = findAbilityByType(AbilityType.READ);
-    const updateAbility = findAbilityByType(AbilityType.UPDATE);
+    const createAbility = useMemo(
+      () => findAbilityByType(AbilityType.CREATE),
+      [findAbilityByType]
+    );
+    const deleteAbility = useMemo(
+      () => findAbilityByType(AbilityType.DELETE),
+      [findAbilityByType]
+    );
+    const readAbility = useMemo(
+      () => findAbilityByType(AbilityType.READ),
+      [findAbilityByType]
+    );
+    const updateAbility = useMemo(
+      () => findAbilityByType(AbilityType.UPDATE),
+      [findAbilityByType]
+    );
 
     const handleAbilityChange = (ability: Ability) => {
       if (ability.can) {
-        //selectedRole?.upateAbility(ability);
+        setAbilities((abilities) => [
+          ...abilities.filter(
+            (abi) =>
+              abi.entityUuid !== ability.entityUuid ||
+              (ability.columnUuid || undefined) !== ability.columnUuid ||
+              abi.roleId !== ability.roleId ||
+              abi.abilityType !== ability.abilityType
+          ),
+          ability,
+        ]);
       } else {
-        //selectedRole?.removeAbiltiy(ability);
+        setAbilities((abilities) =>
+          abilities.filter(
+            (abi) =>
+              abi.entityUuid !== ability.entityUuid ||
+              (ability.columnUuid || undefined) !== ability.columnUuid ||
+              abi.roleId !== ability.roleId ||
+              abi.abilityType !== ability.abilityType
+          )
+        );
       }
 
       setChanged(true);
@@ -74,13 +90,21 @@ export const AbilityActions = memo(
     const isEntity = !columnUuid;
 
     return (
-      <div className={classes.root}>
+      <Box
+        sx={{
+          width: 600,
+        }}
+      >
         <Grid container alignItems="center">
           {selectedRole && (
             <>
               <Grid
                 item
-                className={classNames(classes.actionGrid, classes.createGrid)}
+                sx={{
+                  width: "20%",
+                  display: "flex",
+                  alignItems: "center",
+                }}
               >
                 {isEntity && (
                   <ActionWithExpression
@@ -92,7 +116,14 @@ export const AbilityActions = memo(
                   />
                 )}
               </Grid>
-              <Grid item className={classes.actionGrid}>
+              <Grid
+                item
+                sx={{
+                  width: "25%",
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
                 {isEntity && (
                   <ActionWithExpression
                     ability={deleteAbility}
@@ -102,7 +133,14 @@ export const AbilityActions = memo(
                   />
                 )}
               </Grid>
-              <Grid item className={classes.actionGrid}>
+              <Grid
+                item
+                sx={{
+                  width: "25%",
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
                 <ActionWithExpression
                   ability={readAbility}
                   label={intl.get("read")}
@@ -110,7 +148,14 @@ export const AbilityActions = memo(
                   entityMeta={entityMeta}
                 />
               </Grid>
-              <Grid item className={classes.actionGrid}>
+              <Grid
+                item
+                sx={{
+                  width: "25%",
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
                 <ActionWithExpression
                   ability={updateAbility}
                   label={intl.get("update")}
@@ -121,7 +166,7 @@ export const AbilityActions = memo(
             </>
           )}
         </Grid>
-      </div>
+      </Box>
     );
   }
 );
