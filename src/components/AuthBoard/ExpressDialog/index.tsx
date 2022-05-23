@@ -24,7 +24,6 @@ import { useRecoilValue } from "recoil";
 import { LoadingButton } from "@mui/lab";
 import { useSelectedServiceId } from "components/ModelBoard/hooks/useSelectedServiceId";
 
-
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     content: {
@@ -57,7 +56,7 @@ export const ExpressDialog = memo(
   }) => {
     const { entityMeta, expression, onExpressionChange } = props;
     const classes = useStyles();
-    const selectedServieId = useSelectedServiceId()
+    const selectedServieId = useSelectedServiceId();
     const [open, setOpen] = useState(false);
     const [exp, setExp] = useState(expression);
     const [error, setError] = useState("");
@@ -108,7 +107,6 @@ export const ExpressDialog = memo(
 
     const validateExpression = (exp: string) => {
       // const parser = new SqlWhereParser();
-
       // const evaluator = (
       //   operatorValue: string | typeof OPERATOR_UNARY_MINUS,
       //   operands: any[]
@@ -119,7 +117,6 @@ export const ExpressDialog = memo(
       //   if (operatorValue === ",") {
       //     return [].concat(operands[0], operands[1]);
       //   }
-
       //   switch (operatorValue) {
       //     case "OR":
       //       return `(${operands.join(" OR ")})`;
@@ -127,23 +124,19 @@ export const ExpressDialog = memo(
       //       return `(${operands.join(" AND ")})`;
       //     default:
       //       const arr = operands[0].split(".");
-
       //       if (arr.length > 1) {
       //         const [roleName, columnName] = arr;
-
       //         const relation = getRelationByName(entityMeta.uuid, roleName);
       //         if (!relation) {
       //           throw new Error(
       //             `Entity ${entityMeta.name} has not relation ${roleName}`
       //           );
       //         }
-
       //         const targetUuid =
       //           entityMeta.uuid === relation.sourceId
       //             ? relation.targetId
       //             : relation.sourceId;
       //         const targetEntity = getEntityByUuid(targetUuid);
-
       //         if (
       //           !targetEntity?.methods.find(
       //             (column) => column.name === columnName
@@ -166,7 +159,6 @@ export const ExpressDialog = memo(
       //       }
       //   }
       // };
-
       // try {
       //   parser.parse(exp, evaluator);
       // } catch (error) {
@@ -220,7 +212,9 @@ export const ExpressDialog = memo(
             </div>
           </DialogContent>
           <DialogActions className={classes.actions}>
-            <Button onClick={handleClose}>{intl.get("cancel")}</Button>
+            <Button color="inherit" onClick={handleClose}>
+              {intl.get("cancel")}
+            </Button>
             <LoadingButton
               onClick={handleConfirm}
               variant="contained"

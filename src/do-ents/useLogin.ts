@@ -10,6 +10,7 @@ const loginMutation = gql`
 `;
 
 export interface LoginOptions {
+  serverUrl?:string,
   onCompleted?: (access_token: string) => void;
   onError?: (error?: GraphQLError) => void;
 }
@@ -25,7 +26,7 @@ export function useLogin(
   const [error, setError] = useState<GraphQLError | undefined>();
 
   const login = useCallback((loginName: string, password: string) => {
-    const graphQLClient = createGraphQLClient();
+    const graphQLClient = createGraphQLClient(options?.serverUrl);
 
     setLoading(true);
     setError(undefined);

@@ -27,7 +27,7 @@ import useShadows from "../util/useShadows";
 import { useLogin } from "do-ents/useLogin";
 import { LoadingButton } from "@mui/lab";
 import { useRecoilValue } from "recoil";
-import { loggedUserState } from "recoil/atoms";
+import { authUrlState, loggedUserState } from "recoil/atoms";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -82,17 +82,19 @@ const useStyles = makeStyles((theme: Theme) =>
 export const Login = memo(() => {
   const classes = useStyles();
   const [values, setValues] = useState<any>({
-    account: "demo",
-    password: "demo",
+    account: "admin",
+    password: "123456",
     showPassword: false,
   });
   const [rememberMe, setRememberMe] = useState(true);
   const [errorMessage, setErroMessage] = useState("");
   const loggedUser = useRecoilValue(loggedUserState);
+  const authUrl = useRecoilValue(authUrlState);
 
   const history = useHistory();
 
   const [login, { loading }] = useLogin({
+    serverUrl: authUrl,
     onCompleted(atoken: string) {
       console.log("token:", atoken);
       if (atoken) {
@@ -269,6 +271,7 @@ export const Login = memo(() => {
                     style={{ fontSize: "1.2rem" }}
                     loading={loading}
                     type="submit"
+                    disabled={!authUrl}
                   >
                     {intl.get("login")}
                   </LoadingButton>
