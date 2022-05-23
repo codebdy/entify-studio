@@ -4,20 +4,15 @@ import intl from "react-intl-universal";
 import { ClassMeta } from "components/ModelBoard/meta/ClassMeta";
 import { Ability } from "components/AuthBoard/meta/Ability";
 import { memo, useCallback, useMemo } from "react";
-import { useSetRecoilState } from "recoil";
-import { abilitiesState } from "./recoil/atoms";
 import { AbilityType } from "./meta/AbilityType";
 import { useSelectedRole } from "./hooks/useSelectedRole";
 import { useRoleAbilities } from "./hooks/useRoleAbilities";
-import { useSelectedServiceId } from "components/ModelBoard/hooks/useSelectedServiceId";
 
 export const AbilityActions = memo(
   (props: { entityMeta: ClassMeta; columnUuid?: string }) => {
     const { entityMeta, columnUuid } = props;
     const selectedRole = useSelectedRole();
-    const selectedServiceId = useSelectedServiceId();
     const roleAbilities = useRoleAbilities(selectedRole?.id);
-    const setAbilities = useSetRecoilState(abilitiesState(selectedServiceId));
 
     const findAbilityByType = useCallback(
       (type: AbilityType): Ability => {
@@ -57,31 +52,6 @@ export const AbilityActions = memo(
       [findAbilityByType]
     );
 
-    const handleAbilityChange = (ability: Ability) => {
-      if (ability.can) {
-        setAbilities((abilities) => [
-          ...abilities.filter(
-            (abi) =>
-              abi.entityUuid !== ability.entityUuid ||
-              (ability.columnUuid || undefined) !== ability.columnUuid ||
-              abi.roleId !== ability.roleId ||
-              abi.abilityType !== ability.abilityType
-          ),
-          ability,
-        ]);
-      } else {
-        setAbilities((abilities) =>
-          abilities.filter(
-            (abi) =>
-              abi.entityUuid !== ability.entityUuid ||
-              (ability.columnUuid || undefined) !== ability.columnUuid ||
-              abi.roleId !== ability.roleId ||
-              abi.abilityType !== ability.abilityType
-          )
-        );
-      }
-    };
-
     const isEntity = !columnUuid;
 
     return (
@@ -105,7 +75,6 @@ export const AbilityActions = memo(
                   <ActionWithExpression
                     ability={createAbility}
                     label={intl.get("create")}
-                    onAbilityChange={handleAbilityChange}
                     noExpression
                     entityMeta={entityMeta}
                   />
@@ -123,7 +92,6 @@ export const AbilityActions = memo(
                   <ActionWithExpression
                     ability={deleteAbility}
                     label={intl.get("delete")}
-                    onAbilityChange={handleAbilityChange}
                     entityMeta={entityMeta}
                   />
                 )}
@@ -139,7 +107,6 @@ export const AbilityActions = memo(
                 <ActionWithExpression
                   ability={readAbility}
                   label={intl.get("read")}
-                  onAbilityChange={handleAbilityChange}
                   entityMeta={entityMeta}
                 />
               </Grid>
@@ -154,7 +121,6 @@ export const AbilityActions = memo(
                 <ActionWithExpression
                   ability={updateAbility}
                   label={intl.get("update")}
-                  onAbilityChange={handleAbilityChange}
                   entityMeta={entityMeta}
                 />
               </Grid>

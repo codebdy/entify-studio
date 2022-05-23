@@ -3,7 +3,7 @@ import { useSelectedService } from "hooks/useSelectedService";
 import { useCallback } from "react";
 import { usePostOne } from "do-ents/usePostOne";
 import { useSetRecoilState } from "recoil";
-import { entityAuthSettingsState } from "../recoil/atoms";
+import { abilitiesState } from "../recoil/atoms";
 import { Ability } from "../meta/Ability";
 
 export function usePostAbility(): [
@@ -11,22 +11,24 @@ export function usePostAbility(): [
   { loading?: boolean; error?: ServerError }
 ] {
   const selectedServie = useSelectedService();
-  const setEntitiyAuthSettings = useSetRecoilState(
-    entityAuthSettingsState(selectedServie?.id || 0)
+  const setAbilities = useSetRecoilState(
+    abilitiesState(selectedServie?.id || 0)
   );
-  const [post, { loading, error }] = usePostOne<Ability>(
-    "Ability",
-    {
-      onCompleted(data: any) {
-        setEntitiyAuthSettings((abilities) => [
-          ...abilities.filter(
-            (ability) => ability.entityUuid !== data.entityUuid
-          ),
-          data,
-        ]);
-      },
-    }
-  );
+
+  const [post, { loading, error }] = usePostOne<Ability>("Ability", {
+    onCompleted(ability: Ability) {
+      setAbilities((abilities) => [
+        ...abilities.filter(
+          (abi) =>
+            abi.entityUuid !== ability.entityUuid ||
+            (ability.columnUuid || undefined) !== ability.columnUuid ||
+            abi.roleId !== ability.roleId ||
+            abi.abilityType !== ability.abilityType
+        ),
+        ability,
+      ]);
+    },
+  });
 
   const save = useCallback(
     (ability: Ability) => {
