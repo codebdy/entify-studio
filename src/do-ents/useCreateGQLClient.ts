@@ -1,7 +1,7 @@
 import { GraphQLClient } from "graphql-request";
 import { useToken } from "hooks/useToken";
 import { useCallback } from "react";
-import { SERVER_URL } from "util/consts";
+import { AUTHORIZATION, SERVER_URL, TOKEN_PREFIX } from "util/consts";
 
 export function useCreateGQLClient() {
   const token = useToken();
@@ -13,7 +13,7 @@ export function useCreateGQLClient() {
       }
     );
 
-    client.setHeader("Authorization", token ? `Bearer ${token}` : "");
+    client.setHeader(AUTHORIZATION, token ? `${TOKEN_PREFIX}${token}` : "");
 
     return client;
   }, [token]);
