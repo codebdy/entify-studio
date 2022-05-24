@@ -26,8 +26,8 @@ import { INDEX_URL, PRIMARY_COLOR, TOKEN_NAME } from "../util/consts";
 import useShadows from "../util/useShadows";
 import { useLogin } from "do-ents/useLogin";
 import { LoadingButton } from "@mui/lab";
-import { useRecoilValue } from "recoil";
-import { authUrlState, loggedUserState } from "recoil/atoms";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { authUrlState, loggedUserState, tokenState } from "recoil/atoms";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -90,14 +90,15 @@ export const Login = memo(() => {
   const [errorMessage, setErroMessage] = useState("");
   const loggedUser = useRecoilValue(loggedUserState);
   const authUrl = useRecoilValue(authUrlState);
+  const setToken = useSetRecoilState(tokenState);
 
   const history = useHistory();
 
   const [login, { loading }] = useLogin({
     serverUrl: authUrl,
     onCompleted(atoken: string) {
-      console.log("token:", atoken);
       if (atoken) {
+        setToken(atoken);
         if (rememberMe) {
           localStorage.setItem(TOKEN_NAME, atoken);
         } else {
@@ -193,7 +194,9 @@ export const Login = memo(() => {
                 spacing={3}
               >
                 <Grid item xs={12}>
-                  <h2 className={classes.title}>{intl.get("login")} Entify Studio</h2>
+                  <h2 className={classes.title}>
+                    {intl.get("login")} Entify Studio
+                  </h2>
                   <Typography variant="subtitle1" color="textSecondary">
                     {intl.get("login-tip")}
                   </Typography>

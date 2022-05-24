@@ -22,6 +22,7 @@ import { AuthBoard } from "./AuthBoard";
 import { useShowServerError } from "hooks/useShowServerError";
 import { useReadMeta } from "do-ents/useReadMeta";
 import Loading from "./common/loading";
+import { useLoginCheck } from "hooks/useLoginCheck";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -63,8 +64,9 @@ export const Studio = memo(() => {
   const history = useHistory();
   const setLoggedUser = useSetRecoilState(loggedUserState);
 
-  const { loading, error } = useReadMeta();
+  useLoginCheck();
 
+  const { loading, error } = useReadMeta();
   useShowServerError(error);
 
   const handleLogout = useCallback(() => {

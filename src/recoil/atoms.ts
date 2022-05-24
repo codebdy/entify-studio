@@ -62,7 +62,7 @@ export const rolesState = atom<Role[]>({
   default: [],
 });
 
-// export const tokenState = atom<string|undefined>({
-//   key: "token",
-//   default: undefined,
-// })
+export const tokenState = atom<string|undefined>({
+  key: "token",
+  default: undefined,
+})
