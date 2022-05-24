@@ -39,7 +39,7 @@ export function useLogin(
         options?.onCompleted && options?.onCompleted(data.login);
       })
       .catch((err: ClientError) => {
-        const error: GraphQLError | undefined = err.response.errors
+        const error: GraphQLError | undefined = err.response?.errors
           ? err.response.errors[0]
           : undefined;
         setLoading(false);

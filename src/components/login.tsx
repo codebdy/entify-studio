@@ -108,10 +108,10 @@ export const Login = memo(() => {
       }
     },
     onError(error: any) {
-      if (error.response?.status === 401) {
+      if (error?.response?.status === 401) {
         setErroMessage(intl.get("login-failure"));
       } else {
-        setErroMessage(error.message);
+        setErroMessage(error?.message);
       }
     },
   });
