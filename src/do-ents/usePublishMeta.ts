@@ -1,7 +1,7 @@
 import { Meta } from "components/ModelBoard/meta/Meta";
 import { ClientError, gql } from "graphql-request";
 import { useCallback, useState } from "react";
-import { createGraphQLClient } from "./createGraphQLClient";
+import { useCreateGQLClient } from "./useCreateGQLClient";
 import { ServerError } from "./ServerError";
 import { IPostOptions } from "./usePostOne";
 
@@ -14,11 +14,11 @@ export function usePublishMeta(
   //const { noRefresh, ...axioOptions } = useMemo(() => options || {}, [options]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<ServerError | undefined>();
-  //const postedDataRef = useRef<any>();
+  const createClient = useCreateGQLClient()
 
   const publish = useCallback(
     (serverUrl: string | undefined) => {
-      const graphQLClient = createGraphQLClient(serverUrl);
+      const graphQLClient = createClient(serverUrl);
       const postMutation = gql`
         mutation publish {
           publish {
@@ -45,7 +45,7 @@ export function usePublishMeta(
           error && options?.onError && options?.onError(error);
         });
     },
-    [options]
+    [createClient, options]
   );
 
   return [publish, { loading, error }];

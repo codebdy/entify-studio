@@ -1,7 +1,7 @@
 import { Meta } from "components/ModelBoard/meta/Meta";
 import { ClientError, gql } from "graphql-request";
 import { useCallback, useState } from "react";
-import { createGraphQLClient } from "./createGraphQLClient";
+import { useCreateGQLClient } from "./useCreateGQLClient";
 import { ServerError } from "./ServerError";
 import { IPostOptions } from "./usePostOne";
 
@@ -15,10 +15,11 @@ export function useSyncMeta(
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<ServerError | undefined>();
   //const postedDataRef = useRef<any>();
+  const createClient = useCreateGQLClient()
 
   const syncMeta = useCallback(
     () => {
-      const graphQLClient = createGraphQLClient();
+      const graphQLClient = createClient();
       const postMutation = gql`
         mutation syncMeta {
           syncMeta{
@@ -45,7 +46,7 @@ export function useSyncMeta(
           error && options?.onError && options?.onError(error);
         });
     },
-    [options]
+    [createClient, options]
   );
 
   return [syncMeta, { loading, error }];

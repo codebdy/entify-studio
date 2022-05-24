@@ -1,6 +1,6 @@
 import { ClientError, gql } from "graphql-request";
 import { useCallback, useState } from "react";
-import { createGraphQLClient } from "./createGraphQLClient";
+import { useCreateGQLClient } from "./useCreateGQLClient";
 import { PostOptions } from "./PostOptions";
 import { ServerError } from "./ServerError";
 import { Service } from "../components/ModelBoard/meta/Service";
@@ -13,10 +13,11 @@ export function useUpdateService(
 ] {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<ServerError | undefined>();
+  const createClient = useCreateGQLClient()
 
   const post = useCallback(
     (input: Service) => {
-      const graphQLClient = createGraphQLClient(options?.serverUrl);
+      const graphQLClient = createClient(options?.serverUrl);
       const postMutation = gql`
         mutation updateService($input: ServiceInput!) {
           updateService(input: $input){
@@ -43,7 +44,7 @@ export function useUpdateService(
           error && options?.onError && options?.onError(error);
         });
     },
-    [options]
+    [createClient, options]
   );
 
   return [post, { loading, error }];

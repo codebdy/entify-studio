@@ -1,7 +1,7 @@
 import { CONST_ID } from "components/ModelBoard/meta/Meta";
 import { ClientError, gql } from "graphql-request";
 import { useCallback, useState } from "react";
-import { createGraphQLClient } from "./createGraphQLClient";
+import { useCreateGQLClient } from "./useCreateGQLClient";
 import { ServerError } from "./ServerError";
 
 export interface IPostOptions<T> {
@@ -19,10 +19,11 @@ export function usePostOne<T>(
 ] {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<ServerError | undefined>();
+  const createClient = useCreateGQLClient()
 
   const post = useCallback(
     (object: T, serverUrl?: string) => {
-      const graphQLClient = createGraphQLClient(serverUrl);
+      const graphQLClient = createClient(serverUrl);
       const postName = "upsertOne" + __type;
       const typeName = __type + "Input";
       const postMutation = gql`
@@ -54,7 +55,7 @@ export function usePostOne<T>(
           error && options?.onError && options?.onError(error);
         });
     },
-    [__type, options]
+    [__type, createClient, options]
   );
 
   return [post, { loading, error }];

@@ -1,6 +1,6 @@
 import { ClientError, gql } from "graphql-request";
 import { useCallback, useState } from "react";
-import { createGraphQLClient } from "./createGraphQLClient";
+import { useCreateGQLClient } from "./useCreateGQLClient";
 import { PostOptions } from "./PostOptions";
 import { ServerError } from "./ServerError";
 
@@ -12,10 +12,11 @@ export function useRemoveService(
 ] {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<ServerError | undefined>();
+  const createClient = useCreateGQLClient()
 
   const post = useCallback(
     (id: number) => {
-      const graphQLClient = createGraphQLClient(options?.serverUrl);
+      const graphQLClient = createClient(options?.serverUrl);
       const postMutation = gql`
         mutation removeService($id: Int!) {
           removeService(id: $id) {
@@ -42,7 +43,7 @@ export function useRemoveService(
           error && options?.onError && options?.onError(error);
         });
     },
-    [options]
+    [createClient, options]
   );
 
   return [post, { loading, error }];
