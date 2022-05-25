@@ -1,6 +1,7 @@
 import { useMountRef } from "components/ModelBoard/GraphCanvas/ClassView/useMountRef";
-import { ClientError, GraphQLError } from "graphql-request/dist/types";
+import { ClientError } from "graphql-request/dist/types";
 import { useCallback, useEffect, useState } from "react";
+import { parseErrorMessage } from "./parseErrorMessage";
 import { ServerError } from "./ServerError";
 import { useCreateGQLClient } from "./useCreateGQLClient";
 
@@ -20,9 +21,9 @@ export function useGQLQuery<T>(
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<ServerError>();
   const [data, setData] = useState<GQLData<T>>();
-  const mountRef = useMountRef()
-  const createClient = useCreateGQLClient()
-  
+  const mountRef = useMountRef();
+  const createClient = useCreateGQLClient();
+
   const excute = useCallback(() => {
     const graphQLClient = createClient(serverUrl);
 
@@ -40,11 +41,9 @@ export function useGQLQuery<T>(
         }
       })
       .catch((err: ClientError) => {
-        const error: GraphQLError | undefined = err.response?.errors
-          ? err.response.errors[0]
-          : err;
+        const message = parseErrorMessage(err);
         setLoading(false);
-        setError({message: error.message, serverUrl});
+        setError({ message: message, serverUrl });
         console.error(err);
       });
   }, [createClient, gql, mountRef, serverUrl]);

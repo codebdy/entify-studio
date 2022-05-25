@@ -3,7 +3,7 @@ import { useCallback, useState } from "react";
 import { useCreateGQLClient } from "./useCreateGQLClient";
 import { PostOptions } from "./PostOptions";
 import { ServerError } from "./ServerError";
-import { GraphQLError } from "graphql-request/dist/types";
+import { parseErrorMessage } from "./parseErrorMessage";
 
 export function useRemoveService(
   options?: PostOptions
@@ -35,12 +35,10 @@ export function useRemoveService(
           options?.onCompleted && options?.onCompleted(!!data["removeService"]);
         })
         .catch((err: ClientError) => {
-          const error: GraphQLError | undefined = err.response?.errors
-            ? err.response.errors[0]
-            : err;
+          const message = parseErrorMessage(err);
           setLoading(false);
           const serverError: ServerError = {
-            message: error?.message,
+            message: message,
             serverUrl: options?.serverUrl,
           };
           setError(serverError);
@@ -48,7 +46,7 @@ export function useRemoveService(
           error && options?.onError && options?.onError(serverError);
         });
     },
-    [createClient, options]
+    [createClient, error, options]
   );
 
   return [post, { loading, error }];

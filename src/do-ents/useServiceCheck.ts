@@ -1,8 +1,9 @@
-import { ClientError, GraphQLError } from "graphql-request/dist/types";
+import { ClientError } from "graphql-request/dist/types";
 import { useCallback, useState } from "react";
 import { useCreateGQLClient } from "./useCreateGQLClient";
 import { PostOptions } from "./PostOptions";
 import { ServerError } from "./ServerError";
+import { parseErrorMessage } from "./parseErrorMessage";
 
 const checkApi = "entifyInstalled";
 
@@ -42,12 +43,10 @@ export function useServiceCheck(options?: PostOptions): [
           options?.onCompleted && options?.onCompleted(data[checkApi]);
         })
         .catch((err: ClientError) => {
-          const error: GraphQLError | undefined = err.response?.errors
-            ? err.response.errors[0]
-            : err;
+          const message = parseErrorMessage(err);
           setLoading(false);
           const serverError: ServerError = {
-            message: error?.message,
+            message: message,
             serverUrl: options?.serverUrl,
           };
           setError(serverError);
@@ -55,7 +54,7 @@ export function useServiceCheck(options?: PostOptions): [
           error && options?.onError && options?.onError(serverError);
         });
     },
-    [createClient, options]
+    [createClient, error, options]
   );
 
   return [

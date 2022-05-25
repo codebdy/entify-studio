@@ -1,8 +1,9 @@
-import { ClientError, GraphQLError } from "graphql-request/dist/types";
+import { ClientError } from "graphql-request/dist/types";
 import { useCallback, useEffect, useState } from "react";
 import { useCreateGQLClient } from "./useCreateGQLClient";
 import { useMountRef } from "components/ModelBoard/GraphCanvas/ClassView/useMountRef";
 import { ServerError } from "./ServerError";
+import { parseErrorMessage } from "./parseErrorMessage";
 
 export interface IQueryOpions {}
 export type MutateFn<T> = (data?: T) => void;
@@ -25,8 +26,8 @@ export function useQueryOne<T>(
   const [error, setError] = useState<ServerError>();
   const [data, setData] = useState<QueryOneResult<T>>();
   const mountRef = useMountRef();
-  const createClient = useCreateGQLClient()
-  
+  const createClient = useCreateGQLClient();
+
   const excute = useCallback(() => {
     const graphQLClient = createClient(serverUrl);
 
@@ -44,11 +45,9 @@ export function useQueryOne<T>(
         }
       })
       .catch((err: ClientError) => {
-        const error: GraphQLError | undefined = err.response?.errors
-          ? err.response.errors[0]
-          : err;
+        const message = parseErrorMessage(err);
         setLoading(false);
-        setError({message:error?.message, serverUrl});
+        setError({ message: message, serverUrl });
         console.error(err);
       });
   }, [createClient, gql, mountRef, serverUrl]);

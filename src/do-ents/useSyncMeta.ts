@@ -4,7 +4,7 @@ import { useCallback, useState } from "react";
 import { useCreateGQLClient } from "./useCreateGQLClient";
 import { ServerError } from "./ServerError";
 import { IPostOptions } from "./usePostOne";
-import { GraphQLError } from "graphql-request/dist/types";
+import { parseErrorMessage } from "./parseErrorMessage";
 
 export function useSyncMeta(
   options?: IPostOptions<Meta>
@@ -38,12 +38,10 @@ export function useSyncMeta(
           options?.onCompleted && options?.onCompleted(data["syncMeta"]);
         })
         .catch((err: ClientError) => {
-          const error: GraphQLError | undefined = err.response.errors
-            ? err.response.errors[0]
-            : undefined;
+          const message = parseErrorMessage(err);
           setLoading(false);
           const serverError: ServerError = {
-            message: error?.message,
+            message: message,
             serverUrl: options?.serverUrl,
           };
           setError(serverError);
@@ -51,7 +49,7 @@ export function useSyncMeta(
           error && options?.onError && options?.onError(serverError);
         });
     },
-    [createClient, options]
+    [createClient, error, options]
   );
 
   return [syncMeta, { loading, error }];

@@ -4,7 +4,7 @@ import { useCallback, useState } from "react";
 import { useCreateGQLClient } from "./useCreateGQLClient";
 import { ServerError } from "./ServerError";
 import { IPostOptions } from "./usePostOne";
-import { GraphQLError } from "graphql-request/dist/types";
+import { parseErrorMessage } from "./parseErrorMessage";
 
 export function usePublishMeta(
   options?: IPostOptions<Meta>
@@ -15,7 +15,7 @@ export function usePublishMeta(
   //const { noRefresh, ...axioOptions } = useMemo(() => options || {}, [options]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<ServerError | undefined>();
-  const createClient = useCreateGQLClient()
+  const createClient = useCreateGQLClient();
 
   const publish = useCallback(
     (serverUrl: string | undefined) => {
@@ -37,12 +37,10 @@ export function usePublishMeta(
           options?.onCompleted && options?.onCompleted(data["publish"]);
         })
         .catch((err: ClientError) => {
-          const error: GraphQLError | undefined = err.response?.errors
-            ? err.response.errors[0]
-            : err;
+          const message = parseErrorMessage(err);
           setLoading(false);
           const serverError: ServerError = {
-            message: error?.message,
+            message: message,
             serverUrl: serverUrl,
           };
           setError(serverError);
@@ -50,7 +48,7 @@ export function usePublishMeta(
           error && options?.onError && options?.onError(serverError);
         });
     },
-    [createClient, options]
+    [createClient, error, options]
   );
 
   return [publish, { loading, error }];

@@ -1,6 +1,6 @@
 import { ClientError, gql } from "graphql-request";
-import { GraphQLError } from "graphql-request/dist/types";
 import { useCallback, useState } from "react";
+import { parseErrorMessage } from "./parseErrorMessage";
 import { ServerError } from "./ServerError";
 import { useCreateGQLClient } from "./useCreateGQLClient";
 
@@ -41,11 +41,9 @@ export function useLogin(
           options?.onCompleted && options?.onCompleted(data.login);
         })
         .catch((err: ClientError) => {
-          const error: GraphQLError | undefined = err.response?.errors
-            ? err.response.errors[0]
-            : undefined;
+          const message = parseErrorMessage(err);
           setLoading(false);
-          const serverError:ServerError = { message: error?.message, serverUrl:options?.serverUrl }
+          const serverError:ServerError = { message: message, serverUrl:options?.serverUrl }
           setError(serverError);
           console.error(err);
           options?.onError && options?.onError(serverError);
