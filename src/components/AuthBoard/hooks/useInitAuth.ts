@@ -1,4 +1,4 @@
-import { GraphQLError } from "graphql-request/dist/types";
+import { ServerError } from "do-ents/ServerError";
 import { useSelectedService } from "hooks/useSelectedService";
 import { useEffect } from "react";
 import { useSetRecoilState } from "recoil";
@@ -8,7 +8,7 @@ import { useEntityAuthSettings } from "./useEntityAuthSettings";
 
 export function useInitAuth(): {
   loading?: boolean;
-  error?: GraphQLError;
+  error?: ServerError;
 } {
   const selectedServie = useSelectedService();
   const setAbilities = useSetRecoilState(

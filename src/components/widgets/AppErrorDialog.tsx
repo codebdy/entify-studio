@@ -1,23 +1,22 @@
 import React from "react";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
-import { Box, Dialog } from "@mui/material";
+import { Dialog } from "@mui/material";
 import { useRecoilState } from "recoil";
-import intl from "react-intl-universal";
-import { serverErrorState } from "recoil/atoms";
+import { appErrorState } from "recoil/atoms";
 
 function Alert(props: AlertProps) {
   return <MuiAlert elevation={6} variant="filled" {...props} square />;
 }
 
-export const ErrorDialog = () => {
-  const [error, setError] = useRecoilState(serverErrorState);
+export const AppErrorDialog = () => {
+  const [error, setError] = useRecoilState(appErrorState);
   const handleClose = () => {
     setError(undefined);
   };
 
   return (
     <Dialog
-      open={!!error?.message}
+      open={!!error}
       onClose={handleClose}
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
@@ -31,9 +30,8 @@ export const ErrorDialog = () => {
           justifyContent: "space-between",
         }}
       >
-        {error?.serverUrl + " " + intl.get("error") }
+        {error}
       </Alert>
-      {error?.message && <Box sx={{ p: 2 }}>{error.message}</Box>}
     </Dialog>
   );
 };

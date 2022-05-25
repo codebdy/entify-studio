@@ -1,6 +1,7 @@
 import { useMountRef } from "components/ModelBoard/GraphCanvas/ClassView/useMountRef";
 import { ClientError, GraphQLError } from "graphql-request/dist/types";
 import { useCallback, useEffect, useState } from "react";
+import { ServerError } from "./ServerError";
 import { useCreateGQLClient } from "./useCreateGQLClient";
 
 export interface GQLData<T> {
@@ -13,11 +14,11 @@ export function useGQLQuery<T>(
 ): {
   data?: GQLData<T>;
   loading?: boolean;
-  error?: GraphQLError;
+  error?: ServerError;
   refresh: () => void;
 } {
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<GraphQLError>();
+  const [error, setError] = useState<ServerError>();
   const [data, setData] = useState<GQLData<T>>();
   const mountRef = useMountRef()
   const createClient = useCreateGQLClient()
@@ -43,7 +44,7 @@ export function useGQLQuery<T>(
           ? err.response.errors[0]
           : err;
         setLoading(false);
-        setError(error);
+        setError({message: error.message, serverUrl});
         console.error(err);
       });
   }, [createClient, gql, mountRef, serverUrl]);

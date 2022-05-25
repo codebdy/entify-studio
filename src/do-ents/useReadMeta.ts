@@ -8,14 +8,14 @@ import {
   x6NodesState,
 } from "components/ModelBoard/recoil/atoms";
 import { gql } from "graphql-request";
-import { GraphQLError } from "graphql-request/dist/types";
 import { useSelectedService } from "hooks/useSelectedService";
 import { useMemo, useEffect } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { selectedServiceIdState } from "recoil/atoms";
+import { ServerError } from "./ServerError";
 import { useQueryOne } from "./useQueryOne";
 
-export function useReadMeta(): { error?: GraphQLError; loading?: boolean } {
+export function useReadMeta(): { error?: ServerError; loading?: boolean } {
   const serviceId = useRecoilValue(selectedServiceIdState);
   const selecedService = useSelectedService();
   const setMeta = useSetRecoilState(metaState(serviceId));

@@ -1,5 +1,5 @@
+import { ServerError } from "do-ents/ServerError";
 import { useGQLQuery } from "do-ents/useGQLQuery";
-import { GraphQLError } from "graphql-request/dist/types";
 import { EntityAuthSettings } from "../meta/EntityAuthSettings";
 
 const queryName = "entityAuthSettings";
@@ -16,7 +16,7 @@ const gql = `
 export function useEntityAuthSettings(serverUrl: string | undefined): {
   settings?: EntityAuthSettings[];
   loading?: boolean;
-  error?: GraphQLError;
+  error?: ServerError;
 } {
   const { data, loading, error } = useGQLQuery<EntityAuthSettings[]>(
     serverUrl ? gql : "",

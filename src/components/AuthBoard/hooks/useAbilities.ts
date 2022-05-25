@@ -1,5 +1,5 @@
+import { ServerError } from "do-ents/ServerError";
 import { useGQLQuery } from "do-ents/useGQLQuery";
-import { GraphQLError } from "graphql-request/dist/types";
 import { Ability } from "../meta/Ability";
 
 const queryName = "ability";
@@ -20,7 +20,7 @@ const gql = `
 export function useAbilities(serverUrl: string | undefined): {
   abilities?: Ability[];
   loading?: boolean;
-  error?: GraphQLError;
+  error?: ServerError;
 } {
   const { data, loading, error } = useGQLQuery<Ability[]>(
     serverUrl ? gql : "",

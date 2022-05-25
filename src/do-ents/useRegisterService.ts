@@ -4,6 +4,7 @@ import { useCreateGQLClient } from "./useCreateGQLClient";
 import { PostOptions } from "./PostOptions";
 import { ServerError } from "./ServerError";
 import { Service } from "../components/ModelBoard/meta/Service";
+import { GraphQLError } from "graphql-request/dist/types";
 
 export function useRegisterService(
   options?: PostOptions
@@ -35,13 +36,17 @@ export function useRegisterService(
           options?.onCompleted && options?.onCompleted(!!data["addService"]);
         })
         .catch((err: ClientError) => {
-          const error: ServerError | undefined = err.response?.errors
+          const error: GraphQLError | undefined = err.response?.errors
             ? err.response.errors[0]
             : err;
           setLoading(false);
-          setError(error);
+          const serverError: ServerError = {
+            message: error?.message,
+            serverUrl: options?.serverUrl,
+          };
+          setError(serverError);
           console.error(err);
-          error && options?.onError && options?.onError(error);
+          error && options?.onError && options?.onError(serverError);
         });
     },
     [createClient, options]

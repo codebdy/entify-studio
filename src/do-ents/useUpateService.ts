@@ -4,6 +4,7 @@ import { useCreateGQLClient } from "./useCreateGQLClient";
 import { PostOptions } from "./PostOptions";
 import { ServerError } from "./ServerError";
 import { Service } from "../components/ModelBoard/meta/Service";
+import { GraphQLError } from "graphql-request/dist/types";
 
 export function useUpdateService(
   options?: PostOptions
@@ -13,14 +14,14 @@ export function useUpdateService(
 ] {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<ServerError | undefined>();
-  const createClient = useCreateGQLClient()
+  const createClient = useCreateGQLClient();
 
   const post = useCallback(
     (input: Service) => {
       const graphQLClient = createClient(options?.serverUrl);
       const postMutation = gql`
         mutation updateService($input: ServiceInput!) {
-          updateService(input: $input){
+          updateService(input: $input) {
             id
           }
         }
@@ -35,13 +36,17 @@ export function useUpdateService(
           options?.onCompleted && options?.onCompleted(!!data["updateService"]);
         })
         .catch((err: ClientError) => {
-          const error: ServerError | undefined = err.response?.errors
+          const error: GraphQLError | undefined = err.response?.errors
             ? err.response.errors[0]
             : err;
           setLoading(false);
-          setError(error);
+          const serverError: ServerError = {
+            message: error?.message,
+            serverUrl: options?.serverUrl,
+          };
+          setError(serverError);
           console.error(err);
-          error && options?.onError && options?.onError(error);
+          error && options?.onError && options?.onError(serverError);
         });
     },
     [createClient, options]

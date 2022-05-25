@@ -4,6 +4,7 @@ import { useCallback, useState } from "react";
 import { useCreateGQLClient } from "./useCreateGQLClient";
 import { ServerError } from "./ServerError";
 import { IPostOptions } from "./usePostOne";
+import { GraphQLError } from "graphql-request/dist/types";
 
 export function useSyncMeta(
   options?: IPostOptions<Meta>
@@ -37,13 +38,17 @@ export function useSyncMeta(
           options?.onCompleted && options?.onCompleted(data["syncMeta"]);
         })
         .catch((err: ClientError) => {
-          const error: ServerError | undefined = err.response.errors
+          const error: GraphQLError | undefined = err.response.errors
             ? err.response.errors[0]
             : undefined;
           setLoading(false);
-          setError(error);
+          const serverError: ServerError = {
+            message: error?.message,
+            serverUrl: options?.serverUrl,
+          };
+          setError(serverError);
           console.error(err);
-          error && options?.onError && options?.onError(error);
+          error && options?.onError && options?.onError(serverError);
         });
     },
     [createClient, options]

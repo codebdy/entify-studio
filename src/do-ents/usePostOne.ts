@@ -3,11 +3,13 @@ import { ClientError, gql } from "graphql-request";
 import { useCallback, useState } from "react";
 import { useCreateGQLClient } from "./useCreateGQLClient";
 import { ServerError } from "./ServerError";
+import { GraphQLError } from "graphql-request/dist/types";
 
 export interface IPostOptions<T> {
   onCompleted?: (data: T) => void;
   onError?: (error: ServerError) => void;
   noRefresh?: boolean;
+  serverUrl?:string;
 }
 
 export function usePostOne<T>(
@@ -19,7 +21,7 @@ export function usePostOne<T>(
 ] {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<ServerError | undefined>();
-  const createClient = useCreateGQLClient()
+  const createClient = useCreateGQLClient();
 
   const post = useCallback(
     (object: T, serverUrl?: string) => {
@@ -46,13 +48,17 @@ export function usePostOne<T>(
           options?.onCompleted && options?.onCompleted(data[postName]);
         })
         .catch((err: ClientError) => {
-          const error: ServerError | undefined = err.response?.errors
+          const error: GraphQLError | undefined = err.response?.errors
             ? err.response.errors[0]
             : err;
           setLoading(false);
-          setError(error);
+          const serverError: ServerError = {
+            message: error?.message,
+            serverUrl: serverUrl,
+          };
+          setError(serverError);
           console.error(err);
-          error && options?.onError && options?.onError(error);
+          error && options?.onError && options?.onError(serverError);
         });
     },
     [__type, createClient, options]

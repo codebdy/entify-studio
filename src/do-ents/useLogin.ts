@@ -1,6 +1,7 @@
 import { ClientError, gql } from "graphql-request";
 import { GraphQLError } from "graphql-request/dist/types";
 import { useCallback, useState } from "react";
+import { ServerError } from "./ServerError";
 import { useCreateGQLClient } from "./useCreateGQLClient";
 
 const loginMutation = gql`
@@ -10,44 +11,48 @@ const loginMutation = gql`
 `;
 
 export interface LoginOptions {
-  serverUrl?:string,
+  serverUrl?: string;
   onCompleted?: (access_token: string) => void;
-  onError?: (error?: GraphQLError) => void;
+  onError?: (error?: ServerError) => void;
 }
 
 export function useLogin(
   options?: LoginOptions
 ): [
   (loginName: string, password: string) => void,
-  { token?: string; loading?: boolean; error?: GraphQLError }
+  { token?: string; loading?: boolean; error?: ServerError }
 ] {
   const [token, setToken] = useState("");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<GraphQLError | undefined>();
-  const createClient = useCreateGQLClient()
+  const [error, setError] = useState<ServerError | undefined>();
+  const createClient = useCreateGQLClient();
 
-  const login = useCallback((loginName: string, password: string) => {
-    const graphQLClient = createClient(options?.serverUrl);
+  const login = useCallback(
+    (loginName: string, password: string) => {
+      const graphQLClient = createClient(options?.serverUrl);
 
-    setLoading(true);
-    setError(undefined);
-    graphQLClient
-      .request(loginMutation, { loginName, password })
-      .then((data) => {
-        setLoading(false);
-        setToken(data.login);
-        options?.onCompleted && options?.onCompleted(data.login);
-      })
-      .catch((err: ClientError) => {
-        const error: GraphQLError | undefined = err.response?.errors
-          ? err.response.errors[0]
-          : undefined;
-        setLoading(false);
-        setError(error);
-        console.error(err);
-        options?.onError && options?.onError(error);
-      });
-  }, [createClient, options]);
+      setLoading(true);
+      setError(undefined);
+      graphQLClient
+        .request(loginMutation, { loginName, password })
+        .then((data) => {
+          setLoading(false);
+          setToken(data.login);
+          options?.onCompleted && options?.onCompleted(data.login);
+        })
+        .catch((err: ClientError) => {
+          const error: GraphQLError | undefined = err.response?.errors
+            ? err.response.errors[0]
+            : undefined;
+          setLoading(false);
+          const serverError:ServerError = { message: error?.message, serverUrl:options?.serverUrl }
+          setError(serverError);
+          console.error(err);
+          options?.onError && options?.onError(serverError);
+        });
+    },
+    [createClient, options]
+  );
 
   return [login, { token, loading, error }];
 }

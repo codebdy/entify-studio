@@ -1,5 +1,5 @@
-import { GraphQLError } from "graphql-request/dist/types";
 import { Service } from "components/ModelBoard/meta/Service";
+import { ServerError } from "./ServerError";
 import { useGQLQuery } from "./useGQLQuery";
 
 const gql = `
@@ -15,7 +15,7 @@ const gql = `
 export function useGQLServices(): {
   services?: Service[];
   loading?: boolean;
-  error?: GraphQLError;
+  error?: ServerError;
   refresh: () => void;
 } {
   const { data, loading, error, refresh } = useGQLQuery<Service[]>(gql);

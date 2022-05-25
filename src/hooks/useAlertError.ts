@@ -6,7 +6,7 @@ export function useAlertError() {
   const setError = useSetRecoilState(appErrorState);
 
   const alertError = useCallback((message: string) => {
-    setError({ message });
+    setError(message);
   }, [setError]);
 
   return alertError;

@@ -1,3 +1,4 @@
-import { GraphQLError } from "graphql-request/dist/types";
-
-export type ServerError = GraphQLError
+export interface ServerError {
+  message?: string;
+  serverUrl: string | undefined;
+}

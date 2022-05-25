@@ -19,6 +19,7 @@ import { SuccessAlertBar } from "./components/widgets/SuccessAlertBar";
 import { INDEX_URL, LOGIN_URL, PRIMARY_COLOR } from "./util/consts";
 import { useIntl } from "./util/useIntl";
 import useShadows from "./util/useShadows";
+import { AppErrorDialog } from "components/widgets/AppErrorDialog";
 
 function App() {
   const themeMode = useRecoilValue(themeModeState);
@@ -48,6 +49,7 @@ function App() {
         </Switch>
         <SuccessAlertBar />
         <ErrorDialog />
+        <AppErrorDialog />
         <ConfirmDialog />
       </ThemeProvider>
     </StyledEngineProvider>
