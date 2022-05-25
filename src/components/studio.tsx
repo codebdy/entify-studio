@@ -23,6 +23,7 @@ import { useShowServerError } from "hooks/useShowServerError";
 import { useReadMeta } from "do-ents/useReadMeta";
 import Loading from "./common/loading";
 import { useLoginCheck } from "hooks/useLoginCheck";
+import { useLogout } from "do-ents/useLogout";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -64,6 +65,8 @@ export const Studio = memo(() => {
   const history = useHistory();
   const setLoggedUser = useSetRecoilState(loggedUserState);
 
+  const [logout] = useLogout();
+
   useLoginCheck();
 
   const { loading, error } = useReadMeta();
@@ -72,8 +75,9 @@ export const Studio = memo(() => {
   const handleLogout = useCallback(() => {
     setLoggedUser(undefined);
     localStorage.removeItem(TOKEN_NAME);
+    logout();
     history.push(LOGIN_URL);
-  }, [history, setLoggedUser]);
+  }, [history, logout, setLoggedUser]);
 
   const handleSwitchThemeMode = useCallback(() => {
     setThemeMode((mode) => (mode === "dark" ? "light" : "dark"));
