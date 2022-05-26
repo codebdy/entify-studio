@@ -1,4 +1,4 @@
-import { memo, useEffect, useMemo } from "react";
+import { memo, useEffect } from "react";
 import { useChildrenScrollStyles } from "theme/useChildrenScrollStyles";
 import { Graph } from "@antv/x6";
 import { GraphCanvas } from "./GraphCanvas";
@@ -12,49 +12,25 @@ import {
   publishedIdState,
   selectedDiagramState,
 } from "./recoil/atoms";
-import { useQueryOne } from "do-ents/useQueryOne";
-import { EntityNameMeta, Meta } from "./meta/Meta";
 import { useShowServerError } from "hooks/useShowServerError";
-import { gql } from "graphql-request";
 import { PropertyBox } from "./PropertyBox";
 import { selectedServiceIdState } from "recoil/atoms";
-import { useSelectedService } from "./hooks/useSelectedService";
+import { usePublishedMeta } from "./hooks/usePublishedMeta";
 
 export const ModelContent = memo(
   (props: { graph?: Graph; onSetGraph: (graph?: Graph) => void }) => {
     const { graph, onSetGraph } = props;
     const scrollStyles = useChildrenScrollStyles();
     const serviceId = useRecoilValue(selectedServiceIdState);
-    const selecedService = useSelectedService();
     const setPublishedId = useSetRecoilState(publishedIdState(serviceId));
     const selectedDiagram = useRecoilValue(selectedDiagramState(serviceId));
     const minMap = useRecoilValue(minMapState(serviceId));
-    const queryName = useMemo(() => "one" + EntityNameMeta, []);
 
-    const queryPubishedGql = useMemo(() => {
-      return gql`
-      query ${queryName} {
-        ${queryName}(where:{
-          status:{
-            _eq:published
-          }
-        }){
-          id
-        }
-      }
-    `;
-    }, [queryName]);
-
-    const {
-      data: publishedData,
-      error: publishedError,
-      loading: publishedLoading,
-    } = useQueryOne<Meta>(queryPubishedGql, selecedService?.url);
-    useShowServerError(publishedError);
+    const { meta, error } = usePublishedMeta();
+    useShowServerError(error);
     useEffect(() => {
-      const meta = publishedData ? publishedData[queryName] : undefined;
       setPublishedId(meta?.id || undefined);
-    }, [publishedData, queryName, setPublishedId]);
+    }, [meta?.id, setPublishedId]);
 
     return (
       <Box
