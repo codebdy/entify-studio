@@ -14,7 +14,6 @@ export function ActionWithExpression(props: {
   entityMeta: ClassMeta;
 }) {
   const { label, ability, noExpression, entityMeta } = props;
-  console.log(ability)
   const [post, { error, loading }] = usePostAbility();
   useShowServerError(error);
 

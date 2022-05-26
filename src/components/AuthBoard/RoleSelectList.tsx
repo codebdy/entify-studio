@@ -12,6 +12,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import { GUEST_ROLE_ID } from "util/consts";
+import { ID } from "./meta/id";
 
 export const RoleSelectList = memo(() => {
   const selectedServiceId = useSelectedServiceId();
@@ -21,7 +22,7 @@ export const RoleSelectList = memo(() => {
 
   const roles = useRecoilValue(rolesState);
 
-  const handleChange = (roleId: number) => {
+  const handleChange = (roleId: ID) => {
     if (roleId !== selectedRoleId) {
       setSelectedRoleId(roleId);
     }

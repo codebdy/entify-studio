@@ -10,4 +10,4 @@ export const AUTHORIZATION = "Authorization"
 export const TOKEN_PREFIX= "Bearer "
 
 //普通角色的ID永远不会是1
-export const GUEST_ROLE_ID = 1
+export const GUEST_ROLE_ID = "1"

@@ -1,8 +1,9 @@
 import { atomFamily } from "recoil";
 import { Ability } from "../meta/Ability";
 import { EntityAuthSettings } from "../meta/EntityAuthSettings";
+import { ID } from "../meta/id";
 
-export const selectedRoleIdState = atomFamily<number | undefined, number>({
+export const selectedRoleIdState = atomFamily<ID | undefined, number>({
   key: "selectedRoleId",
   default: undefined,
 });

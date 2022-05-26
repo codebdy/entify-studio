@@ -1,5 +1,7 @@
+import { ID } from "./id";
+
 export interface EntityAuthSettings {
-  id?: number;
+  id?: ID;
   entityUuid: string;
   expand?: boolean;
 }

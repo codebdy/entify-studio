@@ -45,7 +45,7 @@ export const AbilityActions = memo(
             entityUuid: entityMeta.uuid,
             columnUuid: columnUuid,
             abilityType: type,
-            roleId: selectedRoleId || 0,
+            roleId: selectedRoleId || "",
           }
         );
       },
@@ -56,6 +56,7 @@ export const AbilityActions = memo(
       () => findAbilityByType(AbilityType.CREATE),
       [findAbilityByType]
     );
+
     const deleteAbility = useMemo(
       () => findAbilityByType(AbilityType.DELETE),
       [findAbilityByType]
