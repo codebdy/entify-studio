@@ -5,14 +5,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import intl from "react-intl-universal";
-import {
-  Tooltip,
-  IconButton,
-  Theme,
-  Grid,
-  TextField,
-  SvgIcon,
-} from "@mui/material";
+import { Tooltip, IconButton, Theme, Grid, SvgIcon, Box } from "@mui/material";
 import createStyles from "@mui/styles/createStyles";
 import makeStyles from "@mui/styles/makeStyles";
 import { ClassMeta } from "components/ModelBoard/meta/ClassMeta";
@@ -23,13 +16,10 @@ import {
 import { useRecoilValue } from "recoil";
 import { LoadingButton } from "@mui/lab";
 import { useSelectedServiceId } from "components/ModelBoard/hooks/useSelectedServiceId";
+import { JsonInput } from "./JsonInput";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    content: {
-      minWidth: "600px",
-      minHeight: "260px",
-    },
     list: {
       border: ` ${theme.palette.divider} solid 1px`,
       display: "flex",
@@ -189,27 +179,26 @@ export const ExpressDialog = memo(
             </SvgIcon>
           </IconButton>
         </Tooltip>
-        <Dialog open={open} onClose={handleClose} scroll="paper" maxWidth="lg">
+        <Dialog
+          open={open}
+          onClose={handleClose}
+          scroll="paper"
+          maxWidth="sm"
+          fullWidth
+        >
           <DialogTitle>{intl.get("express-tip")}</DialogTitle>
-          <DialogContent>
-            <div className={classes.content}>
-              <Grid container>
-                <Grid item xs={12}>
-                  <TextField
-                    multiline
-                    fullWidth
-                    rows={16}
-                    variant="outlined"
-                    size="small"
-                    value={exp || ""}
-                    autoFocus
-                    onChange={handleExpressionChange}
-                    error={!!error}
-                    helperText={error}
-                  />
-                </Grid>
-              </Grid>
-            </div>
+          <DialogContent
+            sx={{
+              height: "calc(100vh - 140px)",
+              width: "100%",
+              overflow: "hidden",
+              "& .monaco-editor": {
+                height: "100%",
+                width: "100%",
+              },
+            }}
+          >
+            <JsonInput value="" onChange={() => {}} />
           </DialogContent>
           <DialogActions className={classes.actions}>
             <Button color="inherit" onClick={handleClose}>
