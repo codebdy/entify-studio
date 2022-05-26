@@ -5,24 +5,26 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { useChildrenScrollStyles } from "theme/useChildrenScrollStyles";
 import { useSelectedService } from "components/ModelBoard/hooks/useSelectedService";
-import { useEntities } from "components/ModelBoard/hooks/useEntities";
-import { useSelectedServiceId } from "components/ModelBoard/hooks/useSelectedServiceId";
 import { ClassNode } from "./ClassNode";
 import { RoleSelectList } from "./RoleSelectList";
 import { useSelectedRole } from "./hooks/useSelectedRole";
 import { useInitAuth } from "./hooks/useInitAuth";
 import { useShowServerError } from "hooks/useShowServerError";
 import Loading from "components/common/loading";
+import { usePublishedEntities } from "./hooks/usePublishedEntities";
 
 export const AuthBoard = memo(() => {
   const scrollStyles = useChildrenScrollStyles();
   const selectedServie = useSelectedService();
-  const selectedServiceId = useSelectedServiceId();
   const selectedRole = useSelectedRole();
-  const entities = useEntities(selectedServiceId);
+  const {
+    entities,
+    loading: loadingEntities,
+    error: entitiesError,
+  } = usePublishedEntities();
 
   const { loading, error } = useInitAuth();
-  useShowServerError(error);
+  useShowServerError(error || entitiesError);
 
   return selectedServie ? (
     <Box
@@ -36,7 +38,7 @@ export const AuthBoard = memo(() => {
       }}
     >
       <RoleSelectList />
-      {loading ? (
+      {loading || loadingEntities ? (
         <Loading />
       ) : (
         selectedRole && (
@@ -62,7 +64,7 @@ export const AuthBoard = memo(() => {
                 defaultExpandIcon={<ChevronRightIcon />}
                 selected=""
               >
-                {entities.map((entity) => {
+                {entities?.map((entity) => {
                   return <ClassNode key={entity.uuid} entityMeta={entity} />;
                 })}
               </TreeView>
