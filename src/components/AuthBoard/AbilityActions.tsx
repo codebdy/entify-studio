@@ -5,14 +5,14 @@ import { ClassMeta } from "components/ModelBoard/meta/ClassMeta";
 import { Ability } from "components/AuthBoard/meta/Ability";
 import { memo, useCallback, useMemo } from "react";
 import { AbilityType } from "./meta/AbilityType";
-import { useSelectedRole } from "./hooks/useSelectedRole";
 import { useRoleAbilities } from "./hooks/useRoleAbilities";
+import { useSelectedRoleId } from "./hooks/useSelectedRoleId";
 
 export const AbilityActions = memo(
   (props: { entityMeta: ClassMeta; columnUuid?: string }) => {
     const { entityMeta, columnUuid } = props;
-    const selectedRole = useSelectedRole();
-    const roleAbilities = useRoleAbilities(selectedRole?.id);
+    const selectedRoleId = useSelectedRoleId();
+    const roleAbilities = useRoleAbilities(selectedRoleId);
     const isEntity = !columnUuid;
 
     const findAbilityByType = useCallback(
@@ -45,11 +45,11 @@ export const AbilityActions = memo(
             entityUuid: entityMeta.uuid,
             columnUuid: columnUuid,
             abilityType: type,
-            roleId: selectedRole?.id || 0,
+            roleId: selectedRoleId || 0,
           }
         );
       },
-      [columnUuid, entityMeta.uuid, isEntity, roleAbilities, selectedRole?.id]
+      [columnUuid, entityMeta.uuid, isEntity, roleAbilities, selectedRoleId]
     );
 
     const createAbility = useMemo(
@@ -76,7 +76,7 @@ export const AbilityActions = memo(
         }}
       >
         <Grid container alignItems="center">
-          {selectedRole && (
+          {selectedRoleId !== undefined && (
             <>
               <Grid
                 item

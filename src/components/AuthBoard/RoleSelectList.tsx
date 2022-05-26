@@ -11,6 +11,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
+import { GUEST_ROLE_ID } from "util/consts";
 
 export const RoleSelectList = memo(() => {
   const selectedServiceId = useSelectedServiceId();
@@ -73,6 +74,15 @@ export const RoleSelectList = memo(() => {
               </ListItemButton>
             );
           })}
+          <ListItemButton
+            selected={selectedRoleId === GUEST_ROLE_ID}
+            onClick={() => handleChange(GUEST_ROLE_ID)}
+          >
+            <ListItemIcon>
+              <PersonOutlineOutlinedIcon />
+            </ListItemIcon>
+            <ListItemText primary={intl.get("guest")} />
+          </ListItemButton>
         </List>
       </Box>
     </Box>

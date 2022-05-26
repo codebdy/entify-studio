@@ -7,16 +7,16 @@ import { useChildrenScrollStyles } from "theme/useChildrenScrollStyles";
 import { useSelectedService } from "components/ModelBoard/hooks/useSelectedService";
 import { ClassNode } from "./ClassNode";
 import { RoleSelectList } from "./RoleSelectList";
-import { useSelectedRole } from "./hooks/useSelectedRole";
 import { useInitAuth } from "./hooks/useInitAuth";
 import { useShowServerError } from "hooks/useShowServerError";
 import Loading from "components/common/loading";
 import { usePublishedEntities } from "./hooks/usePublishedEntities";
+import { useSelectedRoleId } from "./hooks/useSelectedRoleId";
 
 export const AuthBoard = memo(() => {
   const scrollStyles = useChildrenScrollStyles();
   const selectedServie = useSelectedService();
-  const selectedRole = useSelectedRole();
+  const selectedRoleId = useSelectedRoleId();
   const {
     entities,
     loading: loadingEntities,
@@ -41,7 +41,7 @@ export const AuthBoard = memo(() => {
       {loading || loadingEntities ? (
         <Loading />
       ) : (
-        selectedRole && (
+        selectedRoleId !== undefined && (
           <Box
             sx={{
               flex: 1,
