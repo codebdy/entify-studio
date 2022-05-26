@@ -166,5 +166,6 @@
   "settings": "Settings",
   "authority": "Authority",
   "role-list": "Role List",
-  "role-auth-setting":"Role Authroity setting"
+  "role-auth-setting":"Role Authroity setting",
+  "guest":"Guest"
 }

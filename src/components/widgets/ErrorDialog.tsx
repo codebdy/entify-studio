@@ -31,7 +31,7 @@ export const ErrorDialog = () => {
           justifyContent: "space-between",
         }}
       >
-        {error?.serverUrl + " " + intl.get("error") }
+        {(error?.serverUrl||"") + " " + intl.get("error") }
       </Alert>
       {error?.message && <Box sx={{ p: 2 }}>{error.message}</Box>}
     </Dialog>

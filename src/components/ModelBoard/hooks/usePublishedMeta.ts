@@ -24,7 +24,7 @@ export function usePublishedMeta() {
   }, [queryName]);
 
   const { data, error, loading } = useQueryOne<Meta>(
-    queryPubishedGql,
+    selecedService ? queryPubishedGql : "",
     selecedService?.url
   );
 

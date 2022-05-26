@@ -166,5 +166,6 @@
   "settings": "设置",
   "authority": "权限",
   "role-list": "角色列表",
-  "role-auth-setting":" 的权限设置"
+  "role-auth-setting":" 的权限设置",
+  "guest":"游客"
 }
