@@ -63,11 +63,8 @@ export const ExpressDialog = memo(
       setOpen(false);
     };
 
-    const handleExpressionChange = (
-      event: React.ChangeEvent<{ value: string }>
-    ) => {
-      setExp(event.target.value);
-      setError("");
+    const handleExpressionChange = (exression: string) => {
+      setExp(exression);
     };
 
     const getRelationByName = (entityUuid: string, roleName: string) => {
@@ -198,7 +195,7 @@ export const ExpressDialog = memo(
               },
             }}
           >
-            <JsonInput value="" onChange={() => {}} />
+            <JsonInput expression={exp} onChange={handleExpressionChange} />
           </DialogContent>
           <DialogActions className={classes.actions}>
             <Button color="inherit" onClick={handleClose}>
