@@ -5,7 +5,12 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import intl from "react-intl-universal";
-import { Tooltip, IconButton, Theme, Grid, SvgIcon, Box } from "@mui/material";
+import {
+  Tooltip,
+  IconButton,
+  Theme,
+  SvgIcon,
+} from "@mui/material";
 import createStyles from "@mui/styles/createStyles";
 import makeStyles from "@mui/styles/makeStyles";
 import { ClassMeta } from "components/ModelBoard/meta/ClassMeta";
@@ -30,10 +35,6 @@ const useStyles = makeStyles((theme: Theme) =>
     plus: {
       textAlign: "center",
       marginTop: theme.spacing(1),
-    },
-    actions: {
-      padding: theme.spacing(2),
-      paddingRight: theme.spacing(3),
     },
   })
 );
@@ -180,14 +181,16 @@ export const ExpressDialog = memo(
           open={open}
           onClose={handleClose}
           scroll="paper"
-          maxWidth="sm"
+          maxWidth="md"
           fullWidth
         >
           <DialogTitle>{intl.get("express-tip")}</DialogTitle>
           <DialogContent
+            dividers
             sx={{
               height: "calc(100vh - 140px)",
               width: "100%",
+              p: 1,
               overflow: "hidden",
               "& .monaco-editor": {
                 height: "100%",
@@ -197,7 +200,7 @@ export const ExpressDialog = memo(
           >
             <JsonInput expression={exp} onChange={handleExpressionChange} />
           </DialogContent>
-          <DialogActions className={classes.actions}>
+          <DialogActions sx={{ p: 2 }}>
             <Button color="inherit" onClick={handleClose}>
               {intl.get("cancel")}
             </Button>
