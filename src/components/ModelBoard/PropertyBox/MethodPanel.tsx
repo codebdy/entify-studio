@@ -124,7 +124,7 @@ export const MethodPanel = (props: { method: MethodMeta; cls: ClassMeta }) => {
   );
 
   return (
-    <>
+    <Grid container spacing={2} sx={{ p: 2 }}>
       <Grid item xs={12}>
         <LazyTextField
           label={intl.get("name")}
@@ -195,6 +195,6 @@ export const MethodPanel = (props: { method: MethodMeta; cls: ClassMeta }) => {
           />
         </Grid>
       )}
-    </>
+    </Grid>
   );
 };
