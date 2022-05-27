@@ -10,7 +10,7 @@ export function useCreateClassMethod(serviceId: number) {
     (cls: ClassMeta) => {
       const method = createMethod(cls.methods);
 
-      changeClass({ ...cls, methods: [...cls.methods, method] });
+      changeClass({ ...cls, methods: [...cls.methods||[], method] });
     },
     [changeClass, createMethod]
   );

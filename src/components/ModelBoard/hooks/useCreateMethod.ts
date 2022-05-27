@@ -17,7 +17,7 @@ export function useCreateMethod(serviceId: number) {
       const namePrefix = "newMethod";
       while (
         // eslint-disable-next-line no-loop-func
-        methods.find((mthd) => mthd.name === namePrefix + index)
+        methods?.find((mthd) => mthd.name === namePrefix + index)
       ) {
         index++;
       }
