@@ -5,10 +5,6 @@ import { useEffect } from "react";
 import { ClassView } from "../GraphCanvas/ClassView";
 import {
   svgInherit,
-  svgLinkLine,
-  svgOneWayAggregation,
-  svgOneWayAssociation,
-  svgOneWayCombination,
   svgTwoWayAggregation,
   svgTwoWayAssociation,
   svgTwoWayCombination,
@@ -147,7 +143,7 @@ export const Toolbox = memo((props: { graph?: Graph }) => {
           {intl.get("inherit")}
         </ToolItem>
       </CategoryCollapse>
-      <CategoryCollapse title={intl.get("two-way-relation")}>
+      <CategoryCollapse title={intl.get("relations")}>
         <ToolItem
           selected={pressedLineType === RelationType.TWO_WAY_ASSOCIATION}
           onClick={handleRelationClick(RelationType.TWO_WAY_ASSOCIATION)}
@@ -170,7 +166,7 @@ export const Toolbox = memo((props: { graph?: Graph }) => {
           {intl.get("combination")}
         </ToolItem>
       </CategoryCollapse>
-      <CategoryCollapse title={intl.get("one-way-relation")}>
+      {/* <CategoryCollapse title={intl.get("one-way-relation")}>
         <ToolItem
           selected={pressedLineType === RelationType.ONE_WAY_ASSOCIATION}
           onClick={handleRelationClick(RelationType.ONE_WAY_ASSOCIATION)}
@@ -207,7 +203,7 @@ export const Toolbox = memo((props: { graph?: Graph }) => {
           {svgLinkLine}
           {intl.get("link-line")}
         </ToolItem>
-      </CategoryCollapse>
+      </CategoryCollapse> */}
     </Box>
   );
 });
