@@ -10,6 +10,7 @@ import {
   pressedLineTypeState,
   relationsState,
   selectedDiagramState,
+  selectedElementState,
   x6EdgesState,
 } from "../recoil/atoms";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
@@ -27,6 +28,7 @@ export function useEdgeLineDraw(graph: Graph | undefined, serviceId: number) {
   );
   const selectedDiagram = useRecoilValue(selectedDiagramState(serviceId));
   const setRelations = useSetRecoilState(relationsState(serviceId));
+  const selectedElement = useSetRecoilState(selectedElementState(serviceId));
   const setEdges = useSetRecoilState(x6EdgesState(serviceId));
   const getClass = useGetClass(serviceId);
   const backupSnapshot = useBackupSnapshot(serviceId);
@@ -142,6 +144,7 @@ export function useEdgeLineDraw(graph: Graph | undefined, serviceId: number) {
         tempEdge?.remove();
         setPressedLineType(undefined);
         setDrawingLine(undefined);
+        selectedElement(relationId);
         return;
       }
       if (edge?.id === drawingLine?.tempEdgeId) {
@@ -157,6 +160,7 @@ export function useEdgeLineDraw(graph: Graph | undefined, serviceId: number) {
       getClass,
       graph,
       selectedDiagram,
+      selectedElement,
       setDrawingLine,
       setEdges,
       setPressedLineType,
