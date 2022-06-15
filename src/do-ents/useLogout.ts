@@ -6,7 +6,7 @@ import { useCreateGQLClient } from "./useCreateGQLClient";
 
 const logoutMutation = gql`
   mutation {
-    logout()
+    logout
   }
 `;
 export interface LogoutOptions {
