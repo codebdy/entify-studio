@@ -14,7 +14,6 @@ export function useCreateGQLClient() {
     );
 
     client.setHeader(AUTHORIZATION, token ? `${TOKEN_PREFIX}${token}` : "");
-
     return client;
   }, [token]);
 

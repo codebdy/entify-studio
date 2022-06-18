@@ -1,4 +1,5 @@
 import { Role } from "components/AuthBoard/meta/Role";
+import { useToken } from "hooks/useToken";
 import { useRecoilValue } from "recoil";
 import { authUrlState } from "recoil/atoms";
 import { ServerError } from "./ServerError";
@@ -20,8 +21,9 @@ export function useRoles(): {
   error?: ServerError;
 } {
   const authUrl = useRecoilValue(authUrlState);
+  const token = useToken()
   const { data, loading, error } = useGQLQuery<Role[]>(
-    authUrl ? gql : "",
+    authUrl && token? gql : "",
     authUrl
   );
   return {
