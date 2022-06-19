@@ -10,10 +10,10 @@ import { NavLink, Redirect, Route, Switch, useHistory } from "react-router-dom";
 import { GraphiQLBoard } from "./GraphiQLBoard";
 import { ModelsBoard } from "./ModelBoard";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness5Icon from "@mui/icons-material/Brightness5";
-import { loggedUserState, themeModeState } from "recoil/atoms";
+import { authUrlState, loggedUserState, themeModeState } from "recoil/atoms";
 import { LOGIN_URL, TOKEN_NAME } from "util/consts";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import { ServiceSelect } from "./ServiceSelect";
@@ -64,8 +64,9 @@ export const Studio = memo(() => {
   const classes = useStyles();
   const history = useHistory();
   const setLoggedUser = useSetRecoilState(loggedUserState);
+  const authUrl = useRecoilValue(authUrlState);
 
-  const [logout] = useLogout();
+  const [logout] = useLogout({serverUrl:authUrl});
 
   useLoginCheck();
 
