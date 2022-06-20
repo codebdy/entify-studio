@@ -9,7 +9,6 @@ export function useCreateClassAttribute(serviceId: number) {
   const createClassAttribute = useCallback(
     (cls: ClassMeta) => {
       const attr = createAttribute(cls.attributes);
-
       changeClass({ ...cls, attributes: [...cls.attributes, attr] });
     },
     [changeClass, createAttribute]
