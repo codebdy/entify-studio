@@ -22,7 +22,7 @@ export function useCreateTempClassNodeForNew(serviceId: number) {
         shape: "react-shape",
         data: {
           ...classMeta,
-          root: stereoType === StereoType.External,
+          root: false,
           isTempForNew: true,
         },
       };

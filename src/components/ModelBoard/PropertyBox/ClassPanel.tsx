@@ -51,7 +51,8 @@ export const ClassPanel = (props: { cls: ClassMeta }) => {
         />
       </Grid>
       {cls.stereoType !== StereoType.Enum &&
-        cls.stereoType !== StereoType.ValueObject && (
+        cls.stereoType !== StereoType.ValueObject &&
+        cls.stereoType !== StereoType.External && (
           <>
             <Grid item xs={6}>
               <FormControlLabel
