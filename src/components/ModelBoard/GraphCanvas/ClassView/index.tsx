@@ -374,6 +374,7 @@ export const ClassView = memo(
                       sx={{
                         padding: theme.spacing(1, 3),
                       }}
+                      disabled = {data?.stereoType === StereoType.External}
                       onClick={handleAttributeCreate}
                     >
                       <SvgIcon fontSize="small">
