@@ -15,6 +15,7 @@ export enum StereoType {
   //GQLInterface = "GQLInterface",
   //Association = "Association",
   External = "External",//外部实体
+  Partial = "Partial"
 }
 
 /**
@@ -29,6 +30,8 @@ export interface ClassMeta {
   innerId: number;
 
   name: string;
+  
+  partailName?: string;
 
   stereoType: StereoType;
 

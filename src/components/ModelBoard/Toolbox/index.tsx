@@ -135,6 +135,10 @@ export const Toolbox = memo((props: { graph?: Graph }) => {
           <ClassRect stereoChar="X" oneBorder={true} />
           {intl.get("external-class")}
         </ToolItem>
+        <ToolItem onMouseDown={startDragFn(StereoType.Partial)}>
+          <ClassRect stereoChar="P" oneBorder={false} />
+          {intl.get("partial-class")}
+        </ToolItem>
         <ToolItem
           selected={pressedLineType === RelationType.INHERIT}
           onClick={handleRelationClick(RelationType.INHERIT)}

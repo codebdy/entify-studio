@@ -106,6 +106,17 @@ export const RootMenu = memo(
       },
       [addClass]
     );
+
+    const handleAddPartial = useCallback(
+      (event: React.MouseEvent<HTMLElement>) => {
+        addClass(StereoType.Partial);
+        event.stopPropagation();
+        setSubAnchorEl(null);
+      },
+      [addClass]
+    );
+
+
     const handleAddDiagram = useCallback(
       (event: React.MouseEvent<HTMLElement>) => {
         backupSnapshot();
@@ -262,6 +273,9 @@ export const RootMenu = memo(
           </MenuItem>
           <MenuItem onClick={handleAddExternal}>
             {intl.get("add-external-class")}
+          </MenuItem>
+          <MenuItem onClick={handleAddPartial}>
+            {intl.get("add-partial-class")}
           </MenuItem>
         </Menu>
         <EditServiceDialog open={editOpen} onClose={handleEditDlgClose} />

@@ -109,9 +109,11 @@
   "enum-classes": "Enums",
   "value-objects": "Value objects",
   "external-classes": "External Classes",
+  "partial-classes": "Partial classes",
   "graphql-interface": "GraphQL interface",
   "association-class": "Association class",
-  "external-class": "External class",
+  "external-class": "External Entity",
+  "partial-class":"Partial Entity",
   "type": "Type",
   "expression-error": "Expression error",
   "entity-column-not-found": "Entity {enity} has not column {column}",
@@ -143,6 +145,7 @@
   "add-enum-class": "Add enum",
   "add-value-object": "Add value object",
   "add-external-class": "Add external class",
+  "add-partial-class":"Add partial class",
   "implement-type": "Implement type",
   "script": "Script",
   "cloud-function": "Cloud funcion",
@@ -167,5 +170,6 @@
   "authority": "Authority",
   "role-list": "Role List",
   "role-auth-setting":"Role Authroity setting",
-  "guest":"Guest"
+  "guest":"Guest",
+  "partial-name":"Partial name"
 }

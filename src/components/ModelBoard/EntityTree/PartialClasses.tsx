@@ -1,31 +1,31 @@
 import TreeItem from "@mui/lab/TreeItem";
 import { TREE_ROOT_ID } from "util/consts";
 import { TreeNodeLabel } from "./TreeNodeLabel";
-import FolderOutlinedIcon from "@mui/icons-material/FolderOutlined";
 import { useSelectedServiceId } from "../hooks/useSelectedServiceId";
 import { NodeText } from "./NodeText";
 import { ClassNode } from "./ClassNode";
 import intl from "react-intl-universal";
 import { memo } from "react";
 import { Graph } from "@antv/x6";
-import { useRootClasses } from "../hooks/useRootClasses";
+import FolderOutlinedIcon from "@mui/icons-material/FolderOutlined";
+import { usePartialClasses } from "../hooks/usePartailClasses";
 
-export const Classes = memo((props: { graph?: Graph }) => {
+export const PartialClasses = memo((props: { graph?: Graph }) => {
   const { graph } = props;
   const serviceId = useSelectedServiceId();
-  const entities = useRootClasses(serviceId);
+  const partails = usePartialClasses(serviceId);
 
-  return entities.length > 0 ? (
+  return partails.length > 0 ? (
     <TreeItem
-      nodeId={TREE_ROOT_ID + "ENTITIES"}
+      nodeId={TREE_ROOT_ID + "PARTIALS"}
       label={
         <TreeNodeLabel>
           <FolderOutlinedIcon />
-          <NodeText>{intl.get("entity-classes")}</NodeText>
+          <NodeText>{intl.get("partial-classes")}</NodeText>
         </TreeNodeLabel>
       }
     >
-      {entities.map((entity) => {
+      {partails.map((entity) => {
         return <ClassNode key={entity.uuid} uuid={entity.uuid} graph={graph} />;
       })}
     </TreeItem>

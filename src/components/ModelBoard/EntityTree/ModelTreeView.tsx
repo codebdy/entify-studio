@@ -22,6 +22,7 @@ import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
 import { refreshServicesState, selectedServiceIdState } from "recoil/atoms";
 import { useShowServerError } from "hooks/useShowServerError";
 import { useRemoveService } from "do-ents/useRemoveService";
+import { PartialClasses } from "./PartialClasses";
 
 export const ModelTreeView = memo((props: { graph?: Graph }) => {
   const { graph } = props;
@@ -147,6 +148,7 @@ export const ModelTreeView = memo((props: { graph?: Graph }) => {
           <Enums graph={graph} />
           <ValueObjects graph={graph} />
           <ExternalClasses graph={graph} />
+          <PartialClasses graph={graph} />
           {diagrams.map((diagram) => {
             return <DiagramNode key={diagram.uuid} diagram={diagram} />;
           })}
