@@ -22,8 +22,8 @@ export const ClassPanel = (props: { cls: ClassMeta }) => {
 
   const handlePartialNameChange= useCallback(
     (event: React.ChangeEvent<{ value: string }>) => {
-      const partailName = event.target.value.trim();
-      changeClass({ ...cls, partailName: partailName });
+      const partialName = event.target.value.trim();
+      changeClass({ ...cls, partialName: partialName });
     },
     [changeClass, cls]
   );
@@ -63,7 +63,7 @@ export const ClassPanel = (props: { cls: ClassMeta }) => {
         <Grid item xs={12}>
         <LazyTextField
           label={intl.get("partial-name")}
-          value={cls.partailName || ""}
+          value={cls.partialName || ""}
           onChange={handlePartialNameChange}
         />
       </Grid>

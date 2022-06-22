@@ -30,8 +30,8 @@ export interface ClassMeta {
   innerId: number;
 
   name: string;
-  
-  partailName?: string;
+
+  partialName?: string;
 
   stereoType: StereoType;
 

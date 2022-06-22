@@ -8,14 +8,14 @@ import intl from "react-intl-universal";
 import { memo } from "react";
 import { Graph } from "@antv/x6";
 import FolderOutlinedIcon from "@mui/icons-material/FolderOutlined";
-import { usePartialClasses } from "../hooks/usePartailClasses";
+import { usePartialClasses } from "../hooks/usePartialClasses";
 
 export const PartialClasses = memo((props: { graph?: Graph }) => {
   const { graph } = props;
   const serviceId = useSelectedServiceId();
-  const partails = usePartialClasses(serviceId);
+  const partials = usePartialClasses(serviceId);
 
-  return partails.length > 0 ? (
+  return partials.length > 0 ? (
     <TreeItem
       nodeId={TREE_ROOT_ID + "PARTIALS"}
       label={
@@ -25,7 +25,7 @@ export const PartialClasses = memo((props: { graph?: Graph }) => {
         </TreeNodeLabel>
       }
     >
-      {partails.map((entity) => {
+      {partials.map((entity) => {
         return <ClassNode key={entity.uuid} uuid={entity.uuid} graph={graph} />;
       })}
     </TreeItem>
