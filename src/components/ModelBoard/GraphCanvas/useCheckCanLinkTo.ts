@@ -28,7 +28,6 @@ export function useCheckCanLinkTo(serviceId: number) {
 
       if (
         target.stereoType === StereoType.Enum ||
-        target.stereoType === StereoType.External ||
         target.stereoType === StereoType.ValueObject 
       ) {
         return false;

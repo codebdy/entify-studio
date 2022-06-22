@@ -5,8 +5,7 @@ export function canStartLink(lineType: RelationType, classMeta: ClassMeta) {
   if (
     lineType &&
     classMeta.stereoType !== StereoType.Enum &&
-    classMeta.stereoType !== StereoType.ValueObject &&
-    classMeta.stereoType !== StereoType.External
+    classMeta.stereoType !== StereoType.ValueObject 
   ) {
     return true;
   } else if (classMeta.stereoType === StereoType.ValueObject) {
