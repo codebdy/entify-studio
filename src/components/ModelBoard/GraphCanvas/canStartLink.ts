@@ -2,7 +2,7 @@ import { ClassMeta, StereoType } from "../meta/ClassMeta";
 import { RelationType } from "../meta/RelationMeta";
 
 export function canStartLink(lineType: RelationType, classMeta: ClassMeta) {
-  if (classMeta.stereoType === StereoType.Partial && lineType == RelationType.INHERIT) {
+  if (classMeta.stereoType === StereoType.Partial && lineType === RelationType.INHERIT) {
     return false
   } else if (
     lineType &&

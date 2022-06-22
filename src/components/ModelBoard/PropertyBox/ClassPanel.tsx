@@ -20,7 +20,7 @@ export const ClassPanel = (props: { cls: ClassMeta }) => {
     [changeClass, cls]
   );
 
-  const handlePartialNameChange= useCallback(
+  const handlePartialNameChange = useCallback(
     (event: React.ChangeEvent<{ value: string }>) => {
       const partialName = event.target.value.trim();
       changeClass({ ...cls, partialName: partialName });
@@ -61,18 +61,17 @@ export const ClassPanel = (props: { cls: ClassMeta }) => {
       {
         cls.stereoType === StereoType.Partial &&
         <Grid item xs={12}>
-        <LazyTextField
-          label={intl.get("partial-name")}
-          value={cls.partialName || ""}
-          onChange={handlePartialNameChange}
-        />
-      </Grid>
+          <LazyTextField
+            label={intl.get("partial-name")}
+            value={cls.partialName || ""}
+            onChange={handlePartialNameChange}
+          />
+        </Grid>
       }
 
       {cls.stereoType !== StereoType.Enum &&
         cls.stereoType !== StereoType.ValueObject &&
-        cls.stereoType !== StereoType.External && 
-        cls.stereoType !== StereoType.Partial &&
+        cls.stereoType !== StereoType.External &&
         (
           <>
             <Grid item xs={6}>
