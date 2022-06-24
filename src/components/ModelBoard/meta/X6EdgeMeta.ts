@@ -22,4 +22,6 @@ export interface X6EdgeMeta{
 
   targetMultiplicityPosition?: LabelPosition;
   diagramUuid: string;
+  sourceAnchor: any;
+  targetAnchor: any;
 }

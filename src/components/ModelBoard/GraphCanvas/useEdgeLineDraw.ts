@@ -139,6 +139,8 @@ export function useEdgeLineDraw(graph: Graph | undefined, serviceId: number) {
             id: relationId,
             vertices: tempEdge?.getVertices(),
             diagramUuid: selectedDiagram,
+            sourceAnchor: undefined,
+            targetAnchor: undefined,
           },
         ]);
         tempEdge?.remove();

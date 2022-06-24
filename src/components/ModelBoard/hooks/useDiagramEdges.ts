@@ -31,7 +31,7 @@ export function useDiagramEdges(diagramUuid: string, serviceId: number) {
             ...relation,
           });
         } else {
-          const newEdge = { id: relation.uuid };
+          const newEdge = { id: relation.uuid, sourceAnchor:undefined, targetAnchor:undefined };
           edges.push({
             ...newEdge,
             ...relation,

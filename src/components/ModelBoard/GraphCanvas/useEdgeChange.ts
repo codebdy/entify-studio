@@ -87,6 +87,8 @@ export function useEdgeChange(graph: Graph | undefined, serviceId: number) {
                 roleOnTargetPosition: roleOnTarget?.position as any,
                 targetMultiplicityPosition: targetMultiplicity?.position as any,
                 diagramUuid: edageData?.diagramUuid,
+                sourceAnchor: (edge.source as any)["anchor"],
+                targetAnchor: (edge.target as any)["anchor"],
               }
             : eg
         )

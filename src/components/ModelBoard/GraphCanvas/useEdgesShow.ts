@@ -48,8 +48,14 @@ export function useEdgesShow(graph: Graph | undefined, serviceId: number) {
       } else {
         grahpEdge = graph?.addEdge({
           id: edgeMeta.id,
-          source: edgeMeta.sourceId,
-          target: edgeMeta.targetId,
+          source: { 
+            cell: edgeMeta.sourceId,
+            anchor: edgeMeta.sourceAnchor,
+          },
+          target: { 
+            cell: edgeMeta.targetId, 
+            anchor: edgeMeta.targetAnchor,
+          },
           vertices: edgeMeta.vertices,
           args: {
             stopPropagation: false,
@@ -59,20 +65,20 @@ export function useEdgesShow(graph: Graph | undefined, serviceId: number) {
           tools:
             selectedElement === edgeMeta.id
               ? [
-                  "boundary",
-                  {
-                    name: "vertices",
-                    args: {
-                      stopPropagation: false,
-                    },
+                "boundary",
+                {
+                  name: "vertices",
+                  args: {
+                    stopPropagation: false,
                   },
-                  {
-                    name: "segments",
-                    args: {
-                      stopPropagation: false,
-                    },
+                },
+                {
+                  name: "segments",
+                  args: {
+                    stopPropagation: false,
                   },
-                ]
+                },
+              ]
               : [],
           attrs: getRelationGraphAttrs(theme, edgeMeta.relationType),
           data: { relationType: edgeMeta.relationType },
@@ -99,7 +105,7 @@ export function useEdgesShow(graph: Graph | undefined, serviceId: number) {
           {
             attrs: {
               text: {
-                text: edgeMeta.roleOfSource||"",
+                text: edgeMeta.roleOfSource || "",
                 fill: theme.palette.text.primary,
               },
               rect: {
