@@ -24,6 +24,8 @@ import { useReadMeta } from "do-ents/useReadMeta";
 import Loading from "./common/loading";
 import { useLoginCheck } from "hooks/useLoginCheck";
 import { useLogout } from "do-ents/useLogout";
+import { UploadBoard } from "./UploadBoard";
+import { useSelectedServiceId } from "./ModelBoard/hooks/useSelectedServiceId";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -65,8 +67,9 @@ export const Studio = memo(() => {
   const history = useHistory();
   const setLoggedUser = useSetRecoilState(loggedUserState);
   const authUrl = useRecoilValue(authUrlState);
+  const selectedId = useSelectedServiceId()
 
-  const [logout] = useLogout({serverUrl:authUrl});
+  const [logout] = useLogout({ serverUrl: authUrl });
 
   useLoginCheck();
 
@@ -126,13 +129,25 @@ export const Studio = memo(() => {
           >
             {"API"}
           </NavLink>
-          <NavLink
-            className={classes.navLink}
-            activeClassName={classes.activeLink}
-            to="/studio/auth"
-          >
-            {intl.get("authority")}
-          </NavLink>
+          {
+            selectedId > 0 && <>
+              <NavLink
+                className={classes.navLink}
+                activeClassName={classes.activeLink}
+                to="/studio/auth"
+              >
+                {intl.get("authority")}
+              </NavLink>
+              <NavLink
+                className={classes.navLink}
+                activeClassName={classes.activeLink}
+                to="/studio/upload"
+              >
+                {intl.get("file-upload")}
+              </NavLink>
+            </>
+          }
+
           <Box sx={{ flex: 1 }} />
           <Tooltip
             title={intl.get(themeToSwitch)}
@@ -177,6 +192,7 @@ export const Studio = memo(() => {
           <Route path="/studio/models" component={ModelsBoard}></Route>
           <Route path="/studio/api" component={GraphiQLBoard}></Route>
           <Route path="/studio/auth" component={AuthBoard}></Route>
+          <Route path="/studio/upload" component={UploadBoard}></Route>
           <Redirect to={`/studio/models`} from="/studio" />
         </Switch>
       )}

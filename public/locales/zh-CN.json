@@ -171,5 +171,6 @@
   "role-list": "角色列表",
   "role-auth-setting":" 的权限设置",
   "guest":"游客",
-  "partial-name":"部件名"
+  "partial-name":"部件名",
+  "file-upload":"文件上传" 
 }
