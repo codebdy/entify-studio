@@ -172,5 +172,6 @@
   "role-auth-setting":"Role Authroity setting",
   "guest":"Guest",
   "partial-name":"Partial name",
-  "file-upload":"File upload" 
+  "file-upload":"File upload",
+  "upload":"Upload"
 }
