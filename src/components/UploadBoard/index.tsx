@@ -1,16 +1,16 @@
 import { LoadingButton } from "@mui/lab";
 import { Container, Stack, TextField, useTheme, Box } from "@mui/material"
-import { useCreateGQLClient } from "do-ents/useCreateGQLClient";
 import { memo, useCallback, useState } from "react"
 import intl from "react-intl-universal"
 import { useSelectedService } from 'components/ModelBoard/hooks/useSelectedService';
 import { ServerError } from "do-ents/ServerError";
-import { ClientError } from "graphql-request";
-import { parseErrorMessage } from "do-ents/parseErrorMessage";
 import { useShowServerError } from 'hooks/useShowServerError';
+import { AwesomeGraphQLClient, GraphQLRequestError } from 'awesome-graphql-client'
+import { useToken } from "hooks/useToken";
+import { AUTHORIZATION, TOKEN_PREFIX } from "util/consts";
 
 const gql = `
-  mutation upload($file:Upload!, $name:string){
+  mutation upload($file:Upload!, $name:String){
     singleUpload(file:$file, name:$name){
       id
     }
@@ -22,8 +22,8 @@ export const UploadBoard = memo(() => {
   const [file, setFile] = useState<File>()
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<ServerError | undefined>();
+  const token = useToken();
   
-  const createClient = useCreateGQLClient();
   const theme = useTheme()
   const service = useSelectedService()
 
@@ -45,24 +45,25 @@ export const UploadBoard = memo(() => {
   }, [])
 
   const handleUpload = useCallback(()=>{
-    const graphQLClient = createClient(service?.url);
-
-    graphQLClient.setHeader("Content-Type", "multipart/form-data")
+    if (!service?.url){
+      return 
+    }
+    const client = new AwesomeGraphQLClient({ endpoint: service.url})
+    //graphQLClient.setHeader()
+    //    client.setHeader(AUTHORIZATION, token ? `${TOKEN_PREFIX}${token}` : "");
     setLoading(true);
     setError(undefined);
-    graphQLClient
-      .request(gql, { file, name })
+    client
+      .request(gql, { file, name }, {headers: {[AUTHORIZATION]: token ? `${TOKEN_PREFIX}${token}` : ""}})
       .then((data) => {
         setLoading(false);
       })
-      .catch((err: ClientError) => {
-        const message = parseErrorMessage(err);
+      .catch((err: GraphQLRequestError) => {
         setLoading(false);
-        const serverError:ServerError = { message: message, serverUrl:service?.url }
-        setError(serverError);
         console.error(err);
+        setError(err as any)
       });
-  }, [createClient, file, name, service?.url])
+  }, [file, name, service?.url, token])
 
   return (
     <Container maxWidth="xl">
