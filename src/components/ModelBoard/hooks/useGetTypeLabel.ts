@@ -18,7 +18,8 @@ export function useGetTypeLabel(serviceId: number) {
         type === Type.IntArray ||
         type === Type.FloatArray ||
         type === Type.StringArray ||
-        type === Type.DateArray
+        type === Type.DateArray ||
+        type === Type.File
       ) {
         return type;
       } else {
