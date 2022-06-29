@@ -13,6 +13,7 @@ import { useEnums } from "../hooks/useEnums";
 import { useSelectedServiceId } from "../hooks/useSelectedServiceId";
 import { useValueObjects } from "../hooks/useValueObjects";
 import { Type } from "../meta/Type";
+import { useSelectedService } from 'components/ModelBoard/hooks/useSelectedService';
 
 export const TypeInput = memo(
   (props: {
@@ -32,6 +33,7 @@ export const TypeInput = memo(
       onTypeUuidChange,
     } = props;
     const serviceId = useSelectedServiceId();
+    const service = useSelectedService();
     const enums = useEnums(serviceId);
     const valueObjects = useValueObjects(serviceId);
     const entities = useEntities(serviceId);
@@ -80,6 +82,13 @@ export const TypeInput = memo(
                   {intl.get("entity")}
                 </MenuItem>
               )}
+              {
+                service?.canUpload &&
+                <MenuItem value={Type.File}>
+                {intl.get("file")}
+              </MenuItem>
+              }
+
               <MenuItem value={Type.IDArray}>
                 ID {intl.get("array")}
               </MenuItem>

@@ -1,9 +1,9 @@
 import { ClientError } from "graphql-request/dist/types";
 import { useCallback, useState } from "react";
 import { useCreateGQLClient } from "./useCreateGQLClient";
-import { PostOptions } from "./PostOptions";
 import { ServerError } from "./ServerError";
 import { parseErrorMessage } from "./parseErrorMessage";
+import { Service } from "components/ModelBoard/meta/Service";
 
 const serviceField = "_service";
 
@@ -11,14 +11,16 @@ const gql = `
   query{
     ${serviceField}{
       installed
+      canUpload
     }
   }
 `;
 
-export function useServiceCheck(options?: PostOptions): [
+export function useServiceCheck(onComplete?:(service?:Service)=>void): [
   (serverUrl: string) => void,
   {
     installed?: boolean;
+    canUpload?: boolean;
     loading?: boolean;
     error?: ServerError;
   }
@@ -26,6 +28,7 @@ export function useServiceCheck(options?: PostOptions): [
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<ServerError>();
   const [installed, setInstalled] = useState<boolean>();
+  const [canUpload, setCanUpload] = useState<boolean>();
   const createClient = useCreateGQLClient();
 
   const check = useCallback(
@@ -40,29 +43,30 @@ export function useServiceCheck(options?: PostOptions): [
           setLoading(false);
           if (data) {
             setInstalled(data[serviceField]?.installed);
+            setCanUpload(data[serviceField]?.canUpload);
+            onComplete && onComplete(data[serviceField])
           }
-
-          options?.onCompleted && options?.onCompleted(data[serviceField]);
         })
         .catch((err: ClientError) => {
           const message = parseErrorMessage(err);
           setLoading(false);
           const serverError: ServerError = {
             message: message,
-            serverUrl: options?.serverUrl,
+            serverUrl
           };
           setError(serverError);
           console.error(err);
-          error && options?.onError && options?.onError(serverError);
+
         });
     },
-    [createClient, error, options]
+    [createClient, onComplete]
   );
 
   return [
     check,
     {
       installed,
+      canUpload: canUpload,
       loading,
       error,
     },

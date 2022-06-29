@@ -113,7 +113,7 @@
   "graphql-interface": "GraphQL接口",
   "association-class": "关联类",
   "external-class": "外部实体",
-  "partial-class":"实体部件",
+  "partial-class": "实体部件",
   "type": "类型",
   "expression-error": "表达式错误",
   "entity-column-not-found": "实体{enity}上没有定义列{column}",
@@ -145,7 +145,7 @@
   "add-enum-class": "添加枚举类",
   "add-value-object": "添加值类",
   "add-external-class": "添加外部实体",
-  "add-partial-class":"添加实体部件",
+  "add-partial-class": "添加实体部件",
   "implement-type": "实现类型",
   "script": "脚本",
   "cloud-function": "云函数",
@@ -169,9 +169,10 @@
   "settings": "设置",
   "authority": "权限",
   "role-list": "角色列表",
-  "role-auth-setting":" 的权限设置",
-  "guest":"游客",
-  "partial-name":"部件名",
-  "file-upload":"文件上传",
-  "upload":"上传"
+  "role-auth-setting": " 的权限设置",
+  "guest": "游客",
+  "partial-name": "部件名",
+  "file-upload": "文件上传",
+  "upload": "上传",
+  "file": "文件"
 }

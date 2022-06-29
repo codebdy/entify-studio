@@ -20,4 +20,5 @@ export enum Type {
   EnumArray = "EnumArray",
   ValueObjectArray = "ValueObjectArray",
   EntityArray = "EntityArray",
+  File = "File"
 }

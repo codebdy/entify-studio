@@ -18,6 +18,7 @@ import { useShowServerError } from "hooks/useShowServerError";
 import { AddServiceDialog } from "components/ServiceSelect/AddServiceDialog";
 import { ServiceItem } from "./ServiceItem";
 import { useSelectedService } from "hooks/useSelectedService";
+import { useReplenishService } from "components/ModelBoard/hooks/useReplenishService";
 
 export const ServiceSelect = memo(() => {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
@@ -27,6 +28,7 @@ export const ServiceSelect = memo(() => {
   const refreshFlg = useRecoilValue(refreshServicesState);
   const { services, loading, error, refresh } = useGQLServices();
 
+  useReplenishService()
   useEffect(() => {
     if (refreshFlg && refresh) {
       refresh();
