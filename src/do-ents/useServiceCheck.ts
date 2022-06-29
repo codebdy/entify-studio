@@ -5,11 +5,13 @@ import { PostOptions } from "./PostOptions";
 import { ServerError } from "./ServerError";
 import { parseErrorMessage } from "./parseErrorMessage";
 
-const checkApi = "entifyInstalled";
+const serviceField = "_service";
 
 const gql = `
   query{
-    ${checkApi}
+    ${serviceField}{
+      installed
+    }
   }
 `;
 
@@ -37,10 +39,10 @@ export function useServiceCheck(options?: PostOptions): [
         .then((data) => {
           setLoading(false);
           if (data) {
-            setInstalled(data[checkApi]);
+            setInstalled(data[serviceField]?.installed);
           }
 
-          options?.onCompleted && options?.onCompleted(data[checkApi]);
+          options?.onCompleted && options?.onCompleted(data[serviceField]);
         })
         .catch((err: ClientError) => {
           const message = parseErrorMessage(err);

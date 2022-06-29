@@ -11,7 +11,7 @@ import { AUTHORIZATION, TOKEN_PREFIX } from "util/consts";
 
 const gql = `
   mutation upload($file:Upload!, $name:String){
-    singleUpload(file:$file, name:$name){
+    singleUpload(media:{file:$file, name:$name}){
       id
     }
   }
