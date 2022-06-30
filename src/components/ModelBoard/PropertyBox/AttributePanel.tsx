@@ -169,7 +169,7 @@ export const AttributePanel = (props: {
             </Grid>
           )}
 
-          {attribute.type === Type.Date && (
+          {attribute.type === Type.Date && cls.stereoType !== StereoType.Partial &&(
             <Grid item xs={6}>
               <FormControlLabel
                 control={
@@ -183,7 +183,7 @@ export const AttributePanel = (props: {
               />
             </Grid>
           )}
-          {attribute.type === Type.Date && (
+          {attribute.type === Type.Date && cls.stereoType !== StereoType.Partial &&(
             <Grid item xs={6}>
               <FormControlLabel
                 control={
