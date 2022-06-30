@@ -10,15 +10,20 @@ import { useToken } from "hooks/useToken";
 import { AUTHORIZATION, TOKEN_PREFIX } from "util/consts";
 
 const gql = `
-  mutation upload($file:Upload!, $name:String){
-    singleUpload(media:{file:$file, name:$name}){
+  mutation upload($file:Upload!){
+    upsertOneEntityName(
+      object:{
+        file:$file, 
+        name:"file name"
+      }
+    ){
       id
     }
   }
 `
 
 export const UploadBoard = memo(() => {
-  const [name, setName] = useState("")
+  const [mutation, setMutation] = useState(gql)
   const [file, setFile] = useState<File>()
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<ServerError | undefined>();
@@ -33,7 +38,6 @@ export const UploadBoard = memo(() => {
     (event: React.ChangeEvent<HTMLInputElement>) => {
       const files = event.target.files
       if (files?.length) {
-        setName(files[0].name)
         setFile(files[0])
       }
     },
@@ -41,7 +45,7 @@ export const UploadBoard = memo(() => {
   );
 
   const handleNameChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-    setName(event.target.value)
+    setMutation(event.target.value)
   }, [])
 
   const handleUpload = useCallback(() => {
@@ -54,7 +58,7 @@ export const UploadBoard = memo(() => {
     setLoading(true);
     setError(undefined);
     client
-      .request(gql, { file, name }, { headers: { [AUTHORIZATION]: token ? `${TOKEN_PREFIX}${token}` : "" } })
+      .request(mutation, { file }, { headers: { [AUTHORIZATION]: token ? `${TOKEN_PREFIX}${token}` : "" } })
       .then((data) => {
         setLoading(false);
       })
@@ -63,7 +67,7 @@ export const UploadBoard = memo(() => {
         console.error(err);
         setError(err as any)
       });
-  }, [file, name, service?.url, token])
+  }, [file, mutation, service?.url, token])
 
   return (
     <Container maxWidth="md">
@@ -79,7 +83,7 @@ export const UploadBoard = memo(() => {
             multiline
             rows={12}
             size="small"
-            value={name}
+            value={mutation}
             onChange={handleNameChange}
           />
         </Grid>
