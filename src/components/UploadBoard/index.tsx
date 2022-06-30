@@ -71,28 +71,31 @@ export const UploadBoard = memo(() => {
 
   return (
     <Container maxWidth="md">
-      <Grid container spacing={2} sx={{ p: 2 }}>
-        <Grid item xs={12}>
-          <input accept="image/*" type="file" onChange={handleFileChange} style={{ color: theme.palette.text.secondary }} />
+      {
+        !!service && <Grid container spacing={2} sx={{ p: 2 }}>
+          <Grid item xs={12}>
+            <input accept="image/*" type="file" onChange={handleFileChange} style={{ color: theme.palette.text.secondary }} />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              fullWidth
+              label={"Mutation"}
+              variant="outlined"
+              multiline
+              rows={16}
+              size="small"
+              value={mutation}
+              onChange={handleNameChange}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <LoadingButton variant="contained" loading={loading} component="span" disabled={!file} onClick={handleUpload}>
+              {intl.get("upload")}
+            </LoadingButton>
+          </Grid>
         </Grid>
-        <Grid item xs={12}>
-          <TextField
-            fullWidth
-            label={"Mutation"}
-            variant="outlined"
-            multiline
-            rows={12}
-            size="small"
-            value={mutation}
-            onChange={handleNameChange}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <LoadingButton variant="contained" loading={loading} component="span" disabled={!file} onClick={handleUpload}>
-            {intl.get("upload")}
-          </LoadingButton>
-        </Grid>
-      </Grid>
+      }
+
     </Container>
   )
 })
