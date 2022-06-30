@@ -8,6 +8,8 @@ import { useShowServerError } from 'hooks/useShowServerError';
 import { AwesomeGraphQLClient, GraphQLRequestError } from 'awesome-graphql-client'
 import { useToken } from "hooks/useToken";
 import { AUTHORIZATION, TOKEN_PREFIX } from "util/consts";
+import { useSetRecoilState } from "recoil";
+import { successAlertState } from "recoil/atoms";
 
 const gql = `
   mutation upload($file:Upload!){
@@ -27,6 +29,7 @@ export const UploadBoard = memo(() => {
   const [file, setFile] = useState<File>()
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<ServerError | undefined>();
+  const setSuccessAlertState = useSetRecoilState(successAlertState);
   const token = useToken();
 
   const theme = useTheme()
@@ -61,13 +64,14 @@ export const UploadBoard = memo(() => {
       .request(mutation, { file }, { headers: { [AUTHORIZATION]: token ? `${TOKEN_PREFIX}${token}` : "" } })
       .then((data) => {
         setLoading(false);
+        setSuccessAlertState(true)
       })
       .catch((err: GraphQLRequestError) => {
         setLoading(false);
         console.error(err);
         setError(err as any)
       });
-  }, [file, mutation, service?.url, token])
+  }, [file, mutation, service?.url, setSuccessAlertState, token])
 
   return (
     <Container maxWidth="md">
