@@ -11,15 +11,20 @@ import { AUTHORIZATION, TOKEN_PREFIX } from "util/consts";
 import { useSetRecoilState } from "recoil";
 import { successAlertState } from "recoil/atoms";
 
+const field = "upsertOneEntityName"
+
 const gql = `
   mutation upload($file:Upload!){
-    upsertOneEntityName(
+    ${field}(
       object:{
         file:$file, 
         name:"file name"
       }
     ){
       id
+      file{
+        url
+      }
     }
   }
 `
@@ -29,6 +34,7 @@ export const UploadBoard = memo(() => {
   const [file, setFile] = useState<File>()
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<ServerError | undefined>();
+  const [data, setData] = useState<any>()
   const setSuccessAlertState = useSetRecoilState(successAlertState);
   const token = useToken();
 
@@ -65,6 +71,8 @@ export const UploadBoard = memo(() => {
       .then((data) => {
         setLoading(false);
         setSuccessAlertState(true)
+
+        setData(data)
       })
       .catch((err: GraphQLRequestError) => {
         setLoading(false);
@@ -74,28 +82,33 @@ export const UploadBoard = memo(() => {
   }, [file, mutation, service?.url, setSuccessAlertState, token])
 
   return (
-    <Container maxWidth="md">
+    <Container maxWidth="lg">
       {
         !!service && <Grid container spacing={2} sx={{ p: 2 }}>
-          <Grid item xs={12}>
-            <input accept="image/*" type="file" onChange={handleFileChange} style={{ color: theme.palette.text.secondary }} />
+          <Grid item container spacing={2} sx={{ p: 2 }} lg={6}>
+            <Grid item xs={12}>
+              <input accept="image/*" type="file" onChange={handleFileChange} style={{ color: theme.palette.text.secondary }} />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label={"Mutation"}
+                variant="outlined"
+                multiline
+                rows={16}
+                size="small"
+                value={mutation}
+                onChange={handleNameChange}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <LoadingButton variant="contained" loading={loading} component="span" disabled={!file} onClick={handleUpload}>
+                {intl.get("upload")}
+              </LoadingButton>
+            </Grid>
           </Grid>
-          <Grid item xs={12}>
-            <TextField
-              fullWidth
-              label={"Mutation"}
-              variant="outlined"
-              multiline
-              rows={16}
-              size="small"
-              value={mutation}
-              onChange={handleNameChange}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <LoadingButton variant="contained" loading={loading} component="span" disabled={!file} onClick={handleUpload}>
-              {intl.get("upload")}
-            </LoadingButton>
+          <Grid item lg={6} sx={{ mt:5 }}>
+            <TextField multiline fullWidth rows = {15} value = {data?JSON.stringify(data, null, 2): ""} />
           </Grid>
         </Grid>
       }
