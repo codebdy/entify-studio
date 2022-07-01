@@ -8,29 +8,12 @@ import { useShowServerError } from 'hooks/useShowServerError';
 import { AwesomeGraphQLClient, GraphQLRequestError } from 'awesome-graphql-client'
 import { useToken } from "hooks/useToken";
 import { AUTHORIZATION, TOKEN_PREFIX } from "util/consts";
-import { useSetRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { successAlertState } from "recoil/atoms";
-
-const field = "upsertOneEntityName"
-
-const gql = `
-  mutation upload($file:Upload!){
-    ${field}(
-      object:{
-        file:$file, 
-        name:"file name"
-      }
-    ){
-      id
-      file{
-        url
-      }
-    }
-  }
-`
+import { uploadGqlState } from "./atoms";
 
 export const UploadBoard = memo(() => {
-  const [mutation, setMutation] = useState(gql)
+  const [mutation, setMutation] = useRecoilState(uploadGqlState)
   const [file, setFile] = useState<File>()
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<ServerError | undefined>();
@@ -55,7 +38,7 @@ export const UploadBoard = memo(() => {
 
   const handleNameChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     setMutation(event.target.value)
-  }, [])
+  }, [setMutation])
 
   const handleUpload = useCallback(() => {
     if (!service?.url) {
