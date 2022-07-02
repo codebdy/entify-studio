@@ -41,7 +41,7 @@ export const ServiceItem = memo(
           />
         </SvgIcon>
 
-        <ListItemText primary={service.name} />
+        <ListItemText primary={service.name} secondary={service.url} />
       </ListItemButton>
     );
   }
