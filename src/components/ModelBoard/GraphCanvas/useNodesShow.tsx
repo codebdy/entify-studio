@@ -101,8 +101,9 @@ export function useNodesShow(graph: Graph | undefined, serviceId: number) {
       console.error("Class not exist: " + classUuid);
       return;
     }
-    createAttributeRef.current(cls);
-  }, []);
+    const attr = createAttributeRef.current(cls);
+    setSelectedElement(attr?.uuid)
+  }, [setSelectedElement]);
 
   const handleMethodCreate = useCallback((classUuid: string) => {
     const cls = getClassRef.current(classUuid);

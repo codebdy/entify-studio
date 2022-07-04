@@ -10,6 +10,7 @@ export function useCreateClassAttribute(serviceId: number) {
     (cls: ClassMeta) => {
       const attr = createAttribute(cls.attributes);
       changeClass({ ...cls, attributes: [...cls.attributes, attr] });
+      return attr
     },
     [changeClass, createAttribute]
   );
