@@ -18,7 +18,7 @@ export const AbilityActions = memo(
     const findAbilityByType = useCallback(
       (type: AbilityType): Ability => {
         //实体级别
-        let fundeAbility = roleAbilities?.find(
+        let foundAbility = roleAbilities?.find(
           (ability) =>
             !ability.columnUuid &&
             isEntity &&
@@ -27,8 +27,8 @@ export const AbilityActions = memo(
         );
 
         //字段级别
-        if (!fundeAbility) {
-          fundeAbility = roleAbilities?.find(
+        if (!foundAbility) {
+          foundAbility = roleAbilities?.find(
             (ability) =>
               !!ability.columnUuid &&
               !isEntity &&
@@ -39,7 +39,7 @@ export const AbilityActions = memo(
         }
 
         return (
-          fundeAbility || {
+          foundAbility || {
             can: false,
             expression: "",
             entityUuid: entityMeta.uuid,
